@@ -1,0 +1,12 @@
+
+
+/* Change styles for cancel button and signup button on extra small screens */
+@media screen and (max-width: 700px) {
+    .input_box {
+      flex-direction: column !important;
+    ;
+    }
+    .input_box .form-group{
+      width: -webkit-fill-available !important;
+    }
+  }

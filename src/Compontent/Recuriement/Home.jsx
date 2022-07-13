@@ -1,0 +1,124 @@
+import React from "react";
+import Fade from "react-reveal/Fade";
+import {
+  Container,
+  Box,
+  Typography,
+  Button,
+  Divider,
+  useMediaQuery,
+} from "@mui/material";
+import Hero from "../../Images/h1_hero.jpg";
+
+function Home() {
+  const match = useMediaQuery("(max-width:700px)");
+  const img = "";
+  const inputstyle = {
+    width: match ? "100%" : "25%",
+    height: " 70px",
+    color: "#777777",
+    fontSize: "18px",
+    fontWeight: "400",
+    padding: " 9px 33px 9px 32px",
+    border: "none",
+    borderRadius: " 0px",
+    position: " relative",
+    outline: "none",
+    backgroundColor: "white",
+  };
+
+  return (
+    <>
+      <Box
+        sx={{
+          width: "100%",
+          backgroundImage: `url(${Hero})`,
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
+          py: 2,
+        }}
+      >
+        <Container>
+          <Box sx={{ width: { xs: "100%", md: "50%" } }}>
+            <Fade top>
+              <Typography
+                sx={{
+                  fontSize: { xs: "40px", md: "80px" },
+                  width: "100%",
+                  fontWeight: "bold",
+                  pt: 10,
+                  pb: 2,
+                  lineHeight: { md: "100px", xs: "60px" },
+                  background: "linear-gradient(#ff9b44 0%, #fc6075 100%)",
+                  backgroundClip: " text",
+                  textFillColor: " transparent",
+                  backgroundClip: "text",
+                  textFillColor: " transparent",
+                  textStroke: "2px rgb(245, 245, 245)",
+                }}
+                className="main_heading"
+              >
+                Find the most exciting startup jobs
+              </Typography>
+            </Fade>
+          </Box>
+          <Box
+            sx={{
+              width: "100%",
+              py: 5,
+              mt: 1,
+              display: "flex",
+              justiftyContent: { md: "space-around", xs: "space-evenly" },
+              flexDirection: { md: "row", xs: "column" },
+              alignItems: "center",
+            }}
+          >
+            <input
+              type="text"
+              name="keyword"
+              placeholder="Job title and Keywords"
+              style={inputstyle}
+            />
+            <Divider
+              sx={{ width: "3px", height: "5px", textAlign: "center" }}
+            />
+            <select style={inputstyle}>
+              <option value="0">Select locations:</option>
+              <option value="1">Audi</option>
+              <option value="2">BMW</option>
+              <option value="3">Citroen</option>
+              <option value="4">Ford</option>
+            </select>
+            <Divider
+              sx={{ width: "3px", height: "5px", textAlign: "center" }}
+            />
+            <Button
+              type="submit"
+              value="Finds Jobs"
+              sx={{
+                width: { md: "20%", xs: "100%" },
+                height: " 70px",
+                background:
+                  "linear-gradient(to right, #ff9b44 0%, #fc6075 100%)",
+                textSlign: "center",
+                color: "#fff",
+                padding: "15px",
+                textTransform: " capitalize",
+                lineHeight: "38px",
+                fontSize: "14px",
+                "&:hover": {
+                  background:
+                    "linear-gradient(to right, #ff9b44 0%, #fc6075 100%)",
+                },
+              }}
+            >
+              Find Jobs
+            </Button>
+          </Box>
+        </Container>
+      </Box>
+    </>
+  );
+}
+
+export default Home;
