@@ -1,9 +1,10 @@
-import React from "react";
+import React,{useEffect} from "react";
 import logo from "../../Images/logo2.png";
 import { NavLink } from "react-router-dom";
 import { Formik, Field, Form } from "formik";
 import Errorsg from "../Msgerror/Errormsg";
 import schema from "../Yup/Yup";
+import { useNavigate } from "react-router-dom";
 const Initivalue={
   instituename:'',
   degree:'',

@@ -1,23 +1,29 @@
-import React from "react";
+import React,{useEffect, useState} from "react";
 import logo from "../../Images/logo2.png";
 import { Formik, Field, Form } from "formik";
 import Errorsg from "../Msgerror/Errormsg";
 import { Loginschema } from "../Yup/Yup";
+import {POST} from '../API/PostAPI';
+import { useNavigate } from "react-router-dom";
+const url="http://localhost/HRMS/visters/Login.php";
 function Login() {
+  const navigate = useNavigate();
   const Initivalue = {
     email: "",
     password: "",
   };
+  const [add,setAddState]=useState('');
   return (
     <>
       <Formik
         initialValues={Initivalue}
         validationSchema={Loginschema}
         onSubmit={(values, { resetForm }) => {
-          console.log(values);
+          // console.log(values);
+          setAddState(values);
           resetForm();
           alert("submit");
-          //  window.location.replace('Login','/')
+         
         }}
       >
         <div className="main-wrapper">
@@ -91,7 +97,7 @@ function Login() {
                           className="text-muted float-right"
                           href="forgot-password.php"
                         >
-                          Login..
+                          Signup..
                         </a>
                       </div>
                     </div>
@@ -102,6 +108,7 @@ function Login() {
           </div>
         </div>
       </Formik>
+      {add && <POST values={add} url={url} Addstate={setAddState}/>}
     </>
   );
 }

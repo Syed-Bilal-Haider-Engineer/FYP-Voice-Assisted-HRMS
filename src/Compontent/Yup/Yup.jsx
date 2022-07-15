@@ -31,7 +31,6 @@ const schema = yup.object().shape({
     .matches(/^[A-Za-z ]*$/, "Please enter valid user name")
     .required("user name is required"),
   address: yup.string().required("address is required"),
-  image: yup.string().required("A file is required")
 });
 
 export default schema;

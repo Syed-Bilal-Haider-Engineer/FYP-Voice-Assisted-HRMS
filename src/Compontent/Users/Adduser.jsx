@@ -2,7 +2,7 @@ import React,{useEffect, useState} from "react";
 import { Formik, Field, Form } from "formik";
 import Errorsg from "../Msgerror/Errormsg";
 import {userschema} from "../Yup/Yup";
-import {usePOST} from '../API/PostAPI';
+import {POST} from '../API/PostAPI';
 const url="http://localhost/HRMS/Users/Adduser.php";
 const Initivalue={
   username:'',
@@ -13,8 +13,7 @@ const Initivalue={
 }
 
 function Adduser() {
-  const [add,setAddState]=useState();
-  usePOST(add,url); 
+  const [add,setAddState]=useState(); 
   return (
     <>
     <Formik
@@ -132,6 +131,7 @@ function Adduser() {
       </div>
     </div>
     </Formik>
+    {add &&<POST values={add} url={url} Addstate={setAddState}/>}
     </>
   );
 }

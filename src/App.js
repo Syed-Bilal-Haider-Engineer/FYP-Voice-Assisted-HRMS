@@ -3,10 +3,12 @@ import Contact from "./Compontent/Recuriement/Contact.jsx";
 import Footer from "./Compontent/Recuriement/Footer.jsx";
 // import Header from "./Compontent/Recuriement/Header.jsx";
 import Signup from "./Compontent/Recuriement/Signup";
+import Pagenotfound from './Compontent/Notfound/Pagenotfound';
 import { Route, Routes } from "react-router-dom";
 import Login from "./Compontent/Recuriement/Loging";
 import Exprience from "./Compontent/Recuriement/Exprience";
 import Apply from "./Compontent/Recuriement/Applications";
+import Logout from './Compontent/Recuriement/Logout';
 import Dashboard from "./Compontent/Dashboard/Dashboard";
 import Contactus from './Compontent/Contact/Contact';
 import Header from "./Compontent/Includes/Header";
@@ -44,7 +46,7 @@ import Clientlist from "./Compontent/Clients/Clientlist";
 function App() {
   return (
     <>
-         <Header />
+           <Header />
       <div className="main-wrapper">
         <Sidebar />
        <Routes>
@@ -81,18 +83,20 @@ function App() {
          <Route path="/Notice" element={<Notice />} />
           <Route path="/Contactus" element={<Contactus/>}/>
         </Routes>
-          </div> 
+          </div>   
 
-         {/* <Header />
+          {/* <Header />
         <Routes>
          <Route path="/" element={<Main />} />
          <Route path="/signup" element={<Signup />} />
          <Route path="/contact" element={<Contact />} />
          <Route path="/login" element={<Login />} />
-         <Route path="/Apply" element={<Apply />} />
+           <Route path="/Apply" element={<Apply />} />
           <Route path="/Exprience" element={<Exprience />} />
+          <Route path="/Logout" element={<Logout/>}/>
+          <Route path="*" element={<Pagenotfound/>}/>
       </Routes>
-       <Footer />    */}
+       <Footer />      */}
     </>
   );
 }

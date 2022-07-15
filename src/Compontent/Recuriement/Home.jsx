@@ -11,6 +11,7 @@ import {
 import Hero from "../../Images/h1_hero.jpg";
 
 function Home() {
+  
   const match = useMediaQuery("(max-width:700px)");
   const img = "";
   const inputstyle = {

@@ -12,6 +12,14 @@ import joblist from "../../Images/joblist.png";
 import Fade from "react-reveal/Fade";
 import { NavLink } from "react-router-dom";
 function Joblist() {
+
+  var Role,checkstatus;
+  if(localStorage.getItem("user"))
+  {
+  const Islogin=window.atob(localStorage.getItem("user"));
+   Role=JSON.parse(Islogin);
+   checkstatus=Role.token;
+  };
   return (
     <>
       <Box sx={{ py: 16, backgroundColor: "white" }}>
@@ -87,6 +95,7 @@ function Joblist() {
                         <Typography>Athens, Greece</Typography>
                       </Box>
                     </Box>
+
                     <Box
                       sx={{
                         width: { md: "20%", xs: "90%" },
@@ -94,6 +103,7 @@ function Joblist() {
                         textAlign: "right",
                       }}
                     >
+                      {checkstatus==0 &&
                       <Button
                         sx={{
                           width: { md: "80px", xs: "100%" },
@@ -109,7 +119,7 @@ function Joblist() {
                           {" "}
                           Apply
                         </NavLink>
-                      </Button>
+                      </Button>}
                       <Typography mt={1}>7hr ago</Typography>
                     </Box>
                   </Box>

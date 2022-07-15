@@ -1,6 +1,33 @@
-import React from "react";
+import React,{useState} from "react";
 import Add_category from "./Addcategory";
+import useGet from '../API/API';
+import { useSelector } from "react-redux";
+import {
+  Container,
+  Box,
+  Typography,
+  Button,
+  Divider,
+  Stack,
+  Grid,
+  Pagination
+} from "@mui/material";
+const url="http://localhost/HRMS/Category/getcategory.php";
 function Category() {
+  const type="category";
+  var i=0;
+  const CategoryInfo = useSelector(state => state.categoryreducer);
+  console.log("userInfo", CategoryInfo);
+  useGet(url,type);
+ 
+  //......paginations..........
+  const [postsPerPage, setPostsPerPage] = useState(5);
+  const [currentPage, setCurrentPage] = useState(1);
+  const handleChangepage = (event, value) => {
+    setCurrentPage(value);
+  };
+
+  const pageCount = Math.ceil(CategoryInfo.length / postsPerPage);
   return (
     <>
       <>
@@ -47,46 +74,73 @@ function Category() {
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td>sr</td>
-                          <td>Category name</td>
-                          <td className="text-right">
-                            <div className="dropdown dropdown-action">
-                              <a
-                                href="#"
-                                className="action-icon dropdown-toggle"
-                                data-toggle="dropdown"
-                                aria-expanded="false"
-                              >
-                                <i className="material-icons">more_vert</i>
-                              </a>
-                              <div className="dropdown-menu dropdown-menu-right">
+                        {CategoryInfo.length > 0 && CategoryInfo.slice(
+                            currentPage * postsPerPage - postsPerPage,
+                            currentPage * postsPerPage
+                          ).map((Items)=>{
+                            i++;
+                            return <>
+                            <tr>
+                            <td>{i}</td>
+                            <td>{Items.catname}</td>
+                            <td className="text-right">
+                              <div className="dropdown dropdown-action">
                                 <a
-                                  className="dropdown-item"
                                   href="#"
-                                  data-toggle="modal"
-                                  data-target="#edit_department"
+                                  className="action-icon dropdown-toggle"
+                                  data-toggle="dropdown"
+                                  aria-expanded="false"
                                 >
-                                  <i className="fa fa-pencil m-r-5" /> Edit
+                                  <i className="material-icons">more_vert</i>
                                 </a>
-                                <a
-                                  className="dropdown-item"
-                                  href="#"
-                                  data-toggle="modal"
-                                  data-target="#delete_department"
-                                >
-                                  <i className="fa fa-trash-o m-r-5" /> Delete
-                                </a>
+                                <div className="dropdown-menu dropdown-menu-right">
+                                  <a
+                                    className="dropdown-item"
+                                    href="#"
+                                    data-toggle="modal"
+                                    data-target="#edit_department"
+                                  >
+                                    <i className="fa fa-pencil m-r-5" /> Edit
+                                  </a>
+                                  <a
+                                    className="dropdown-item"
+                                    href="#"
+                                    data-toggle="modal"
+                                    data-target="#delete_department"
+                                  >
+                                    <i className="fa fa-trash-o m-r-5" /> Delete
+                                  </a>
+                                </div>
                               </div>
-                            </div>
-                          </td>
-                        </tr>
+                            </td>
+                          </tr>
+                          
+                          </>
+                         
+                          })
+                        }
+                        
                       </tbody>
                     </table>
                   </div>
                 </div>
               </div>
             </div>
+            <Box  m="15px">
+              
+              <Stack
+                direction={"row"}
+                alignItems="center"
+                justifyContent="flex-end"
+
+              >
+                <Pagination
+                  count={pageCount}
+                  page={currentPage}
+                  onChange={handleChangepage}
+                />
+              </Stack>
+            </Box>
             {/* /Page Content */}
             {/* Add Department Modal */}
             <Add_category />

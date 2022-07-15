@@ -3,7 +3,8 @@ import logo from "../../Images/logo2.png";
 import { Formik, Field, Form } from "formik";
 import Errorsg from "../Msgerror/Errormsg";
 import schema from "../Yup/Yup";
-import {usePOST} from '../API/PostAPI';
+import {POST} from '../API/PostAPI';
+
 const url="http://localhost/HRMS/Visters/Visters.php";
 function Signup() {
   const Initivalue = {
@@ -14,33 +15,28 @@ function Signup() {
     password: "",
     phone: "",
     address: "",
-    image: "",
+   
+
   }
-  const [add,setAddState]=useState();
-    console.log("add",add);
-    usePOST(add,url); 
+  const [add,setAddState]=useState('');
+    // console.log("add",add);
+
   return (
     <>
       <Formik
         initialValues={Initivalue}
         validationSchema={schema}
         onSubmit={(values, { resetForm }) => {
-          // console.log(values);
+          console.log(values);
           setAddState(values);
           alert("submit");
           resetForm();
-          //  window.location.replace('Login','/')
         }}
       >
         <div className="main-wrapper">
           <div className="account-content">
             <div className="container">
-              {/* Account Logo */}
-              <div className="account-logo">
-                <a href="index.php">
-                  <img src={logo} alt="Company Logo" />
-                </a>
-              </div>
+             
               <div className="account-box">
                 <div className="account-wrapper">
                   <h3 className="account-title">User Signup</h3>
@@ -139,16 +135,7 @@ function Signup() {
                       />
                       <Errorsg name="address" className="error" />
                     </div>
-                    <div className="form-group">
-                      <label>Profile Pic</label>
-                      <Field
-                        className="form-control"
-                        name="image"
-                        required
-                        type="file"
-                      />
-                      <Errorsg name="image" className="error" />
-                    </div>
+                    
                     <div className="form-group text-center">
                       <button
                         className="btn btn-primary account-btn"
@@ -160,7 +147,7 @@ function Signup() {
                       <div className="col-auto pt-2">
                         <a
                           className="text-muted float-right"
-                          href="forgot-password.php"
+                          href=""
                         >
                           Login..
                         </a>
@@ -173,8 +160,9 @@ function Signup() {
           </div>
         </div>
       </Formik>
+      {add && <POST values={add} url={url} Addstate={setAddState}/>}
     </>
   );
 }
 
-export default Signup;
+export default React.memo(Signup);

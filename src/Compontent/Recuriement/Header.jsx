@@ -34,6 +34,16 @@ const link = {
   color: "white",
 };
 export default function Header() {
+  var Role,checkstatus='';
+  console.log(checkstatus);
+  if(localStorage.getItem("user"))
+  {
+  const Islogin=window.atob(localStorage.getItem("user"));
+   Role=JSON.parse(Islogin);
+   checkstatus=Role.token;
+  console.log(checkstatus,"checkstatus");
+  }
+  
   const classes = useStyles();
   const [state, setState] = React.useState({
     left: false,
@@ -189,8 +199,7 @@ export default function Header() {
                       Signup
                     </NavLink>
                   </Box>
-
-                  <Box
+                  {checkstatus=='' ?<Box
                     mr={6}
                     fontSize="20px"
                     zIndex="1"
@@ -206,6 +215,23 @@ export default function Header() {
                     <NavLink to="/login" style={link}>
                       Login
                     </NavLink>
+                  </Box> :''}
+                  <Box
+                    mr={6}
+                    fontSize="20px"
+                    zIndex="1"
+                    sx={{
+                      textDecoration: "none",
+                      cursor: "pointer",
+                      color: "white",
+                      "&:hover": {
+                        borderBottom: "2px solid black",
+                      },
+                    }}
+                  >
+                    <Link to="/Logout" style={link}>
+                      Logout
+                    </Link>
                   </Box>
                   <Box
                     mr={6}
@@ -239,6 +265,7 @@ export default function Header() {
                   >
                     FAQ
                   </Box>
+                  
                 </Hidden>
               </Box>
 

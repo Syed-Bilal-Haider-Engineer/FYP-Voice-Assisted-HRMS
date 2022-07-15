@@ -18,10 +18,10 @@ function Users() {
 
    // .......Get user values from ReactRedux...........
    const userInfo = useSelector(state => state.Userregisteration);
-   console.log("userInfo", userInfo);
-   useGet(url);
+   const type="user";
+   useGet(url,type);
   // .............Page pagination............
-  const [postsPerPage, setPostsPerPage] = useState(4);
+  const [postsPerPage, setPostsPerPage] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
   const handleChangepage = (event, value) => {
     setCurrentPage(value);
@@ -165,7 +165,7 @@ function Users() {
               </div>
             </div>
           </div>
-          <Box m="20px">
+          <Box  m="15px">
               
                 <Stack
                   direction={"row"}

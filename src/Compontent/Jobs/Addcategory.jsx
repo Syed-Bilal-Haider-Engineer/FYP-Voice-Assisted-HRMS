@@ -2,19 +2,24 @@ import React from "react";
 import { Formik, Field, Form } from "formik";
 import Errorsg from "../Msgerror/Errormsg";
 import { categoryschema } from "../Yup/Yup";
+import {POST} from '../API/PostAPI';
+const url="http://localhost/HRMS/Category/Category.php";
 function Addcategory() {
+  const [add,setAddState]=React.useState('');
   const Initivalue = {
     category: "",
   };
   return (
+    <>
     <Formik
       initialValues={Initivalue}
       validationSchema={categoryschema}
       onSubmit={(values, { resetForm }) => {
         console.log(values);
+        setAddState(values);
         alert("submit");
         resetForm();
-        //  window.location.replace('Login','/')
+        
       }}
     >
       <div id="add_category" className="modal custom-modal fade" role="dialog">
@@ -60,7 +65,10 @@ function Addcategory() {
         </div>
       </div>
     </Formik>
-  );
+    {add && <POST values={add} url={url} Addstate={setAddState}/>}
+
+ </>
+  )
 }
 
 export default Addcategory;
