@@ -2,7 +2,10 @@ import React from "react";
 import { Formik, Field, Form } from "formik";
 import Errorsg from "../Msgerror/Errormsg";
 import { Holidayschema } from "../Yup/Yup";
+import { POST } from "../API/PostAPI";
+const url="http://localhost/HRMS/Holiday/AddHoliday.php";
 function Addholiday() {
+  const [add, setAddState] = React.useState();
   const Initivalue = {
     holiday: "",
     date: "",
@@ -13,8 +16,8 @@ function Addholiday() {
         initialValues={Initivalue}
         validationSchema={Holidayschema}
         onSubmit={(values, { resetForm }) => {
-          console.log(values);
-          alert("submit");
+          // console.log(values);
+          setAddState(values);
           resetForm();
           //  window.location.replace('Login','/')
         }}
@@ -74,6 +77,7 @@ function Addholiday() {
           </div>
         </div>
       </Formik>
+      {add && <POST values={add} url={url} Addstate={setAddState} />}
     </>
   );
 }

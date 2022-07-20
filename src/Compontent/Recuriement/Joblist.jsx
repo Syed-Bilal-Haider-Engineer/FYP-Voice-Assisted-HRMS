@@ -1,18 +1,23 @@
-import React from "react";
+import React,{useState} from "react";
 import {
   Container,
   Box,
   Typography,
   Button,
-  Divider,
-  Grid,
+  Pagination,
+  Stack,
 } from "@mui/material";
 import Slide from "react-reveal/Slide";
 import joblist from "../../Images/joblist.png";
 import Fade from "react-reveal/Fade";
-import { NavLink } from "react-router-dom";
+import { Link,NavLink } from "react-router-dom";
+import {useSelector} from 'react-redux';
 function Joblist() {
+  const jobinfo = useSelector(state => state.Jobreducer);
+  console.log("jobinfo", jobinfo);
 
+
+  //.......Login , use local storage..............
   var Role,checkstatus;
   if(localStorage.getItem("user"))
   {
@@ -20,6 +25,14 @@ function Joblist() {
    Role=JSON.parse(Islogin);
    checkstatus=Role.token;
   };
+
+  // .............Paginations.............
+  const [postsPerPage, setPostsPerPage] = useState(5);
+  const [currentPage, setCurrentPage] = useState(1);
+  const handleChangepage = (event, value) => {
+    setCurrentPage(value);
+  };
+  const pageCount = Math.ceil(jobinfo.length / postsPerPage);
   return (
     <>
       <Box sx={{ py: 16, backgroundColor: "white" }}>
@@ -47,17 +60,25 @@ function Joblist() {
             </Slide>
           </Box>
           <br />
-          {[1, 2, 3, 4].map(() => {
+           {jobinfo.length > 0 && jobinfo.slice(
+                            currentPage * postsPerPage - postsPerPage,
+                            currentPage * postsPerPage
+                          ).map((Items,i) => {
+             const {job_id,category,title,posting_date,description,job_city,last_date,logo,status,no_of_positons}=Items;
             return (
               <>
                 <Fade top>
+                  <Link to={`/Jobdetails/${job_id}`}>
                   <Box
+
+                  key={i}
                     sx={{
                       width: "100%",
                       display: "flex",
                       justifyContent: "space-around",
                       alignItems: "center",
                       padding: " 36px 30px",
+                      cursor:'pointer',
                       mt: 1,
                       flexDirection: { md: "row", xs: "column" },
                       "&:hover": {
@@ -66,7 +87,7 @@ function Joblist() {
                     }}
                   >
                     <Box sx={{ width: { md: "20%", xs: "90%" } }}>
-                      <img src={joblist} alt="" />
+                    <img style={{width:'20px',height:'20px'}} src={`http://localhost/HRMS/Uploads/${logo}`} alt=""/>
                     </Box>
                     <Box
                       sx={{
@@ -80,7 +101,7 @@ function Joblist() {
                           fontWeight: "bold",
                         }}
                       >
-                        Digital Marketer
+                      {title}
                       </Typography>
                       <Box
                         sx={{
@@ -90,12 +111,11 @@ function Joblist() {
                           color: "lightgray",
                         }}
                       >
-                        <Typography>Creative Agency</Typography>
-                        <Typography> $3500 - $4000</Typography>
-                        <Typography>Athens, Greece</Typography>
+                        <Typography>company name</Typography>
+                        <Typography>last date: {last_date}</Typography>
+                        <Typography>{job_city}</Typography>
                       </Box>
                     </Box>
-
                     <Box
                       sx={{
                         width: { md: "20%", xs: "90%" },
@@ -111,6 +131,7 @@ function Joblist() {
                           border: "none",
                           borderRadius: "4px",
                           color: "white",
+
                           background:
                             "linear-gradient(#ff9b44 0%, #fc6075 100%)",
                         }}
@@ -120,14 +141,30 @@ function Joblist() {
                           Apply
                         </NavLink>
                       </Button>}
-                      <Typography mt={1}>7hr ago</Typography>
+                      <Typography mt={1}>{posting_date}</Typography>
                     </Box>
                   </Box>
+                  </Link>
                 </Fade>
               </>
             );
           })}
         </Container>
+        <Box  my="15px" mx="100px">
+              
+              <Stack
+                direction={"row"}
+                alignItems="center"
+                justifyContent="flex-end"
+
+              >
+                <Pagination
+                  count={pageCount}
+                  page={currentPage}
+                  onChange={handleChangepage}
+                />
+              </Stack>
+            </Box>
       </Box>
     </>
   );

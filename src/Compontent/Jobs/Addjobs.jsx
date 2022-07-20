@@ -1,7 +1,13 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import { Formik, Field, Form } from "formik";
 import Errorsg from "../Msgerror/Errormsg";
 import { jobschema } from "../Yup/Yup";
+import { useSelector } from "react-redux";
+import {POST} from '../API/PostAPI';
+import useGet from "../API/API";
+import { toast } from "react-toastify";
+import axios from "axios";
+const urlpost="http://localhost/HRMS/Job/Addjob.php";
 const selectinput = {
   width: "100%",
   height: "45px",
@@ -14,20 +20,49 @@ const Initivalue = {
   city: "",
   category: "",
   status: "",
-  file: "",
   Notice: "",
+  skills:"",
+  position:''
 };
+
 function Addjobs() {
+  const [add,setAddState]=React.useState(false);
+  var jobform;
+  const formData = new FormData();
+  const CategoryInfo = useSelector((state) => state.categoryreducer);
+  const inputRef = useRef(null);
+  const filehandler = async (values) => {
+    const img = inputRef.current.files[0];
+     formData.append("title",values.title);
+     formData.append("enddate",values.enddate);
+     formData.append("city",values.city);
+     formData.append("status",values.status);
+     formData.append("category",values.category);
+     formData.append("img",img);
+     formData.append("Notice",values.Notice);
+     formData.append('skills',values.skills);
+     formData.append('position',values.position);
+     try {
+      const response = await axios.post(urlpost,formData,{headers:{ "Content-Type": "multipart/form-data" }});
+      const msg=response.data;
+      if(response.status==200)
+      {
+        toast.success(`${msg}`);
+      }
+    } catch(error) {
+      toast.success(`${error}`);
+    }
+  };
+  console.log(CategoryInfo,"CategoryInfo------<>")
   return (
     <>
       <Formik
         initialValues={Initivalue}
         validationSchema={jobschema}
         onSubmit={(values, { resetForm }) => {
-          console.log(values);
+          filehandler(values);
           alert("submit");
           resetForm();
-          //  window.location.replace('Login','/')
         }}
       >
         <div id="add_jobs" className="modal custom-modal fade" role="dialog">
@@ -64,7 +99,34 @@ function Addjobs() {
                         <Errorsg name="title" className="error" />
                       </div>
                     </div>
-
+                    <div className="col-sm-12">
+                      <div className="form-group">
+                        <label>
+                          Skills <span className="text-danger">*</span>
+                        </label>
+                        <Field
+                          className="form-control"
+                          required=""
+                          name="skills"
+                          type="text"
+                        />
+                        <Errorsg name="title" className="error" />
+                      </div>
+                    </div>
+                    <div className="col-sm-12">
+                      <div className="form-group">
+                        <label>
+                          position <span className="text-danger">*</span>
+                        </label>
+                        <Field
+                          className="form-control"
+                          required=""
+                          name="position"
+                          type="tel"
+                        />
+                        <Errorsg name="title" className="error" />
+                      </div>
+                    </div>
                     <div className="col-sm-6">
                       <div className="form-group">
                         <label>
@@ -102,8 +164,15 @@ function Addjobs() {
                           className="select"
                           style={selectinput}
                         >
-                          <option value={0}>website developer</option>
-                          <option value={1}>Website designer</option>
+                          {CategoryInfo.map((items) => {
+                            return (
+                              <>
+                                <option value={items.Catid}>
+                                  {items.catname}
+                                </option>
+                              </>
+                            );
+                          })}
                         </Field>
                         <Errorsg name="category" className="error" />
                       </div>
@@ -128,13 +197,14 @@ function Addjobs() {
                         <label>
                           File <span className="text-danger">*</span>
                         </label>
-                        <Field
+                        <input
                           type="file"
                           className="form-control"
                           required=""
                           name="file"
+                          ref={inputRef}
                         />
-                        <Errorsg name="file" className="error" />
+                       
                       </div>
                     </div>
                     <div className="col-sm-12">
@@ -145,8 +215,6 @@ function Addjobs() {
                           rows={4}
                           name="Notice"
                           className="form-control summernote"
-                          placeholder="Enter your message here"
-                          defaultValue={""}
                         />
                         <Errorsg name="Notice" className="error" />
                       </div>

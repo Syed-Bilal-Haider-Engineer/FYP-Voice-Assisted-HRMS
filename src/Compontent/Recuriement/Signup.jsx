@@ -27,10 +27,11 @@ function Signup() {
         initialValues={Initivalue}
         validationSchema={schema}
         onSubmit={(values, { resetForm }) => {
-          console.log(values);
+          // console.log(values);
           setAddState(values);
           alert("submit");
           resetForm();
+          //  window.location.replace('Login','/')
         }}
       >
         <div className="main-wrapper">

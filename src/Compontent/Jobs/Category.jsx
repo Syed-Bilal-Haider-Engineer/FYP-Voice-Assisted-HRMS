@@ -12,13 +12,13 @@ import {
   Grid,
   Pagination
 } from "@mui/material";
-const url="http://localhost/HRMS/Category/getcategory.php";
+const url="";
 function Category() {
-  const type="category";
+
   var i=0;
   const CategoryInfo = useSelector(state => state.categoryreducer);
   console.log("userInfo", CategoryInfo);
-  useGet(url,type);
+  
  
   //......paginations..........
   const [postsPerPage, setPostsPerPage] = useState(5);
@@ -28,6 +28,7 @@ function Category() {
   };
 
   const pageCount = Math.ceil(CategoryInfo.length / postsPerPage);
+
   return (
     <>
       <>

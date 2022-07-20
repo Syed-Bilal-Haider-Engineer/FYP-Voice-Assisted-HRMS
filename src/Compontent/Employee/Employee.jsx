@@ -1,6 +1,9 @@
 import React from "react";
 import Addemployee from "./Addemployee";
+import {useSelector} from 'react-redux';
 function Employee() {
+   const Employeestate=useSelector(state=>state.Fetchemployeereducer);
+   console.log("Employeestate",Employeestate);
   return (
     <>
       {/* Main Wrapper */}

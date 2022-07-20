@@ -1,4 +1,11 @@
 export const ActionTypes = {
     Showusers:'Showusers',
-    Getcategory:'Getcategory'
+    Getcategory:'Getcategory',
+    fetchvister:'fetchvister',
+    Job:"Jobdata",
+    department:'department',
+    designation:"designation",
+    fetchHoliday:'fetchHoliday',
+    Userapplications:'userapplications',
+    Employee:'Employee'
 }

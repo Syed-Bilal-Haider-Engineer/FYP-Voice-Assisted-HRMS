@@ -32,9 +32,10 @@ const useStyles = makeStyles({
 });
 const link = {
   color: "white",
+  textDecoration:'none'
 };
 export default function Header() {
-  var Role,checkstatus='';
+  var Role,checkstatus;
   console.log(checkstatus);
   if(localStorage.getItem("user"))
   {
@@ -199,7 +200,7 @@ export default function Header() {
                       Signup
                     </NavLink>
                   </Box>
-                  {checkstatus=='' ?<Box
+                  {checkstatus==undefined ?<Box
                     mr={6}
                     fontSize="20px"
                     zIndex="1"

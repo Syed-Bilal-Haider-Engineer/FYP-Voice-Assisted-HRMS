@@ -3,28 +3,13 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 export const POST = ({ values, url, Addstate }) => {
+
   const navigate = useNavigate();
   const ToastyHandler = (msg, status) => {
     if (status == false) {
-      toast.error(`${msg}`, {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      toast.error(`${msg}`);
     } else {
-      toast.success(`${msg}`, {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      toast.success(`${msg}`);
       // setTimeout(() => {
       //   navigate("/login");
       // }, 3000);
@@ -32,17 +17,16 @@ export const POST = ({ values, url, Addstate }) => {
   };
   const usersPost = async () => {
     await axios
-      .post(url, values)
+      .post(url,values)
       .then((response) => {
-            console.log(response.data);
+            console.log("server responces",response.data);
         const status = response.data.status;
         const msg = response.data.message;
-        // console.log("success message=", msg, "status=", status);
-         
-        // ...........Generate Token For login.............
         if (response.data.token) {
+          console.log("id",response.data.id);
           const token = {
             token: response.data.token,
+            id:response.data.id
           };
           const string = JSON.stringify(token);
           const encrypt=window.btoa(string);

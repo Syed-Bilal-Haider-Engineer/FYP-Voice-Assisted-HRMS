@@ -2,17 +2,19 @@ import React from "react";
 import { Formik, Field, Form } from "formik";
 import Errorsg from "../Msgerror/Errormsg";
 import { departmentschema } from "../Yup/Yup";
-
+import {POST} from '../API/PostAPI';
 function Adddepart() {
+  const url="http://localhost/HRMS/Department/Adddepartment.php";
   const Initivalue = {
     department: "",
   };
-  return (
+  const [add,setAddState]=React.useState(); 
+  return ( <>
     <Formik
       initialValues={Initivalue}
       validationSchema={departmentschema}
       onSubmit={(values, { resetForm }) => {
-        console.log(values);
+        setAddState(values)
         alert("submit");
         resetForm();
         //  window.location.replace('Login','/')
@@ -65,6 +67,8 @@ function Adddepart() {
         </div>
       </div>
     </Formik>
+     {add &&<POST values={add} url={url} Addstate={setAddState}/>}
+     </>
   );
 }
 

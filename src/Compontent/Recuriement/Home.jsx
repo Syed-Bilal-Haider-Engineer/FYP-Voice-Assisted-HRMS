@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import Fade from "react-reveal/Fade";
+import useGet from '../API/API';
+import theme from '../../Theme/Theme';
 import {
   Container,
   Box,
@@ -9,14 +11,19 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import Hero from "../../Images/h1_hero.jpg";
+import { useDispatch } from "react-redux";
 
 function Home() {
-  
+  const dispatch = useDispatch();
+  const url="http://localhost/HRMS/Job/Jobs.php";
+  const type="job";
+const [Search, setSearch] = useState("");
+  useGet(url,type);
   const match = useMediaQuery("(max-width:700px)");
   const img = "";
   const inputstyle = {
-    width: match ? "100%" : "25%",
-    height: " 70px",
+    width: match ? "100%" : "40%",
+    height: "70px",
     color: "#777777",
     fontSize: "18px",
     fontWeight: "400",
@@ -25,7 +32,7 @@ function Home() {
     borderRadius: " 0px",
     position: " relative",
     outline: "none",
-    backgroundColor: "white",
+    backgroundColor: `${theme.palette.text.secondary}`,
   };
 
   return (
@@ -79,17 +86,8 @@ function Home() {
               name="keyword"
               placeholder="Job title and Keywords"
               style={inputstyle}
+              onChange={(e)=> setSearch(e.target.value)}
             />
-            <Divider
-              sx={{ width: "3px", height: "5px", textAlign: "center" }}
-            />
-            <select style={inputstyle}>
-              <option value="0">Select locations:</option>
-              <option value="1">Audi</option>
-              <option value="2">BMW</option>
-              <option value="3">Citroen</option>
-              <option value="4">Ford</option>
-            </select>
             <Divider
               sx={{ width: "3px", height: "5px", textAlign: "center" }}
             />

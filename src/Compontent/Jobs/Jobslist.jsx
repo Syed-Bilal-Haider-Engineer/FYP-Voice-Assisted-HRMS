@@ -1,6 +1,34 @@
-import React from "react";
+import React,{useState} from "react";
 import Addjobs from "./Addjobs";
+import useGet from '../API/API';
+import { useSelector } from "react-redux";
+import {
+  Container,
+  Box,
+  Typography,
+  Button,
+  Divider,
+  Stack,
+  Grid,
+  Pagination
+} from "@mui/material";
+
 function Jobslisting() {
+  const url="http://localhost/HRMS/Job/Jobs.php";
+  const type="job";
+  var i=0;
+  const jobinfo = useSelector(state => state.Jobreducer);
+  console.log("jobinfo", jobinfo);
+  useGet(url,type);
+  var i=0;
+  // ......paginations.........
+  const [postsPerPage, setPostsPerPage] = useState(5);
+  const [currentPage, setCurrentPage] = useState(1);
+  const handleChangepage = (event, value) => {
+    setCurrentPage(value);
+  };
+  const pageCount = Math.ceil(jobinfo.length / postsPerPage);
+
   return (
     <>
       <>
@@ -47,23 +75,35 @@ function Jobslisting() {
                           <th>Category</th>
                           <th>no_positions</th>
                           <th>locations</th>
-                          <th>Opening date</th>
                           <th>close</th>
+                          <th>Logo</th>
                           <th>Status</th>
                           <th className="text-right">Action</th>
                         </tr>
                       </thead>
                       <tbody>
-                        <tr style={{ color: "black" }}>
-                          <td>sr</td>
-                          <td>website</td>
-                          <td>website design</td>
-                          <td>development</td>
-                          <td>4</td>
-                          <td>jhang</td>
-                          <td>22-200</td>
-                          <td>23-33-900</td>
-                          <td>Active</td>
+                      {jobinfo.length > 0 && jobinfo.slice(
+                            currentPage * postsPerPage - postsPerPage,
+                            currentPage * postsPerPage
+                          ).map((Items)=>{
+                            i++;
+                            const {category,title,description,job_city,last_date,logo,status,no_of_positons}=Items;
+                            return <>
+                             <tr style={{ color: "black" }}>
+                          <td>{i}</td>
+                          <td>{title}</td>
+                          <td>{description}</td>
+                          <td>{category}</td>
+                          <td>{no_of_positons}</td>
+                          <td>{job_city}</td>
+                          <td>{last_date}</td>
+                          <td><img style={{width:'20px',height:'20px'}} src={`http://localhost/HRMS/Uploads/${logo}`} alt=""/>
+                         
+
+                          </td>
+                         
+                          
+                          <td>{ status==0 ? "InActive":'Active'}</td>
                           <td className="text-right">
                             <div className="dropdown dropdown-action">
                               <a
@@ -95,12 +135,30 @@ function Jobslisting() {
                             </div>
                           </td>
                         </tr>
+                            </>
+                          })}
+                       
                       </tbody>
                     </table>
                   </div>
                 </div>
               </div>
             </div>
+            <Box  m="15px">
+              
+              <Stack
+                direction={"row"}
+                alignItems="center"
+                justifyContent="flex-end"
+
+              >
+                <Pagination
+                  count={pageCount}
+                  page={currentPage}
+                  onChange={handleChangepage}
+                />
+              </Stack>
+            </Box>
             {/* /Page Content */}
             {/* Add Department Modal */}
             <Addjobs />

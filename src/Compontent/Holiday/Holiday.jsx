@@ -1,6 +1,12 @@
 import React from "react";
 import Addholiday from "./Addholiday";
+import {useSelector} from 'react-redux';
 function Holiday() {
+
+  const holidaydetails=useSelector(state=>state.Fetchholidayreducer);
+  console.log("holidaydetails",holidaydetails);
+  var i=0;
+
   return (
     <>
       <div className="main-wrapper">
@@ -42,16 +48,17 @@ function Holiday() {
                         <th>#</th>
                         <th>Title </th>
                         <th>Holiday Date</th>
-                        <th>Day</th>
                         <th className="text-right">Action</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr className="holiday-upcoming">
-                        <td>cnt</td>
-                        <td>Holiday_Name</td>
-                        <td>Holiday_Date</td>
-                        <td>Holiday_Date</td>
+                      {holidaydetails.length>0 && holidaydetails.map((items,index)=>{
+                        i++;
+                        return <>
+                         <tr className="holiday-upcoming" key={index}>
+                        <td>{i}</td>
+                        <td>{items.Holiday_Name}</td>
+                        <td>{items.Holiday_Date}</td>
                         <td className="text-right">
                           <div className="dropdown dropdown-action">
                             <a
@@ -83,6 +90,9 @@ function Holiday() {
                           </div>
                         </td>
                       </tr>
+                        </>
+                      })}
+                     
                     </tbody>
                   </table>
                 </div>

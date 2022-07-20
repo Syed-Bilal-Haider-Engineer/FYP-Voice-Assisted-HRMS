@@ -1,8 +1,13 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import Adddesignation from "./Adddesignation";
+
 function Designations() {
+  const designation=useSelector(state=>state.Designationreducer);
+   var i=0;
+
   return (
-    <>
+  
       <>
         {/* Main Wrapper */}
         <div className="main-wrapper">
@@ -48,41 +53,49 @@ function Designations() {
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td>sr</td>
-                          <td>Designation</td>
-                          <td>Department</td>
-                          <td className="text-right">
-                            <div className="dropdown dropdown-action">
-                              <a
-                                href="#"
-                                className="action-icon dropdown-toggle"
-                                data-toggle="dropdown"
-                                aria-expanded="false"
-                              >
-                                <i className="material-icons">more_vert</i>
-                              </a>
-                              <div className="dropdown-menu dropdown-menu-right">
+                        {
+                          designation.length>0 && designation.map((items,index)=>{
+                            i++;
+                            return (
+                              <>
+                            <tr key={index}>
+                            <td>{i}</td>
+                            <td>{items.Designation}</td>
+                            <td>{items.Department}</td>
+                            <td className="text-right">
+                              <div className="dropdown dropdown-action">
                                 <a
-                                  className="dropdown-item"
                                   href="#"
-                                  data-toggle="modal"
-                                  data-target="#edit_designation"
+                                  className="action-icon dropdown-toggle"
+                                  data-toggle="dropdown"
+                                  aria-expanded="false"
                                 >
-                                  <i className="fa fa-pencil m-r-5" /> Edit
+                                  <i className="material-icons">more_vert</i>
                                 </a>
-                                <a
-                                  className="dropdown-item"
-                                  href="#"
-                                  data-toggle="modal"
-                                  data-target="#delete_designation"
-                                >
-                                  <i className="fa fa-trash-o m-r-5" /> Delete
-                                </a>
+                                <div className="dropdown-menu dropdown-menu-right">
+                                  <a
+                                    className="dropdown-item"
+                                    href="#"
+                                    data-toggle="modal"
+                                    data-target="#edit_designation"
+                                  >
+                                    <i className="fa fa-pencil m-r-5" /> Edit
+                                  </a>
+                                  <a
+                                    className="dropdown-item"
+                                    href="#"
+                                    data-toggle="modal"
+                                    data-target="#delete_designation"
+                                  >
+                                    <i className="fa fa-trash-o m-r-5" /> Delete
+                                  </a>
+                                </div>
                               </div>
-                            </div>
-                          </td>
-                        </tr>
+                            </td>
+                          </tr>
+                              </>
+                            )
+                           })}
                       </tbody>
                     </table>
                   </div>
@@ -104,7 +117,7 @@ function Designations() {
         </div>
         {/* /Main Wrapper */}
       </>
-    </>
+   
   );
 }
 

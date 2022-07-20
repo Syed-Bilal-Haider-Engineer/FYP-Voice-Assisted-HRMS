@@ -1,7 +1,9 @@
 import React from "react";
 import Flip from "react-reveal/Flip";
 import Fade from "react-reveal/Fade";
-
+import {useSelector} from 'react-redux';
+import {Link} from 'react-router-dom';
+import theme from '../../Theme/Theme';
 import {
   Container,
   Box,
@@ -10,41 +12,9 @@ import {
   Divider,
   Grid,
 } from "@mui/material";
-const categorydata = [
-  {
-    title: "Design & Creative",
-    count: "120",
-  },
-  {
-    title: " Development",
-    count: "100",
-  },
-  {
-    title: "Sales & Marketing",
-    count: "150",
-  },
-  {
-    title: "Mobile Application",
-    count: "160",
-  },
-  {
-    title: "Construction",
-    count: "160",
-  },
-  {
-    title: "Data science",
-    count: "200",
-  },
-  {
-    title: "Real Estate",
-    count: "250",
-  },
-  {
-    title: "Content Writer",
-    count: "300",
-  },
-];
 function Category() {
+  const jobinfo = useSelector(state => state.Jobreducer);
+  console.log("jobinfo", jobinfo);
   return (
     <>
       <Box sx={{ py: 16, backgroundColor: "white" }}>
@@ -66,8 +36,8 @@ function Category() {
             </Typography>
             <Fade top>
               <Typography
+              color={theme.palette.text.primary}
                 sx={{
-                  color: "#28395a",
                   fontSize: { xs: "30px", md: "50px" },
                   fontWeight: 700,
                   py: 1,
@@ -79,20 +49,24 @@ function Category() {
           </Box>
           <br />
           <Grid container spacing={3}>
-            {categorydata.map((items) => {
+            {jobinfo.length >0 && jobinfo.map((items,i) => {
+              const {category,catname,no_of_positons}=items;
               return (
                 <>
-                  <Grid item xs={12} md={3} sx={{ py: 4 }}>
+                  
+                  <Grid item xs={12} md={3} sx={{ py: 4 }} key={i}>
                     <Flip top>
+                    <Link to={`Categorydetails/${category}`}>
                       <Box
+                      color={theme.palette.text.primary}
                         sx={{
                           padding: "40px",
                           textAlign: "center",
                           boxShadow: "2px 2px lightgray",
-                          color: "#28395a",
+                         
                           cursor: "pointer",
                           "&:hover": {
-                            color: "#fb246a",
+                           color:`${theme.palette.text.hint}`
                           },
                         }}
                       >
@@ -100,22 +74,26 @@ function Category() {
                           variant="subtitle1"
                           sx={{ p: 2, width: "100%", fontWeight: "bold" }}
                         >
-                          {items.title}
+                          {catname}
                         </Typography>
                         <Typography
                           variant="subtitle2"
-                          sx={{ color: "#fb246a" }}
+                          sx={{ color:`${theme.palette.text.hint}` }}
                         >
-                          ({items.count})
+                          ({no_of_positons})
                         </Typography>
                       </Box>
+                      </Link>
                     </Flip>
                   </Grid>
+                 
                 </>
               );
             })}
+            <br/>
             <Button
               sx={{
+                display:"flex",
                 border: " 1px solid #8b92dd",
                 color: "#8b92dd",
                 padding: "19px 69px",

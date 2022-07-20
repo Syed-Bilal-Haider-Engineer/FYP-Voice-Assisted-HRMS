@@ -1,7 +1,10 @@
-import React from "react";
-import { Formik, Field, Form } from "formik";
+import React,{useRef} from "react";
+import { Formik, Field, Form} from "formik";
 import Errorsg from "../Msgerror/Errormsg";
 import { employeeshema } from "../Yup/Yup";
+import {useSelector} from "react-redux";
+import { toast } from "react-toastify";
+import axios from "axios";
 const selectinput = {
   width: "100%",
   height: "45px",
@@ -9,26 +12,51 @@ const selectinput = {
   borderRadius: "6px",
 };
 const Initivalue = {
-  firstname: "",
-  lastname: "",
   username: "",
   email: "",
   password: "",
   confirm_pass: "",
-  employee_id: "",
-  phone: "",
   department: "",
   designation: "",
-  picture: "",
 };
+
+const urlpost="http://localhost/HRMS/Employee/AddEmployee.php";
 function Addemployee() {
+  const department = useSelector((state) => state.Departmentreducer);
+  const designation=useSelector(state=>state.Designationreducer);
+  const Applicationdetails=useSelector(state=>state.fetchuserAppliations);
+  console.log("Applicationdetails:",Applicationdetails);
+  const inputRef = useRef(null);
+  const formData = new FormData();
+  const filehandler = async (values) => {
+    const img = inputRef.current.files[0];
+     formData.append("username",values.username);
+     formData.append("email",values.email);
+     formData.append("password",values.password);
+     formData.append("department",values.department);
+     formData.append("designation",values.designation)
+     formData.append("img",img);
+     try {
+      const response = await axios.post(urlpost,formData,{headers:{ "Content-Type": "multipart/form-data" }});
+      const msg=response.data.message;
+      if(response.data.status==true)
+      {
+        toast.success(`${msg}`);
+      }
+      else {
+        toast.error(`${msg}`);
+      }
+    } catch(error) {
+      toast.error(`${error}`);
+    }
+  };
   return (
     <Formik
       initialValues={Initivalue}
       validationSchema={employeeshema}
       onSubmit={(values, { resetForm }) => {
         console.log(values);
-        alert("submit");
+        filehandler(values);
         resetForm();
         //  window.location.replace('Login','/')
       }}
@@ -50,46 +78,35 @@ function Addemployee() {
             <div className="modal-body">
               <Form>
                 <div className="row">
-                  <div className="col-sm-6">
+                <div className="col-md-6">
                     <div className="form-group">
-                      <label className="col-form-label">
-                        First Name <span className="text-danger">*</span>
-                      </label>
-                      <Field
-                        name="firstname"
-                        required=""
-                        className="form-control"
-                        type="text"
-                      />
-                      <Errorsg name="firstname" className="error" />
-                    </div>
-                  </div>
-                  <div className="col-sm-6">
-                    <div className="form-group">
-                      <label className="col-form-label">Last Name</label>
-                      <Field
-                        name="lastname"
-                        required=""
-                        className="form-control"
-                        type="text"
-                      />
-                      <Errorsg name="lastname" className="error" />
-                    </div>
-                  </div>
-                  <div className="col-sm-6">
-                    <div className="form-group">
-                      <label className="col-form-label">
+                      <label>
                         Username <span className="text-danger">*</span>
                       </label>
                       <Field
-                        name="username"
+                        as="select"
                         required=""
-                        className="form-control"
-                        type="text"
-                      />
+                        name="username"
+                        className="select"
+                        style={selectinput}
+                      >
+                         <option value="" disabled>
+                        selected  user
+                      </option>
+                      {Applicationdetails.length > 0 &&
+                        Applicationdetails.map((items, index) => (
+                          items.Interview=='select'?(
+                            
+                            <option value={items.id}>{items.username}</option>
+                          
+                          ):null
+                        
+                        ))}
+                      </Field>
                       <Errorsg name="username" className="error" />
                     </div>
                   </div>
+                 
                   <div className="col-sm-6">
                     <div className="form-group">
                       <label className="col-form-label">
@@ -128,33 +145,7 @@ function Addemployee() {
                       <Errorsg name="confirm_pass" className="error" />
                     </div>
                   </div>
-                  <div className="col-sm-6">
-                    <div className="form-group">
-                      <label className="col-form-label">
-                        Employee ID <span className="text-danger">*</span>
-                      </label>
-                      <Field
-                        name="employee_id"
-                        readOnly=""
-                        type="text"
-                        defaultValue=""
-                        className="form-control"
-                      />
-                      <Errorsg name="employee_id" className="error" />
-                    </div>
-                  </div>
-                  <div className="col-sm-6">
-                    <div className="form-group">
-                      <label className="col-form-label">Phone </label>
-                      <Field
-                        name="phone"
-                        required=""
-                        className="form-control"
-                        type="text"
-                      />
-                      <Errorsg name="phone" className="error" />
-                    </div>
-                  </div>
+                 
                   <div className="col-md-6">
                     <div className="form-group">
                       <label>
@@ -167,9 +158,18 @@ function Addemployee() {
                         className="select"
                         style={selectinput}
                       >
-                        <option>Select Department</option>
-                        <option>Developement</option>
-                        <option>Networking</option>
+                         <option value="" disabled>
+                        Select department
+                      </option>
+                      {department.length > 0 &&
+                        department.map((items, index) => {
+                          const { id, Department } = items;
+                          return (
+                            <>
+                              <option value={id}>{Department}</option>
+                            </>
+                          );
+                        })}
                       </Field>
                       <Errorsg name="department" className="error" />
                     </div>
@@ -177,7 +177,7 @@ function Addemployee() {
                   <div className="col-md-6">
                     <div className="form-group">
                       <label>
-                        Designation <span className="text-danger">*</span>
+                        Designations <span className="text-danger">*</span>
                       </label>
                       <Field
                         as="select"
@@ -186,25 +186,38 @@ function Addemployee() {
                         className="select"
                         style={selectinput}
                       >
-                        <option>Select Designation</option>
-                        <option>Web developer</option>
-                        <option>Graph designer</option>
+                         <option value="" disabled>
+                        Select Designations
+                      </option>
+                      {designation.length > 0 &&
+                        designation.map((items, index) => {
+                          const { id, Designation } = items;
+                          return (
+                            <>
+                              <option value={id}>{Designation}</option>
+                            </>
+                          );
+                        })}
                       </Field>
                       <Errorsg name="designation" className="error" />
                     </div>
                   </div>
-                  <div className="col-md-12">
-                    <div className="form-group">
-                      <label className="col-form-label">Employee Picture</label>
-                      <Field
-                        className="form-control"
-                        required=""
-                        name="picture"
-                        type="file"
-                      />
-                      <Errorsg name="picture" className="error" />
+                  
+                  <div className="col-sm-6">
+                      <div className="form-group">
+                        <label>
+                          File <span className="text-danger">*</span>
+                        </label>
+                        <input
+                          type="file"
+                          className="form-control"
+                          required=""
+                          name="file"
+                          ref={inputRef}
+                        />
+                        {/* <Errorsg name="file" className="error" /> */}
+                      </div>
                     </div>
-                  </div>
                 </div>
                 <div className="submit-section">
                   <button

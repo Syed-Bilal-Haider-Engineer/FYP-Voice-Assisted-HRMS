@@ -139,29 +139,10 @@ export const employeeshema = yup.object().shape({
     .string()
     .required("Confirm password required")
     .oneOf([yup.ref("password"), null], "Passwords must match"),
-  phone: yup
-    .number()
-    .typeError("That doesn't look like a phone number")
-    .positive("A phone number can't start with a minus")
-    .integer("A phone number can't include a decimal point")
-    .min(11, "Please enter valied numder")
-    .required("A phone number is required"),
-  firstname: yup
-    .string()
-    .matches(/^[A-Za-z ]*$/, "Please enter valid first name")
-    .required("first name is required"),
-  lastname: yup
-    .string()
-    .matches(/^[A-Za-z ]*$/, "Please enter valid last  name")
-    .required("Last name is required"),
   username: yup
-    .string()
-    .matches(/^[A-Za-z ]*$/, "Please enter valid user name")
-    .required("user name is required"),
-  employee_id: yup.string().required("Empoyee Id is required"),
+    .string().required("Selected user is required"),
   department: yup.string().required("Department is required"),
   designation: yup.string().required("Designations is required"),
-  picture: yup.mixed().nullable().required("A file is required"),
 });
 // ....................Leave schema...............
 export const Leaveschema = yup.object().shape({
@@ -207,3 +188,17 @@ export const userschema = yup.object().shape({
   .min(11, "Please enter valied numder")
   .required("A phone number is required"),
 });
+
+
+// ...........Applications schema............
+export const Applicationschema = yup.object().shape({
+  instituename: yup.string().matches(/^[A-Za-z ]*$/, "Please enter valid University name").required("univeristy name is required"),
+  degree: yup.string().matches(/^[A-Za-z ]*$/, "Please enter valid degree name").required("degree name is required"),
+  cgpa:yup.string().max(4,"Maximum 4").required("CGPA is required"),
+  subject:yup.string().required("Subject is required"),
+  designation:yup.string().required("Designation is required"),
+  degreeyear:yup.string().required("Degree is required")
+});
+
+
+

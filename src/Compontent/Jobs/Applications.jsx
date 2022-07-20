@@ -1,7 +1,27 @@
-import React from "react";
-import Exprience from "./../Recuriement/Exprience";
-
+import React,{useState} from "react";
+import {useSelector} from 'react-redux';
+import {
+  Container,
+  Box,
+  Typography,
+  Button,
+  Divider,
+  Stack,
+  Grid,
+  Pagination
+} from "@mui/material";
 function Applications() {
+  const Applicationdetails=useSelector(state=>state.fetchuserAppliations);
+  // const designation=useSelector(state=>state.Designationreducer);
+  console.log("fetchuserAppliations",Applicationdetails);
+  var i=0;
+  // .............Paginations...........
+  const [postsPerPage, setPostsPerPage] = useState(5);
+  const [currentPage, setCurrentPage] = useState(1);
+  const handleChangepage = (event, value) => {
+    setCurrentPage(value);
+  };
+  const pageCount = Math.ceil(Applicationdetails.length / postsPerPage);
   return (
     <>
       <>
@@ -34,25 +54,85 @@ function Applications() {
                         <tr>
                           <th style={{ width: 30 }}>#</th>
                           <th>Job title</th>
+                          <th>Univeristy</th>
                           <th>Description</th>
                           <th>Degree</th>
                           <th>CGPA</th>
                           <th>Locations</th>
                           <th>Exprience</th>
                           <th>Company</th>
+                          <th>email</th>
+                          <th>Phone</th>
+                          <th>Selections</th>
                           <th className="text-right">Action</th>
                         </tr>
                       </thead>
-                      <tbody>
-                        <tr style={{ color: "black" }}>
-                          <td>sr</td>
-                          <td>Job title</td>
-                          <td>Description</td>
-                          <td>Degree</td>
-                          <td>CGPA</td>
-                          <td>Locations</td>
-                          <td>Exprience</td>
-                          <td>Company</td>
+                      <tbody>    
+                          {Applicationdetails.length > 0 && Applicationdetails.slice(
+                            currentPage * postsPerPage - postsPerPage,
+                            currentPage * postsPerPage
+                          ).map((items,index)=>{
+                            i++;
+                          return <>
+                           <tr style={{ color: "black" }}>
+                          <td>{i}</td>
+                          <td>{items.description}</td>
+                          <td>{items.instituename}</td>
+                          <td>{items.description}</td>
+                          <td>{items.degree}</td>
+                          <td>{items.cgpa}</td>
+                          <td>{items.address}</td>
+                          <td>{items.totalexp}</td>
+                          <td>{items.cname}</td>
+                          <td>{items.email}</td>
+                          <td>{items.phone}</td>
+                          
+                          <td className="text-right">
+                            <div className="dropdown dropdown-action">
+                              <a
+                                href="#"
+                                className="action-icon dropdown-toggle"
+                                data-toggle="dropdown"
+                                aria-expanded="false"
+                              >
+                                <i className="material-icons">more_vert</i>
+                              </a>
+                              <div className="dropdown-menu dropdown-menu-right">
+                                <a
+                                  className="dropdown-item"
+                                  href="#"
+                                  data-toggle="modal"
+                                  data-target="#edit_department"
+                                >
+                                  <i className="fa fa-pencil m-r-5" /> {items.Interview}
+                                </a>
+                                <a
+                                  className="dropdown-item"
+                                  href="#"
+                                  data-toggle="modal"
+                                  data-target="#delete_department"
+                                >
+                                  <i className="fa fa-trash-o m-r-5" /> Reject
+                                </a>
+                                <a
+                                  className="dropdown-item"
+                                  href="#"
+                                  data-toggle="modal"
+                                  data-target="#delete_department"
+                                >
+                                  <i className="fa fa-trash-o m-r-5" /> Interview
+                                </a>
+                                <a
+                                  className="dropdown-item"
+                                  href="#"
+                                  data-toggle="modal"
+                                  data-target="#delete_department"
+                                >
+                                  <i className="fa fa-trash-o m-r-5" /> Select
+                                </a>
+                              </div>
+                            </div>
+                          </td>
                           <td className="text-right">
                             <div className="dropdown dropdown-action">
                               <a
@@ -84,12 +164,31 @@ function Applications() {
                             </div>
                           </td>
                         </tr>
+                          </>
+                          })
+                        }
+                       
                       </tbody>
                     </table>
                   </div>
                 </div>
               </div>
             </div>
+            <Box  m="15px">
+              
+              <Stack
+                direction={"row"}
+                alignItems="center"
+                justifyContent="flex-end"
+
+              >
+                <Pagination
+                  count={pageCount}
+                  page={currentPage}
+                  onChange={handleChangepage}
+                />
+              </Stack>
+            </Box>
             {/* /Page Content */}
             {/* Add Department Modal */}
             {/* <?php include_once("includes/modals/department/add_department.php");?> */}

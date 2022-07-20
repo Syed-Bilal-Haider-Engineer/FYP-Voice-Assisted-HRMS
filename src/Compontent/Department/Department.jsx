@@ -1,6 +1,29 @@
-import React from "react";
+import React,{useState} from "react";
 import Adddepart from "./Adddepart";
+import useGet from '../API/API';
+import {useSelector} from 'react-redux';
+import {
+  Container,
+  Box,
+  Typography,
+  Button,
+  Divider,
+  Stack,
+  Grid,
+  Pagination
+} from "@mui/material";
 function Department() {
+
+  const department = useSelector(state => state.Departmentreducer);
+  console.log("department", department);
+  var i=0;
+  const [postsPerPage, setPostsPerPage] = useState(5);
+   const [currentPage, setCurrentPage] = useState(1);
+   const handleChangepage = (event, value) => {
+     setCurrentPage(value);
+   };
+ 
+   const pageCount = Math.ceil(department.length / postsPerPage);
   return (
     <>
       <>
@@ -47,9 +70,14 @@ function Department() {
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td>sr</td>
-                          <td />
+                      {department.length > 0 && department.slice(
+                            currentPage * postsPerPage - postsPerPage,
+                            currentPage * postsPerPage).map((items,i)=>{
+                          i++;
+                         return <>
+                          <tr>
+                          <td>{i}</td>
+                          <td>{items.Department} </td>
                           <td className="text-right">
                             <div className="dropdown dropdown-action">
                               <a
@@ -81,12 +109,27 @@ function Department() {
                             </div>
                           </td>
                         </tr>
+                         </>
+                        })}
+                       
                       </tbody>
                     </table>
                   </div>
                 </div>
               </div>
             </div>
+            <Box  m="15px">
+              <Stack
+                direction={"row"}
+                alignItems="center"
+                justifyContent="flex-end">
+                <Pagination
+                  count={pageCount}
+                  page={currentPage}
+                  onChange={handleChangepage}
+                />
+              </Stack>
+            </Box>
             {/* /Page Content */}
             {/* Add Department Modal */}
             <Adddepart />
