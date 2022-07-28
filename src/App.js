@@ -1,116 +1,48 @@
-import Main from "./Compontent/Recuriement/Main.jsx";
-import Contact from "./Compontent/Recuriement/Contact.jsx";
-import Footer from "./Compontent/Recuriement/Footer.jsx";
-// import Header from "./Compontent/Recuriement/Header.jsx";
-import Signup from "./Compontent/Recuriement/Signup";
-import Pagenotfound from "./Compontent/Notfound/Pagenotfound";
-import { Route, Routes } from "react-router-dom";
-import Login from "./Compontent/Recuriement/Loging";
-import Exprience from "./Compontent/Recuriement/Exprience";
-import Categorydetails from './Compontent/Recuriement/CategoryDetails';
+import React, { useState, useEffect } from "react";
+import Routenormaluser from "./Compontent/UsersRoutes/Routenormaluser";
+import Routesuser from "./Compontent/UsersRoutes/Routesuser";
 import Logout from "./Compontent/Recuriement/Logout";
-import Dashboard from "./Compontent/Dashboard/Dashboard";
-import Contactus from "./Compontent/Contact/Contact";
- import Header from "./Compontent/Includes/Header";
-import Sidebar from "./Compontent/Includes/Sidebar";
-import Employeedashboard from "./Compontent/Employee/Employee_dashboard";
-import Designations from "./Compontent/Employee/Designations";
-import Employee from "./Compontent/Employee/Employee";
-import Employee_leave from "./Compontent/Employee/Employee_leave";
-import Employee_list from "./Compontent/Employee/Employee_list";
-import Assests from "./Compontent/Assests/Assests";
-import Holiday from "./Compontent/Holiday/Holiday";
-import Department from "./Compontent/Department/Department";
-import Terminations from "./Compontent/Terminations/Terminations.jsx";
-import Roles from "./Compontent/Permissiom/Roles";
-import Projectlist from "./Compontent/Project/Projectlist";
-import Projects from "./Compontent/Project/Projects";
-import Projectsview from "./Compontent/Project/Projectsview";
-import Promotions from "./Compontent/Promotions/Promotions";
-import Notice from "./Compontent/Anouncement/Notice.jsx";
-import Salary from "./Compontent/Salary/Salary";
-import Salarysetting from "./Compontent/Salary/Salarysetting";
-import Salaryview from "./Compontent/Salary/Salaryslip";
-import Timesheet from "./Compontent/Timesheet/Timesheet";
-import Profile from "./Compontent/Users/Profile";
-import Resignations from "./Compontent/Resignations/Resignations";
-import Users from "./Compontent/Users/Users";
-import Jobslisting from "./Compontent/Jobs/Jobslist";
-import Category from "./Compontent/Jobs/Category";
-import Applications from "./Compontent/Jobs/Applications";
-import Vister from "./Compontent/Jobs/Visters";
-import Leads from "./Compontent/Leads/Leads";
-import Clientprofile from "./Compontent/Users/Clientprofile";
-import Client from "./Compontent/Clients/Client";
-import Clientlist from "./Compontent/Clients/Clientlist";
+import { Route, Routes } from "react-router-dom";
 import useGet from "./Compontent/API/API";
-import Jobdetails from './Compontent/Recuriement/Jobdetails';
-import { ThemeProvider } from "@mui/material/styles";
-import theme from './Theme/Theme';
+import axios from "axios";
+
 function App() {
-  
-  useGet("http://localhost/HRMS/Designations/Designations.php","Designation");
-  useGet("http://localhost/HRMS/Category/getcategory.php","category");
-  useGet("http://localhost/HRMS/Department/Fetchdepartment.php","department");
-  useGet("http://localhost/HRMS/Holiday/Holiday.php","Holiday");
-  useGet("http://localhost/HRMS/Application/Fetchapplicationsuser.php","Applications");
+  //.........Private and Protected route.........
+  useGet("http://localhost/HRMS/Designations/Designations.php", "Designation");
+  useGet("http://localhost/HRMS/Department/Fetchdepartment.php", "department");
+  useGet(
+    "http://localhost/HRMS/Application/Fetchapplicationsuser.php",
+    "Applications"
+  );
+  useGet("http://localhost/HRMS/Employee/Employee.php", "Employee");
+  useGet("http://localhost/HRMS/Employee/leave.php", "FetchEmployeeleave");
+  useGet("http://localhost/HRMS/Holiday/Holiday.php", "Holiday");
+  useGet("http://localhost/HRMS/Category/getcategory.php", "category");
+  useGet("http://localhost/HRMS/Client/Client.php", "Client");
+  useGet("http://localhost/HRMS/Project/Project.php", "Project");
+
+  var Role, checkstatus;
+  if (localStorage.getItem("user")) {
+    const Islogin = window.atob(localStorage.getItem("user"));
+    Role = JSON.parse(Islogin);
+    checkstatus = Role.token;
+  }
+  console.log("checkstatus App.js", checkstatus);
+
+  // ................Get locations............
+
   return (
     <>
-          <Header />
-      <div className="main-wrapper">
-        <Sidebar />
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/Employeedashboard" element={<Employeedashboard />} />
-          <Route path="/Designations" element={<Designations />} />
-          <Route path="/Employee" element={<Employee />} />
-          <Route path="/Employee_leave" element={<Employee_leave />} />
-          <Route path="/Employee_list" element={<Employee_list />} />
-          <Route path="/Assests" element={<Assests />} />
-          <Route path="/Holiday" element={<Holiday />} />
-          <Route path="/Department" element={<Department />} />
-          <Route path="/Terminations" element={<Terminations />} />
-          <Route path="/Roles" element={<Roles />} />
-          <Route path="/Projectlist" element={<Projectlist />} />
-          <Route path="/Projects" element={<Projects />} />
-          <Route path="/Projectsview" element={<Projectsview />} />
-          <Route path="/Promotions" element={<Promotions />} />
-          <Route path="/Salary" element={<Salary />} />
-          <Route path="/Salarysetting" element={<Salarysetting />} />
-          <Route path="/Salaryview" element={<Salaryview />} />
-          <Route path="/Timesheet" element={<Timesheet />} />
-          <Route path="/Profile" element={<Profile />} />
-          <Route path="/Resignations" element={<Resignations />} />
-          <Route path="/Users" element={<Users />} />
-          <Route path="/Category" element={<Category />} />
-          <Route path="/Jobslisting" element={<Jobslisting />} />
-          <Route path="/Vister" element={<Vister />} />
-          <Route path="/Applications" element={<Applications />} />
-          <Route path="/Leads" element={<Leads />} />
-          <Route path="/Clientprofile" element={<Clientprofile />} />
-          <Route path="/Client" element={<Client />} />
-          <Route path="/Clientlist" element={<Clientlist />} />
-          <Route path="/Notice" element={<Notice />} />
-          <Route path="/Contactus" element={<Contactus />} />
-        </Routes>
-      </div>    
- 
-{/* <ThemeProvider theme={theme}>
-       <Header />
-        <Routes>
-         <Route path="/" element={<Main />} />
-         <Route path="/signup" element={<Signup />} />
-         <Route path="/contact" element={<Contact />} />
-         <Route path="/login" element={<Login />} />
-          <Route path="/Apply" element={<Exprience />} />
-          <Route path="/Logout" element={<Logout/>}/>
-          <Route path="/Jobdetails/:productsid" element={<Jobdetails/>}/>
-          <Route path="/Categorydetails/:Catdetails"  element={<Categorydetails/>}/>
-  
-          <Route path="*" element={<Pagenotfound/>}/>
+      {(checkstatus == 1 || checkstatus == 2) ? <Routesuser /> : null}
+      {/* .............Normal Users Routes.......... */}
+      {checkstatus == 0 || checkstatus == undefined ? (
+        <Routenormaluser />
+      ) : null}
+      <Routes>
+        <Route path="/Logout" element={<Logout />} />
+        {/* <Route path="/signup" element={<Signup />} exact /> */}
       </Routes>
-       <Footer />        
-       </ThemeProvider>   */}
+
     </>
   );
 }

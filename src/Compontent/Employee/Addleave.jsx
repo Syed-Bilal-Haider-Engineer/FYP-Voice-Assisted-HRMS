@@ -2,6 +2,23 @@ import React from "react";
 import { Formik, Field, Form } from "formik";
 import Errorsg from "../Msgerror/Errormsg";
 import { Leaveschema } from "../Yup/Yup";
+import { POST } from "../API/PostAPI";
+var userdetials,checkstatus,userID;
+if(localStorage.getItem("user"))
+{
+const Islogin=window.atob(localStorage.getItem("user"));
+ userdetials=JSON.parse(Islogin);
+ checkstatus=userdetials.token;
+ userID=userdetials.id;
+};
+const Initivalue = {
+ 
+  employee: "",
+  starting_at: "",
+  ends_on: "",
+  days_count: "",
+  reason: "",
+};
 const selectinput = {
   width: "100%",
   height: "45px",
@@ -9,21 +26,18 @@ const selectinput = {
   borderRadius: "6px",
 };
 
-const Initivalue = {
-  employee: "",
-  starting_at: "",
-  ends_on: "",
-  days_count: "",
-  reason: "",
-};
 function Addleave() {
-  return (
+  const url="http://localhost/HRMS/Employee/Addleave.php";
+  const [add, setAddState] = React.useState();
+  const [id,setId]=React.useState({userID});
+
+  console.log("add",add);
+  return <>
     <Formik
       initialValues={Initivalue}
       validationSchema={Leaveschema}
       onSubmit={(values, { resetForm }) => {
-        console.log(values);
-        alert("submit");
+        setAddState({...values,...id});
         resetForm();
         //  window.location.replace('Login','/')
       }}
@@ -60,6 +74,7 @@ function Addleave() {
                   </Field>
                   <Errorsg name="employee" className="error" />
                 </div>
+              
                 <div className="form-group">
                   <label>
                     From <span className="text-danger">*</span>
@@ -117,7 +132,8 @@ function Addleave() {
         </div>
       </div>
     </Formik>
-  );
+    {add && <POST values={add} url={url} Addstate={setAddState} />}
+  </>
 }
 
 export default Addleave;

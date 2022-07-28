@@ -1,8 +1,13 @@
-import React from "react";
+import React,{useRef} from "react";
 import { Formik, Field, Form } from "formik";
 import Errorsg from "../Msgerror/Errormsg";
 import { Clientschema } from "../Yup/Yup";
+import { toast } from "react-toastify";
+import axios from "axios";
 function Addclient() {
+  const formData = new FormData();
+  const inputRef = useRef(null);
+  const urlpost="http://localhost/HRMS/Client/Addclient.php";
   const Initivalue = {
     firstname: "",
     lastname: "",
@@ -12,17 +17,41 @@ function Addclient() {
     phone: "",
     company: "",
     address: "",
-    propic: "",
+   
   };
+
+  const filehandler = async (values) => {
+    const img = inputRef.current.files[0];
+     formData.append("firstname",values.firstname);
+     formData.append("lastname",values.lastname);
+     formData.append("username",values.username);
+     formData.append("email",values.email);
+     formData.append("clientid",values.clientid);
+     formData.append("img",img);
+     formData.append("phone",values.phone);
+     formData.append('company',values.company);
+     formData.append('address',values.address);
+     try {
+      const response = await axios.post(urlpost,formData,{headers:{ "Content-Type": "multipart/form-data" }});
+      const msg=response.data;
+      if(response.status==200)
+      {
+        toast.success(`${msg}`);
+      }
+    } catch(error) {
+      toast.success(`${error}`);
+    }
+  };
+
   return (
     <Formik
       initialValues={Initivalue}
       validationSchema={Clientschema}
       onSubmit={(values, { resetForm }) => {
         console.log(values);
-        alert("submit");
+        filehandler(values);
         resetForm();
-        //  window.location.replace('Login','/')
+     
       }}
     >
       <div id="add_client" className="modal custom-modal fade" role="dialog">
@@ -107,7 +136,8 @@ function Addclient() {
                       </label>
                       <Field
                         name="clientid"
-                        defaultValue=""
+                      
+                        
                         readOnly=""
                         className="form-control floating"
                         type="text"
@@ -153,21 +183,13 @@ function Addclient() {
                   </div>
                   <div className="col-sm-12">
                     <div className="custom-file">
-                      <label htmlFor="">Client Picture</label>
-                      <Field
-                        name="propic"
-                        type="file"
-                        className="custom-file-input"
-                        id="validatedCustomFile"
-                        required=""
-                      />
-                      <Errorsg name="propic" className="error" />
-                      <label
-                        className="custom-file-label"
-                        htmlFor="validatedCustomFile"
-                      >
-                        Choose Profile Picture...
-                      </label>
+                      
+                        <input
+                          type="file"
+                          name="file"
+                          ref={inputRef}
+                        />
+                    
                       <div className="invalid-feedback">
                         Example invalid custom file feedback
                       </div>

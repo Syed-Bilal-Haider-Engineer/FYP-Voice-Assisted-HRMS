@@ -1,6 +1,11 @@
 import React from "react";
 import Addproject from "./Addproject";
+import {useSelector} from 'react-redux';
+import {Link} from 'react-router-dom';
 function Projects() {
+
+  const projectinfo=useSelector(state=>state.Projectreducer);
+  console.log("projectinfo",projectinfo);
   return (
     <>
       <>
@@ -31,18 +36,15 @@ function Projects() {
                       <i className="fa fa-plus" /> Create Project
                     </a>
                     <div className="view-icons">
-                      <a
-                        href="projects.php"
-                        className="grid-view btn btn-link active"
-                      >
-                        <i className="fa fa-th" />
-                      </a>
-                      <a
-                        href="project-list.php"
-                        className="list-view btn btn-link"
-                      >
-                        <i className="fa fa-bars" />
-                      </a>
+                    <Link to="/Projects" className="grid-view btn btn-link">
+                      <i className="fa fa-th" />
+                    </Link>
+                    <Link to="/Projectlist"
+                     
+                      className="list-view btn btn-link active"
+                    >
+                      <i className="fa fa-bars" />
+                    </Link>
                     </div>
                   </div>
                 </div>
@@ -50,6 +52,7 @@ function Projects() {
               {/* /Page Header */}
               {/* Search Filter */}
               <div className="row filter-row">
+               
                 <div className="col-sm-6 col-md-3">
                   <div className="form-group form-focus">
                     <input type="text" className="form-control floating" />
@@ -83,8 +86,13 @@ function Projects() {
               </div>
               {/* Search Filter */}
               <div className="row">
-                <div className="col-lg-4 col-sm-6 col-md-4 col-xl-3">
+              {projectinfo.length > 0 &&  projectinfo.map((element,index)=>{
+                const {project_id,File,leader,project_name,end_date,description}=element;
+                return <>
+                
+                 <div className="col-lg-4 col-sm-6 col-md-4 col-xl-3" key={index}>
                   <div className="card">
+                  <Link to={`Projectsview/${project_id}`}> 
                     <div className="card-body">
                       <div className="dropdown dropdown-action profile-action">
                         <a
@@ -96,26 +104,26 @@ function Projects() {
                           <i className="material-icons">more_vert</i>
                         </a>
                         <div className="dropdown-menu dropdown-menu-right">
-                          <a
+                          <span
                             className="dropdown-item"
-                            href="#"
+                           
                             data-toggle="modal"
                             data-target="#edit_project"
                           >
                             <i className="fa fa-pencil m-r-5" /> Edit
-                          </a>
-                          <a
+                          </span>
+                          <span
                             className="dropdown-item"
-                            href="#"
                             data-toggle="modal"
                             data-target="#delete_project"
+                           
                           >
                             <i className="fa fa-trash-o m-r-5" /> Delete
-                          </a>
+                          </span>
                         </div>
                       </div>
                       <h4 className="project-title">
-                        <a href="project-view.php">Office Management</a>
+                        <a href="project-view.php">{project_name}</a>
                       </h4>
                       <small className="block text-ellipsis m-b-15">
                         <span className="text-xs">1</span>{" "}
@@ -124,182 +132,17 @@ function Projects() {
                         <span className="text-muted">tasks completed</span>
                       </small>
                       <p className="text-muted">
-                        Lorem Ipsum is simply dummy text of the printing and
-                        typesetting industry. When an unknown printer took a
-                        galley of type and scrambled it...
+                       {description}
                       </p>
                       <div className="pro-deadline m-b-15">
-                        <div className="sub-title">Deadline:</div>
-                        <div className="text-muted">17 Apr 2019</div>
+                        <div className="sub-title">Deadline: <span className="text-muted">{end_date}</span></div>
+                      
                       </div>
                       <div className="project-members m-b-15">
-                        <div>Project Leader :</div>
-                        <ul className="team-members">
-                          <li>
-                            <a
-                              href="#"
-                              data-toggle="tooltip"
-                              title="Jeffery Lalor"
-                            >
-                              <img
-                                alt=""
-                                src="assets/img/profiles/avatar-16.jpg"
-                              />
-                            </a>
-                          </li>
-                        </ul>
+                        <div>Project Leader : <span>{leader}</span></div>
+                        
                       </div>
-                      <div className="project-members m-b-15">
-                        <div>Team :</div>
-                        <ul className="team-members">
-                          <li>
-                            <a href="#" data-toggle="tooltip" title="John Doe">
-                              <img
-                                alt=""
-                                src="assets/img/profiles/avatar-02.jpg"
-                              />
-                            </a>
-                          </li>
-                          <li>
-                            <a
-                              href="#"
-                              data-toggle="tooltip"
-                              title="Richard Miles"
-                            >
-                              <img
-                                alt=""
-                                src="assets/img/profiles/avatar-09.jpg"
-                              />
-                            </a>
-                          </li>
-                          <li>
-                            <a
-                              href="#"
-                              data-toggle="tooltip"
-                              title="John Smith"
-                            >
-                              <img
-                                alt=""
-                                src="assets/img/profiles/avatar-10.jpg"
-                              />
-                            </a>
-                          </li>
-                          <li>
-                            <a
-                              href="#"
-                              data-toggle="tooltip"
-                              title="Mike Litorus"
-                            >
-                              <img
-                                alt=""
-                                src="assets/img/profiles/avatar-05.jpg"
-                              />
-                            </a>
-                          </li>
-                          <li className="dropdown avatar-dropdown">
-                            <a
-                              href="#"
-                              className="all-users dropdown-toggle"
-                              data-toggle="dropdown"
-                              aria-expanded="false"
-                            >
-                              +15
-                            </a>
-                            <div className="dropdown-menu dropdown-menu-right">
-                              <div className="avatar-group">
-                                <a className="avatar avatar-xs" href="#">
-                                  <img
-                                    alt=""
-                                    src="assets/img/profiles/avatar-02.jpg"
-                                  />
-                                </a>
-                                <a className="avatar avatar-xs" href="#">
-                                  <img
-                                    alt=""
-                                    src="assets/img/profiles/avatar-09.jpg"
-                                  />
-                                </a>
-                                <a className="avatar avatar-xs" href="#">
-                                  <img
-                                    alt=""
-                                    src="assets/img/profiles/avatar-10.jpg"
-                                  />
-                                </a>
-                                <a className="avatar avatar-xs" href="#">
-                                  <img
-                                    alt=""
-                                    src="assets/img/profiles/avatar-05.jpg"
-                                  />
-                                </a>
-                                <a className="avatar avatar-xs" href="#">
-                                  <img
-                                    alt=""
-                                    src="assets/img/profiles/avatar-11.jpg"
-                                  />
-                                </a>
-                                <a className="avatar avatar-xs" href="#">
-                                  <img
-                                    alt=""
-                                    src="assets/img/profiles/avatar-12.jpg"
-                                  />
-                                </a>
-                                <a className="avatar avatar-xs" href="#">
-                                  <img
-                                    alt=""
-                                    src="assets/img/profiles/avatar-13.jpg"
-                                  />
-                                </a>
-                                <a className="avatar avatar-xs" href="#">
-                                  <img
-                                    alt=""
-                                    src="assets/img/profiles/avatar-01.jpg"
-                                  />
-                                </a>
-                                <a className="avatar avatar-xs" href="#">
-                                  <img
-                                    alt=""
-                                    src="assets/img/profiles/avatar-16.jpg"
-                                  />
-                                </a>
-                              </div>
-                              <div className="avatar-pagination">
-                                <ul className="pagination">
-                                  <li className="page-item">
-                                    <a
-                                      className="page-link"
-                                      href="#"
-                                      aria-label="Previous"
-                                    >
-                                      <span aria-hidden="true">«</span>
-                                      <span className="sr-only">Previous</span>
-                                    </a>
-                                  </li>
-                                  <li className="page-item">
-                                    <a className="page-link" href="#">
-                                      1
-                                    </a>
-                                  </li>
-                                  <li className="page-item">
-                                    <a className="page-link" href="#">
-                                      2
-                                    </a>
-                                  </li>
-                                  <li className="page-item">
-                                    <a
-                                      className="page-link"
-                                      href="#"
-                                      aria-label="Next"
-                                    >
-                                      <span aria-hidden="true">»</span>
-                                      <span className="sr-only">Next</span>
-                                    </a>
-                                  </li>
-                                </ul>
-                              </div>
-                            </div>
-                          </li>
-                        </ul>
-                      </div>
+                     
                       <p className="m-b-5">
                         Progress{" "}
                         <span className="text-success float-right">40%</span>
@@ -314,719 +157,21 @@ function Projects() {
                         />
                       </div>
                     </div>
+                    </Link>
                   </div>
                 </div>
-                <div className="col-lg-4 col-sm-6 col-md-4 col-xl-3">
-                  <div className="card">
-                    <div className="card-body">
-                      <div className="dropdown dropdown-action profile-action">
-                        <a
-                          href="#"
-                          className="action-icon dropdown-toggle"
-                          data-toggle="dropdown"
-                          aria-expanded="false"
-                        >
-                          <i className="material-icons">more_vert</i>
-                        </a>
-                        <div className="dropdown-menu dropdown-menu-right">
-                          <a
-                            className="dropdown-item"
-                            href="#"
-                            data-toggle="modal"
-                            data-target="#edit_project"
-                          >
-                            <i className="fa fa-pencil m-r-5" /> Edit
-                          </a>
-                          <a
-                            className="dropdown-item"
-                            href="#"
-                            data-toggle="modal"
-                            data-target="#delete_project"
-                          >
-                            <i className="fa fa-trash-o m-r-5" /> Delete
-                          </a>
-                        </div>
-                      </div>
-                      <h4 className="project-title">
-                        <a href="project-view.php">Project Management</a>
-                      </h4>
-                      <small className="block text-ellipsis m-b-15">
-                        <span className="text-xs">2</span>{" "}
-                        <span className="text-muted">open tasks, </span>
-                        <span className="text-xs">5</span>{" "}
-                        <span className="text-muted">tasks completed</span>
-                      </small>
-                      <p className="text-muted">
-                        Lorem Ipsum is simply dummy text of the printing and
-                        typesetting industry. When an unknown printer took a
-                        galley of type and scrambled it...
-                      </p>
-                      <div className="pro-deadline m-b-15">
-                        <div className="sub-title">Deadline:</div>
-                        <div className="text-muted">17 Apr 2019</div>
-                      </div>
-                      <div className="project-members m-b-15">
-                        <div>Project Leader :</div>
-                        <ul className="team-members">
-                          <li>
-                            <a
-                              href="#"
-                              data-toggle="tooltip"
-                              title="Jeffery Lalor"
-                            >
-                              <img
-                                alt=""
-                                src="assets/img/profiles/avatar-16.jpg"
-                              />
-                            </a>
-                          </li>
-                        </ul>
-                      </div>
-                      <div className="project-members m-b-15">
-                        <div>Team :</div>
-                        <ul className="team-members">
-                          <li>
-                            <a href="#" data-toggle="tooltip" title="John Doe">
-                              <img
-                                alt=""
-                                src="assets/img/profiles/avatar-02.jpg"
-                              />
-                            </a>
-                          </li>
-                          <li>
-                            <a
-                              href="#"
-                              data-toggle="tooltip"
-                              title="Richard Miles"
-                            >
-                              <img
-                                alt=""
-                                src="assets/img/profiles/avatar-09.jpg"
-                              />
-                            </a>
-                          </li>
-                          <li>
-                            <a
-                              href="#"
-                              data-toggle="tooltip"
-                              title="John Smith"
-                            >
-                              <img
-                                alt=""
-                                src="assets/img/profiles/avatar-10.jpg"
-                              />
-                            </a>
-                          </li>
-                          <li>
-                            <a
-                              href="#"
-                              data-toggle="tooltip"
-                              title="Mike Litorus"
-                            >
-                              <img
-                                alt=""
-                                src="assets/img/profiles/avatar-05.jpg"
-                              />
-                            </a>
-                          </li>
-                          <li className="dropdown avatar-dropdown">
-                            <a
-                              href="#"
-                              className="all-users dropdown-toggle"
-                              data-toggle="dropdown"
-                              aria-expanded="false"
-                            >
-                              +15
-                            </a>
-                            <div className="dropdown-menu dropdown-menu-right">
-                              <div className="avatar-group">
-                                <a className="avatar avatar-xs" href="#">
-                                  <img
-                                    alt=""
-                                    src="assets/img/profiles/avatar-02.jpg"
-                                  />
-                                </a>
-                                <a className="avatar avatar-xs" href="#">
-                                  <img
-                                    alt=""
-                                    src="assets/img/profiles/avatar-09.jpg"
-                                  />
-                                </a>
-                                <a className="avatar avatar-xs" href="#">
-                                  <img
-                                    alt=""
-                                    src="assets/img/profiles/avatar-10.jpg"
-                                  />
-                                </a>
-                                <a className="avatar avatar-xs" href="#">
-                                  <img
-                                    alt=""
-                                    src="assets/img/profiles/avatar-05.jpg"
-                                  />
-                                </a>
-                                <a className="avatar avatar-xs" href="#">
-                                  <img
-                                    alt=""
-                                    src="assets/img/profiles/avatar-11.jpg"
-                                  />
-                                </a>
-                                <a className="avatar avatar-xs" href="#">
-                                  <img
-                                    alt=""
-                                    src="assets/img/profiles/avatar-12.jpg"
-                                  />
-                                </a>
-                                <a className="avatar avatar-xs" href="#">
-                                  <img
-                                    alt=""
-                                    src="assets/img/profiles/avatar-13.jpg"
-                                  />
-                                </a>
-                                <a className="avatar avatar-xs" href="#">
-                                  <img
-                                    alt=""
-                                    src="assets/img/profiles/avatar-01.jpg"
-                                  />
-                                </a>
-                                <a className="avatar avatar-xs" href="#">
-                                  <img
-                                    alt=""
-                                    src="assets/img/profiles/avatar-16.jpg"
-                                  />
-                                </a>
-                              </div>
-                              <div className="avatar-pagination">
-                                <ul className="pagination">
-                                  <li className="page-item">
-                                    <a
-                                      className="page-link"
-                                      href="#"
-                                      aria-label="Previous"
-                                    >
-                                      <span aria-hidden="true">«</span>
-                                      <span className="sr-only">Previous</span>
-                                    </a>
-                                  </li>
-                                  <li className="page-item">
-                                    <a className="page-link" href="#">
-                                      1
-                                    </a>
-                                  </li>
-                                  <li className="page-item">
-                                    <a className="page-link" href="#">
-                                      2
-                                    </a>
-                                  </li>
-                                  <li className="page-item">
-                                    <a
-                                      className="page-link"
-                                      href="#"
-                                      aria-label="Next"
-                                    >
-                                      <span aria-hidden="true">»</span>
-                                      <span className="sr-only">Next</span>
-                                    </a>
-                                  </li>
-                                </ul>
-                              </div>
-                            </div>
-                          </li>
-                        </ul>
-                      </div>
-                      <p className="m-b-5">
-                        Progress{" "}
-                        <span className="text-success float-right">40%</span>
-                      </p>
-                      <div className="progress progress-xs mb-0">
-                        <div
-                          className="progress-bar bg-success"
-                          role="progressbar"
-                          data-toggle="tooltip"
-                          title="40%"
-                          style={{ width: "40%" }}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-lg-4 col-sm-6 col-md-4 col-xl-3">
-                  <div className="card">
-                    <div className="card-body">
-                      <div className="dropdown dropdown-action profile-action">
-                        <a
-                          href="#"
-                          className="action-icon dropdown-toggle"
-                          data-toggle="dropdown"
-                          aria-expanded="false"
-                        >
-                          <i className="material-icons">more_vert</i>
-                        </a>
-                        <div className="dropdown-menu dropdown-menu-right">
-                          <a
-                            className="dropdown-item"
-                            href="#"
-                            data-toggle="modal"
-                            data-target="#edit_project"
-                          >
-                            <i className="fa fa-pencil m-r-5" /> Edit
-                          </a>
-                          <a
-                            className="dropdown-item"
-                            href="#"
-                            data-toggle="modal"
-                            data-target="#delete_project"
-                          >
-                            <i className="fa fa-trash-o m-r-5" /> Delete
-                          </a>
-                        </div>
-                      </div>
-                      <h4 className="project-title">
-                        <a href="project-view.php">Video Calling App</a>
-                      </h4>
-                      <small className="block text-ellipsis m-b-15">
-                        <span className="text-xs">3</span>{" "}
-                        <span className="text-muted">open tasks, </span>
-                        <span className="text-xs">3</span>{" "}
-                        <span className="text-muted">tasks completed</span>
-                      </small>
-                      <p className="text-muted">
-                        Lorem Ipsum is simply dummy text of the printing and
-                        typesetting industry. When an unknown printer took a
-                        galley of type and scrambled it...
-                      </p>
-                      <div className="pro-deadline m-b-15">
-                        <div className="sub-title">Deadline:</div>
-                        <div className="text-muted">17 Apr 2019</div>
-                      </div>
-                      <div className="project-members m-b-15">
-                        <div>Project Leader :</div>
-                        <ul className="team-members">
-                          <li>
-                            <a
-                              href="#"
-                              data-toggle="tooltip"
-                              title="Jeffery Lalor"
-                            >
-                              <img
-                                alt=""
-                                src="assets/img/profiles/avatar-16.jpg"
-                              />
-                            </a>
-                          </li>
-                        </ul>
-                      </div>
-                      <div className="project-members m-b-15">
-                        <div>Team :</div>
-                        <ul className="team-members">
-                          <li>
-                            <a href="#" data-toggle="tooltip" title="John Doe">
-                              <img
-                                alt=""
-                                src="assets/img/profiles/avatar-02.jpg"
-                              />
-                            </a>
-                          </li>
-                          <li>
-                            <a
-                              href="#"
-                              data-toggle="tooltip"
-                              title="Richard Miles"
-                            >
-                              <img
-                                alt=""
-                                src="assets/img/profiles/avatar-09.jpg"
-                              />
-                            </a>
-                          </li>
-                          <li>
-                            <a
-                              href="#"
-                              data-toggle="tooltip"
-                              title="John Smith"
-                            >
-                              <img
-                                alt=""
-                                src="assets/img/profiles/avatar-10.jpg"
-                              />
-                            </a>
-                          </li>
-                          <li>
-                            <a
-                              href="#"
-                              data-toggle="tooltip"
-                              title="Mike Litorus"
-                            >
-                              <img
-                                alt=""
-                                src="assets/img/profiles/avatar-05.jpg"
-                              />
-                            </a>
-                          </li>
-                          <li className="dropdown avatar-dropdown">
-                            <a
-                              href="#"
-                              className="all-users dropdown-toggle"
-                              data-toggle="dropdown"
-                              aria-expanded="false"
-                            >
-                              +15
-                            </a>
-                            <div className="dropdown-menu dropdown-menu-right">
-                              <div className="avatar-group">
-                                <a className="avatar avatar-xs" href="#">
-                                  <img
-                                    alt=""
-                                    src="assets/img/profiles/avatar-02.jpg"
-                                  />
-                                </a>
-                                <a className="avatar avatar-xs" href="#">
-                                  <img
-                                    alt=""
-                                    src="assets/img/profiles/avatar-09.jpg"
-                                  />
-                                </a>
-                                <a className="avatar avatar-xs" href="#">
-                                  <img
-                                    alt=""
-                                    src="assets/img/profiles/avatar-10.jpg"
-                                  />
-                                </a>
-                                <a className="avatar avatar-xs" href="#">
-                                  <img
-                                    alt=""
-                                    src="assets/img/profiles/avatar-05.jpg"
-                                  />
-                                </a>
-                                <a className="avatar avatar-xs" href="#">
-                                  <img
-                                    alt=""
-                                    src="assets/img/profiles/avatar-11.jpg"
-                                  />
-                                </a>
-                                <a className="avatar avatar-xs" href="#">
-                                  <img
-                                    alt=""
-                                    src="assets/img/profiles/avatar-12.jpg"
-                                  />
-                                </a>
-                                <a className="avatar avatar-xs" href="#">
-                                  <img
-                                    alt=""
-                                    src="assets/img/profiles/avatar-13.jpg"
-                                  />
-                                </a>
-                                <a className="avatar avatar-xs" href="#">
-                                  <img
-                                    alt=""
-                                    src="assets/img/profiles/avatar-01.jpg"
-                                  />
-                                </a>
-                                <a className="avatar avatar-xs" href="#">
-                                  <img
-                                    alt=""
-                                    src="assets/img/profiles/avatar-16.jpg"
-                                  />
-                                </a>
-                              </div>
-                              <div className="avatar-pagination">
-                                <ul className="pagination">
-                                  <li className="page-item">
-                                    <a
-                                      className="page-link"
-                                      href="#"
-                                      aria-label="Previous"
-                                    >
-                                      <span aria-hidden="true">«</span>
-                                      <span className="sr-only">Previous</span>
-                                    </a>
-                                  </li>
-                                  <li className="page-item">
-                                    <a className="page-link" href="#">
-                                      1
-                                    </a>
-                                  </li>
-                                  <li className="page-item">
-                                    <a className="page-link" href="#">
-                                      2
-                                    </a>
-                                  </li>
-                                  <li className="page-item">
-                                    <a
-                                      className="page-link"
-                                      href="#"
-                                      aria-label="Next"
-                                    >
-                                      <span aria-hidden="true">»</span>
-                                      <span className="sr-only">Next</span>
-                                    </a>
-                                  </li>
-                                </ul>
-                              </div>
-                            </div>
-                          </li>
-                        </ul>
-                      </div>
-                      <p className="m-b-5">
-                        Progress{" "}
-                        <span className="text-success float-right">40%</span>
-                      </p>
-                      <div className="progress progress-xs mb-0">
-                        <div
-                          className="progress-bar bg-success"
-                          role="progressbar"
-                          data-toggle="tooltip"
-                          title="40%"
-                          style={{ width: "40%" }}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-lg-4 col-sm-6 col-md-4 col-xl-3">
-                  <div className="card">
-                    <div className="card-body">
-                      <div className="dropdown dropdown-action profile-action">
-                        <a
-                          href="#"
-                          className="action-icon dropdown-toggle"
-                          data-toggle="dropdown"
-                          aria-expanded="false"
-                        >
-                          <i className="material-icons">more_vert</i>
-                        </a>
-                        <div className="dropdown-menu dropdown-menu-right">
-                          <a
-                            className="dropdown-item"
-                            href="#"
-                            data-toggle="modal"
-                            data-target="#edit_project"
-                          >
-                            <i className="fa fa-pencil m-r-5" /> Edit
-                          </a>
-                          <a
-                            className="dropdown-item"
-                            href="#"
-                            data-toggle="modal"
-                            data-target="#delete_project"
-                          >
-                            <i className="fa fa-trash-o m-r-5" /> Delete
-                          </a>
-                        </div>
-                      </div>
-                      <h4 className="project-title">
-                        <a href="project-view.php">Hospital Administration</a>
-                      </h4>
-                      <small className="block text-ellipsis m-b-15">
-                        <span className="text-xs">12</span>{" "}
-                        <span className="text-muted">open tasks, </span>
-                        <span className="text-xs">4</span>{" "}
-                        <span className="text-muted">tasks completed</span>
-                      </small>
-                      <p className="text-muted">
-                        Lorem Ipsum is simply dummy text of the printing and
-                        typesetting industry. When an unknown printer took a
-                        galley of type and scrambled it...
-                      </p>
-                      <div className="pro-deadline m-b-15">
-                        <div className="sub-title">Deadline:</div>
-                        <div className="text-muted">17 Apr 2019</div>
-                      </div>
-                      <div className="project-members m-b-15">
-                        <div>Project Leader :</div>
-                        <ul className="team-members">
-                          <li>
-                            <a
-                              href="#"
-                              data-toggle="tooltip"
-                              title="Jeffery Lalor"
-                            >
-                              <img
-                                alt=""
-                                src="assets/img/profiles/avatar-16.jpg"
-                              />
-                            </a>
-                          </li>
-                        </ul>
-                      </div>
-                      <div className="project-members m-b-15">
-                        <div>Team :</div>
-                        <ul className="team-members">
-                          <li>
-                            <a href="#" data-toggle="tooltip" title="John Doe">
-                              <img
-                                alt=""
-                                src="assets/img/profiles/avatar-02.jpg"
-                              />
-                            </a>
-                          </li>
-                          <li>
-                            <a
-                              href="#"
-                              data-toggle="tooltip"
-                              title="Richard Miles"
-                            >
-                              <img
-                                alt=""
-                                src="assets/img/profiles/avatar-09.jpg"
-                              />
-                            </a>
-                          </li>
-                          <li>
-                            <a
-                              href="#"
-                              data-toggle="tooltip"
-                              title="John Smith"
-                            >
-                              <img
-                                alt=""
-                                src="assets/img/profiles/avatar-10.jpg"
-                              />
-                            </a>
-                          </li>
-                          <li>
-                            <a
-                              href="#"
-                              data-toggle="tooltip"
-                              title="Mike Litorus"
-                            >
-                              <img
-                                alt=""
-                                src="assets/img/profiles/avatar-05.jpg"
-                              />
-                            </a>
-                          </li>
-                          <li className="dropdown avatar-dropdown">
-                            <a
-                              href="#"
-                              className="all-users dropdown-toggle"
-                              data-toggle="dropdown"
-                              aria-expanded="false"
-                            >
-                              +15
-                            </a>
-                            <div className="dropdown-menu dropdown-menu-right">
-                              <div className="avatar-group">
-                                <a className="avatar avatar-xs" href="#">
-                                  <img
-                                    alt=""
-                                    src="assets/img/profiles/avatar-02.jpg"
-                                  />
-                                </a>
-                                <a className="avatar avatar-xs" href="#">
-                                  <img
-                                    alt=""
-                                    src="assets/img/profiles/avatar-09.jpg"
-                                  />
-                                </a>
-                                <a className="avatar avatar-xs" href="#">
-                                  <img
-                                    alt=""
-                                    src="assets/img/profiles/avatar-10.jpg"
-                                  />
-                                </a>
-                                <a className="avatar avatar-xs" href="#">
-                                  <img
-                                    alt=""
-                                    src="assets/img/profiles/avatar-05.jpg"
-                                  />
-                                </a>
-                                <a className="avatar avatar-xs" href="#">
-                                  <img
-                                    alt=""
-                                    src="assets/img/profiles/avatar-11.jpg"
-                                  />
-                                </a>
-                                <a className="avatar avatar-xs" href="#">
-                                  <img
-                                    alt=""
-                                    src="assets/img/profiles/avatar-12.jpg"
-                                  />
-                                </a>
-                                <a className="avatar avatar-xs" href="#">
-                                  <img
-                                    alt=""
-                                    src="assets/img/profiles/avatar-13.jpg"
-                                  />
-                                </a>
-                                <a className="avatar avatar-xs" href="#">
-                                  <img
-                                    alt=""
-                                    src="assets/img/profiles/avatar-01.jpg"
-                                  />
-                                </a>
-                                <a className="avatar avatar-xs" href="#">
-                                  <img
-                                    alt=""
-                                    src="assets/img/profiles/avatar-16.jpg"
-                                  />
-                                </a>
-                              </div>
-                              <div className="avatar-pagination">
-                                <ul className="pagination">
-                                  <li className="page-item">
-                                    <a
-                                      className="page-link"
-                                      href="#"
-                                      aria-label="Previous"
-                                    >
-                                      <span aria-hidden="true">«</span>
-                                      <span className="sr-only">Previous</span>
-                                    </a>
-                                  </li>
-                                  <li className="page-item">
-                                    <a className="page-link" href="#">
-                                      1
-                                    </a>
-                                  </li>
-                                  <li className="page-item">
-                                    <a className="page-link" href="#">
-                                      2
-                                    </a>
-                                  </li>
-                                  <li className="page-item">
-                                    <a
-                                      className="page-link"
-                                      href="#"
-                                      aria-label="Next"
-                                    >
-                                      <span aria-hidden="true">»</span>
-                                      <span className="sr-only">Next</span>
-                                    </a>
-                                  </li>
-                                </ul>
-                              </div>
-                            </div>
-                          </li>
-                        </ul>
-                      </div>
-                      <p className="m-b-5">
-                        Progress{" "}
-                        <span className="text-success float-right">40%</span>
-                      </p>
-                      <div className="progress progress-xs mb-0">
-                        <div
-                          className="progress-bar bg-success"
-                          role="progressbar"
-                          data-toggle="tooltip"
-                          title="40%"
-                          style={{ width: "40%" }}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
+               
+                </>
+
+})}
+            
+              
               </div>
             </div>
             {/* /Page Content */}
             {/* Create Project Modal */}
             <Addproject />
-            {/* /Create Project Modal */}
-            {/* Edit Project Modal */}
-            {/* <?php include_once("includes/modals/projects/edit.php"); ?> */}
-            {/* /Edit Project Modal */}
-            {/* Delete Project Modal */}
-            {/* <?php include_once("includes/modals/projects/delete.php"); ?> */}
-            {/* /Delete Project Modal */}
+            
           </div>
           {/* /Page Wrapper */}
         </div>

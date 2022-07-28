@@ -100,7 +100,7 @@ function Category() {
                 textTransform: " uppercase",
                 cursor: " pointer",
                 display: " inline-block",
-                fontSize: "14px",
+                fontSize: {md:'14px',xs:'10px'},
                 fontWeight: 500,
                 borderRadius: " 5px",
                 transition: "color 0.4s linear",

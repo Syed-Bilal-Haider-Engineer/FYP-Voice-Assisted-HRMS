@@ -1,6 +1,10 @@
 import React from "react";
 import Addproject from "./Addproject";
+import { useParams } from "react-router-dom";
 function Projectsview() {
+
+  const params = useParams();
+  console.log(params.productsid);
   return (
     <>
       <div className="main-wrapper">

@@ -1,6 +1,8 @@
 import React from "react";
 import logo from "../../Images/logo.png";
+import {Link} from 'react-router-dom';
 function Header() {
+
   return (
     <>
       <div className="header">
@@ -11,7 +13,7 @@ function Header() {
           </a>
         </div>
         {/* /Logo */}
-        <a id="toggle_btn" href="javascript:void(0);">
+        <a id="toggle_btn" href="#">
           <span className="bar-icon">
             <span />
             <span />
@@ -28,24 +30,6 @@ function Header() {
         </a>
         {/* Header Menu */}
         <ul className="nav user-menu">
-          {/* Search */}
-          <li className="nav-item">
-            <div className="top-nav-search">
-              <a href="javascript:void(0);" className="responsive-search">
-                <i className="fa fa-search" />
-              </a>
-              <form action="search.php">
-                <input
-                  className="form-control"
-                  type="text"
-                  placeholder="Search here"
-                />
-                <button className="btn" type="submit">
-                  <i className="fa fa-search" />
-                </button>
-              </form>
-            </div>
-          </li>
           {/* /Search */}
           {/* Notifications */}
           <li className="nav-item dropdown">
@@ -211,126 +195,7 @@ function Header() {
                   Clear All{" "}
                 </a>
               </div>
-              <div className="noti-content">
-                <ul className="notification-list">
-                  <li className="notification-message">
-                    <a href="chat.php">
-                      <div className="list-item">
-                        <div className="list-left">
-                          <span className="avatar">
-                            <img
-                              alt=""
-                              src="assets/img/profiles/avatar-09.jpg"
-                            />
-                          </span>
-                        </div>
-                        <div className="list-body">
-                          <span className="message-author">Richard Miles </span>
-                          <span className="message-time">12:28 AM</span>
-                          <div className="clearfix" />
-                          <span className="message-content">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing
-                          </span>
-                        </div>
-                      </div>
-                    </a>
-                  </li>
-                  <li className="notification-message">
-                    <a href="chat.php">
-                      <div className="list-item">
-                        <div className="list-left">
-                          <span className="avatar">
-                            <img
-                              alt=""
-                              src="assets/img/profiles/avatar-02.jpg"
-                            />
-                          </span>
-                        </div>
-                        <div className="list-body">
-                          <span className="message-author">John Doe</span>
-                          <span className="message-time">6 Mar</span>
-                          <div className="clearfix" />
-                          <span className="message-content">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing
-                          </span>
-                        </div>
-                      </div>
-                    </a>
-                  </li>
-                  <li className="notification-message">
-                    <a href="chat.php">
-                      <div className="list-item">
-                        <div className="list-left">
-                          <span className="avatar">
-                            <img
-                              alt=""
-                              src="assets/img/profiles/avatar-03.jpg"
-                            />
-                          </span>
-                        </div>
-                        <div className="list-body">
-                          <span className="message-author">
-                            {" "}
-                            Tarah Shropshire{" "}
-                          </span>
-                          <span className="message-time">5 Mar</span>
-                          <div className="clearfix" />
-                          <span className="message-content">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing
-                          </span>
-                        </div>
-                      </div>
-                    </a>
-                  </li>
-                  <li className="notification-message">
-                    <a href="chat.php">
-                      <div className="list-item">
-                        <div className="list-left">
-                          <span className="avatar">
-                            <img
-                              alt=""
-                              src="assets/img/profiles/avatar-05.jpg"
-                            />
-                          </span>
-                        </div>
-                        <div className="list-body">
-                          <span className="message-author">Mike Litorus</span>
-                          <span className="message-time">3 Mar</span>
-                          <div className="clearfix" />
-                          <span className="message-content">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing
-                          </span>
-                        </div>
-                      </div>
-                    </a>
-                  </li>
-                  <li className="notification-message">
-                    <a href="chat.php">
-                      <div className="list-item">
-                        <div className="list-left">
-                          <span className="avatar">
-                            <img
-                              alt=""
-                              src="assets/img/profiles/avatar-08.jpg"
-                            />
-                          </span>
-                        </div>
-                        <div className="list-body">
-                          <span className="message-author">
-                            {" "}
-                            Catherine Manseau{" "}
-                          </span>
-                          <span className="message-time">27 Feb</span>
-                          <div className="clearfix" />
-                          <span className="message-content">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing
-                          </span>
-                        </div>
-                      </div>
-                    </a>
-                  </li>
-                </ul>
-              </div>
+             
               <div className="topnav-dropdown-footer">
                 <a href="chat.php">View all Messages</a>
               </div>
@@ -344,26 +209,25 @@ function Header() {
               data-toggle="dropdown"
             >
               <span className="user-img">
-                <img src="./profiles/ Picture" alt="User Picture" />
                 <span className="status online" />
               </span>
               <span>name</span>
             </a>
             <div className="dropdown-menu">
-              <a className="dropdown-item" href="profile.php">
+              <Link className="dropdown-item" to="/Profile">
                 My Profile
-              </a>
+              </Link>
               <a className="dropdown-item" href="settings.php">
                 Settings
               </a>
-              <a className="dropdown-item" href="logout.php">
+              <Link className="dropdown-item" to="/Logout">
                 Logout
-              </a>
+              </Link>
             </div>
           </li>
         </ul>
-        {/* /Header Menu */}
-        {/* Mobile Menu */}
+      
+        
         <div className="dropdown mobile-user-menu">
           <a
             href="#"
@@ -374,9 +238,9 @@ function Header() {
             <i className="fa fa-ellipsis-v" />
           </a>
           <div className="dropdown-menu dropdown-menu-right">
-            <a className="dropdown-item" href="profile.php">
+            <Link className="dropdown-item" to="/Profile">
               My Profile
-            </a>
+            </Link>
             <a className="dropdown-item" href="settings.php">
               Settings
             </a>

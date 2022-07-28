@@ -1,6 +1,7 @@
 import React,{useState} from "react";
 import useGet from '../API/API';
 import { useSelector } from "react-redux";
+import { POST } from "../API/PostAPI";
 import {
   Container,
   Box,
@@ -27,6 +28,17 @@ function Vister() {
    };
  
    const pageCount = Math.ceil(visterinfo.length / postsPerPage);
+
+  //  ..........Delete Visters.................
+  const [remove,setAddState]=useState();
+  const removeURL="http://localhost/HRMS/Visters/removevister.php";
+  const RemoveVisterHandler=(id)=>{
+    console.log("Id",id);
+     const values={
+      id
+     }
+     setAddState(values);
+  }
   return (
     <>
       {/* Main Wrapper */}
@@ -83,7 +95,7 @@ function Vister() {
                             <td>{Items.phone}</td>
                             
                             <td>
-                              <div className="dropdown dropdown-action">
+                              <div className="dropdown dropdown-action" style={{cursor:'pointer'}}>
                                 <a
                                   href="#"
                                   className="action-icon dropdown-toggle"
@@ -93,22 +105,24 @@ function Vister() {
                                   <i className="material-icons">more_vert</i>
                                 </a>
                                 <div className="dropdown-menu dropdown-menu-right">
-                                  <a
+                                  <span
                                     className="dropdown-item"
                                     href="#"
                                     data-toggle="modal"
                                     data-target="#edit_department"
                                   >
                                     <i className="fa fa-pencil m-r-5" /> Edit
-                                  </a>
-                                  <a
+                                  </span>
+                                  <span
                                     className="dropdown-item"
-                                    href="#"
-                                    data-toggle="modal"
-                                    data-target="#delete_department"
+                                   onClick={()=>{
+                                      RemoveVisterHandler(Items.id)
+                                    }
+                                   }
+                                   
                                   >
                                     <i className="fa fa-trash-o m-r-5" /> Delete
-                                  </a>
+                                  </span>
                                 </div>
                               </div>
                             </td>
@@ -137,20 +151,11 @@ function Vister() {
                 />
               </Stack>
             </Box>
-          {/* /Page Content */}
-          {/* Add Department Modal */}
-          {/* <?php include_once("includes/modals/department/add_department.php");?> */}
-          {/* /Add Department Modal */}
-          {/* Edit Department Modal */}
-          {/* <?php include_once("includes/modals/department/edit_department.php");?> */}
-          {/* /Edit Department Modal */}
-          {/* Delete Department Modal */}
-          {/* <?php include_once("includes/modals/department/delete_department.php");?> */}
-          {/* /Delete Department Modal */}
+         
         </div>
         {/* /Page Wrapper */}
       </div>
-      {/* /Main Wrapper */}
+      {remove && <POST values={remove} url={removeURL} Addstate={setAddState} />}
     </>
   );
 }

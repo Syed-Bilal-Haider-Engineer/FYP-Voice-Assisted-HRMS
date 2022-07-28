@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Showusers,Getcategory,fetchvister,fetchJob,Fetchdepartment,Fetchdesignation,
-    fetchHolidays,Userapplications,FetchEmployee} from '../Redux/Actions/Actions';
+    fetchHolidays,Userapplications,FetchEmployee,FetchEmployeeleave,project,
+    Clientinfo} from '../Redux/Actions/Actions';
 
 import axios from "axios";
 const useGet = (url,type) => {
@@ -43,6 +44,17 @@ const useGet = (url,type) => {
                  }
                  else if(type=="Employee"){
                     usedispatch(FetchEmployee(value));
+                 } else if(type=="FetchEmployeeleave")
+                 {
+                    usedispatch(FetchEmployeeleave(value));
+                 }
+                 else if(type=='Client')
+                 {
+                    usedispatch(Clientinfo(value))
+                 }
+                 else if(type=='Project')
+                 {
+                    usedispatch(project(value));
                  }
             })
             .catch((error) => {

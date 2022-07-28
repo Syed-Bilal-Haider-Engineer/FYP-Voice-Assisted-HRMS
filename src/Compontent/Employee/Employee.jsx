@@ -1,9 +1,21 @@
 import React from "react";
 import Addemployee from "./Addemployee";
 import {useSelector} from 'react-redux';
+import {Link} from 'react-router-dom';
 function Employee() {
    const Employeestate=useSelector(state=>state.Fetchemployeereducer);
    console.log("Employeestate",Employeestate);
+
+   var Role,checkstatus;
+   if(localStorage.getItem("user"))
+   {
+   const Islogin=window.atob(localStorage.getItem("user"));
+    Role=JSON.parse(Islogin);
+    checkstatus=Role.token;
+   };
+ 
+   console.log("checkstatus App.js",checkstatus)
+   
   return (
     <>
       {/* Main Wrapper */}
@@ -25,29 +37,31 @@ function Employee() {
                   </ul>
                 </div>
                 <div className="col-auto float-right ml-auto">
-                  <a
-                    href="#"
-                    className="btn add-btn"
-                    data-toggle="modal"
-                    data-target="#add_employee"
-                  >
-                    <i className="fa fa-plus" /> Add Employee
-                  </a>
+                  { checkstatus==2 ? (
+                     <a
+                     href="#"
+                     className="btn add-btn"
+                     data-toggle="modal"
+                     data-target="#add_employee"
+                   >
+                     <i className="fa fa-plus" /> Add Employee
+                   </a>
+                  ) :null}
+                 
                   <div className="view-icons">
-                    <a
-                      href="employees.php"
+                    <Link
+                     to="/Employee"
                       title="Grid View"
                       className="grid-view btn btn-link active"
                     >
                       <i className="fa fa-th" />
-                    </a>
-                    <a
-                      href="employees-list.php"
+                    </Link>
+                    <Link to="/Employee_list"
                       title="Tabular View"
                       className="list-view btn btn-link"
                     >
                       <i className="fa fa-bars" />
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -81,19 +95,23 @@ function Employee() {
               </div>
               <div className="col-sm-6 col-md-3">
                 <a href="#" className="btn btn-success btn-block">
-                  {" "}
-                  Search{" "}
+                  Search
                 </a>
               </div>
             </div>
             {/* Search Filter */}
             {/* user profiles list starts her */}
             <div className="row staff-grid-row">
-              <div className="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3">
+            {Employeestate.map((items,i)=>{
+
+              return <>
+        
+              <div className="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3" key={i}>
                 <div className="profile-widget">
                   <div className="profile-img">
-                    <a href="profile.html" className="avatar">
-                      <img src="employees/Picture)" alt="picture" />
+                    <a href="#" className="avatar">
+                      <img src={`http://localhost/HRMS/Uploads/${items.picture}`}  alt="picture" />
+                    
                     </a>
                   </div>
                   <div className="dropdown profile-action">
@@ -114,23 +132,20 @@ function Employee() {
                       >
                         <i className="fa fa-pencil m-r-5" /> Edit
                       </a>
-                      <a
-                        className="dropdown-item"
-                        href="#"
-                        data-toggle="modal"
-                        data-target="#delete_employee"
-                      >
-                        <i className="fa fa-trash-o m-r-5" /> Delete
-                      </a>
+                      
                     </div>
                   </div>
                   <h4 className="user-name m-t-10 mb-0 text-ellipsis">
-                    <a href="profile.html">FirstName-LastName</a>
-                  </h4>
-                  <div className="small text-muted">Designation</div>
+                    <span>{items.fname} {items.lname}</span>
+                                      </h4>
+                  <div className="small text-muted">{items.designation}</div>
                 </div>
               </div>
+            
+              </>
+            })}
             </div>
+           
           </div>
           {/* /Page Content */}
           <Addemployee />

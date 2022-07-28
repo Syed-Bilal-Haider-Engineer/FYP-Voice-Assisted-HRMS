@@ -1,11 +1,22 @@
 import React from "react";
 import Addholiday from "./Addholiday";
-import {useSelector} from 'react-redux';
+import { useSelector } from "react-redux";
+import { POST } from "../API/PostAPI";
 function Holiday() {
+  const holidaydetails = useSelector((state) => state.Fetchholidayreducer);
+  console.log("holidaydetails", holidaydetails);
+  var i = 0;
+  // ..............Remove Holiday...............
+  const [remove, setAdd] = React.useState();
 
-  const holidaydetails=useSelector(state=>state.Fetchholidayreducer);
-  console.log("holidaydetails",holidaydetails);
-  var i=0;
+  const removeURL = "http://localhost/HRMS/Holiday/RemoveHoliday.php";
+  const Removeholiday = (id) => {
+    console.log("holiday Id",id);
+    const values = {
+      id,
+    };
+    setAdd(values);
+  };
 
   return (
     <>
@@ -52,66 +63,69 @@ function Holiday() {
                       </tr>
                     </thead>
                     <tbody>
-                      {holidaydetails.length>0 && holidaydetails.map((items,index)=>{
-                        i++;
-                        return <>
-                         <tr className="holiday-upcoming" key={index}>
-                        <td>{i}</td>
-                        <td>{items.Holiday_Name}</td>
-                        <td>{items.Holiday_Date}</td>
-                        <td className="text-right">
-                          <div className="dropdown dropdown-action">
-                            <a
-                              href="#"
-                              className="action-icon dropdown-toggle"
-                              data-toggle="dropdown"
-                              aria-expanded="false"
-                            >
-                              <i className="material-icons">more_vert</i>
-                            </a>
-                            <div className="dropdown-menu dropdown-menu-right">
-                              <a
-                                className="dropdown-item"
-                                href="#"
-                                data-toggle="modal"
-                                data-target="#edit_holiday"
-                              >
-                                <i className="fa fa-pencil m-r-5" /> Edit
-                              </a>
-                              <a
-                                className="dropdown-item"
-                                href="#"
-                                data-toggle="modal"
-                                data-target="#delete_holiday"
-                              >
-                                <i className="fa fa-trash-o m-r-5" /> Delete
-                              </a>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                        </>
-                      })}
-                     
+                      {holidaydetails.length > 0 &&
+                        holidaydetails.map((items, index) => {
+                          i++;
+                          return (
+                            <>
+                              <tr className="holiday-upcoming" key={index}>
+                                <td>{i}</td>
+                                <td>{items.Holiday_Name}</td>
+                                <td>{items.Holiday_Date}</td>
+                                <td className="text-right">
+                                  <div className="dropdown dropdown-action">
+                                    <a
+                                      href="#"
+                                      className="action-icon dropdown-toggle"
+                                      data-toggle="dropdown"
+                                      aria-expanded="false"
+                                    >
+                                      <i className="material-icons">
+                                        more_vert
+                                      </i>
+                                    </a>
+                                    <div
+                                      className="dropdown-menu dropdown-menu-right"
+                                      style={{ cursor: "pointer" }}
+                                    >
+                                      <span
+                                        className="dropdown-item"
+                                        href="#"
+                                        data-toggle="modal"
+                                        data-target="#edit_holiday"
+                                      >
+                                        <i className="fa fa-pencil m-r-5" />{" "}
+                                        Edit
+                                      </span>
+                                      <span
+                                        className="dropdown-item"
+                                        href="#"
+                                        onClick={() => {
+                                          Removeholiday(items.id);
+                                        }}
+                                      >
+                                        <i className="fa fa-trash-o m-r-5" />{" "}
+                                        Delete
+                                      </span>
+                                    </div>
+                                  </div>
+                                </td>
+                              </tr>
+                            </>
+                          );
+                        })}
                     </tbody>
                   </table>
                 </div>
               </div>
             </div>
           </div>
-          {/* /Page Content */}
-          {/* Add Holiday Modal */}
+    
           <Addholiday />
-          {/* /Add Holiday Modal */}
-          {/* Edit Holiday Modal */}
-          {/* <?php include_once("includes/modals/holidays/edit_holiday.php"); ?> */}
-          {/* /Edit Holiday Modal */}
-          {/* Delete Holiday Modal */}
-          {/* <?php include_once("includes/modals/holidays/delete_holiday.php"); ?> */}
-          {/* /Delete Holiday Modal */}
         </div>
-        {/* /Page Wrapper */}
+  
       </div>
+      {remove && <POST values={remove} url={removeURL} Addstate={setAdd} />}
     </>
   );
 }

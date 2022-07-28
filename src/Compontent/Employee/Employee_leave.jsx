@@ -1,6 +1,44 @@
 import React from "react";
 import Addleave from "./Addleave";
+import { useSelector } from "react-redux";
+import { POST } from "../API/PostAPI";
 function Employee_leave() {
+
+const [remove,setAdd]=React.useState();
+const [Leave,setleave]=React.useState();
+  var userdetials, checkstatus, id;
+  if (localStorage.getItem("user")) {
+    const Islogin = window.atob(localStorage.getItem("user"));
+    userdetials = JSON.parse(Islogin);
+    checkstatus = userdetials.token;
+    id = userdetials.id;
+  }
+
+  // ............Employee leave and Employee Information....................
+  const Employeeleave = useSelector((state) => state.Fetchemployeeleavereducer);
+  // console.log("Employeeleave",Employeeleave.EmployeeID);
+  const Employeestate = useSelector((state) => state.Fetchemployeereducer);
+  console.log("Employeestate", Employeeleave);
+
+
+  // ...............Remove Leave Handler......................
+ const removeURL="http://localhost/HRMS/Employee/Removeleave.php";
+ const LeaveURL="http://localhost/HRMS/Employee/Changestatus.php";
+  const Removeleave=(id)=>{
+  const values={
+    id
+  }
+  setAdd(values);
+  }
+
+  const ActionsLeaveHandler=(e)=>{
+    e.preventDefault();
+    const status={
+      status:e.target.value,
+      id
+    }
+    setleave(status)
+  }
   return (
     <>
       <div className="main-wrapper">
@@ -40,51 +78,72 @@ function Employee_leave() {
                     <thead>
                       <tr>
                         <th>Employee</th>
+                        <th>Leave type</th>
                         <th>From</th>
                         <th>To</th>
                         <th>No of Days</th>
                         <th>Reason</th>
+                        <th>status</th>
                         <th className="text-right">Actions</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>Employee&gt;</td>
-                        <td>Starting_At</td>
-                        <td>Ending_On</td>
-                        <td>Days</td>
-                        <td>Reason</td>
-                        <td className="text-right">
-                          <div className="dropdown dropdown-action">
-                            <a
-                              href="#"
-                              className="action-icon dropdown-toggle"
-                              data-toggle="dropdown"
-                              aria-expanded="false"
-                            >
-                              <i className="material-icons">more_vert</i>
-                            </a>
-                            <div className="dropdown-menu dropdown-menu-right">
-                              <a
-                                className="dropdown-item"
-                                href="#"
-                                data-toggle="modal"
-                                data-target="#edit_leave"
-                              >
-                                <i className="fa fa-pencil m-r-5" /> Edit
-                              </a>
-                              <a
-                                className="dropdown-item"
-                                href="#"
-                                data-toggle="modal"
-                                data-target="#delete_approve"
-                              >
-                                <i className="fa fa-trash-o m-r-5" /> Delete
-                              </a>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
+                      {Employeeleave.length > 0 &&
+                        Employeeleave.map((items, index) => {
+                          return (
+                            <tr key={index}>
+                              {Employeestate.map((element, i) => {
+                                if (element.EmployeeID == items.EmployeeID) {
+                                  return <td key={i}>{element.username}</td>;
+                                }
+                              })}
+                              <td>{items.Employee_type}</td>
+                              <td>{items.Starting_At}</td>
+                              <td>{items.Ending_On}</td>
+                              <td>{items.Days}</td>
+                              <td>{items.Reason}</td>
+                              <td>
+                                <select style={{border:'none',borderRadius:'4px',padding:'5px'}} onChange={ActionsLeaveHandler}>
+                                  <option>{items.status}</option>
+                                  <option value="accept">Accept</option>
+                                  <option value="reject">Reject</option>
+                                </select>
+                              </td>
+                              <td className="text-right">
+                                <div className="dropdown dropdown-action" style={{
+                                  cursor:"pointer"
+                                }}>
+                                  <span
+                                  
+                                    className="action-icon dropdown-toggle"
+                                    data-toggle="dropdown"
+                                    aria-expanded="false"
+                                  >
+                                    <i className="material-icons">more_vert</i>
+                                  </span>
+                                  <div className="dropdown-menu dropdown-menu-right">
+                                    <span
+                                      className="dropdown-item"
+                                    
+                                    >
+                                      <i className="fa fa-pencil m-r-5" /> Edit
+                                    </span>
+                                    <span
+                                      className="dropdown-item"
+                                      href="#"
+                                     onClick={()=>{
+                                       Removeleave(items.id)
+                                     }}
+                                    >
+                                      <i className="fa fa-trash-o m-r-5" />{" "}
+                                      Delete
+                                    </span>
+                                  </div>
+                                </div>
+                              </td>
+                            </tr>
+                          );
+                        })}
                     </tbody>
                   </table>
                 </div>
@@ -94,14 +153,9 @@ function Employee_leave() {
           {/* /Page Content */}
           {/* Add Leave Modal */}
           <Addleave />
-          {/* /Add Leave Modal */}
-          {/* Edit Leave Modal */}
-          {/* <?php include_once 'includes/modals/leave/edit_leave.php'; ?> */}
-          {/* /Edit Leave Modal */}
-          {/* Delete Leave Modal */}
-          {/* <?php include_once 'includes/modals/leave/delete_leave.php'; ?> */}
-          {/* /Delete Leave Modal */}
         </div>
+        {  Leave && <POST values={Leave} url={LeaveURL} Addstate={setleave}/>}
+        {remove && <POST values={remove} url={removeURL} Addstate={setAdd} />}
         {/* /Page Wrapper */}
       </div>
     </>

@@ -61,3 +61,33 @@ export const FetchEmployee=(values)=>{
     payload:values
   }
 }
+
+export const FetchEmployeeleave=(values)=>{
+  return{
+    type: ActionTypes.Employeeleave,
+    payload:values
+  }
+}
+
+
+export const Clientinfo=(values)=>{
+  return {
+    type:ActionTypes.Client,
+    payload:values
+  }
+}
+
+export const project=(values)=>{
+  return {
+    type:ActionTypes.project,
+    payload:values
+  }
+
+}
+
+export const jobsearch=(values)=>{
+  return {
+    type:ActionTypes.jobsearch,
+    payload:values
+  }
+}

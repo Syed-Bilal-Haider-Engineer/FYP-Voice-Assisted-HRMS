@@ -109,7 +109,6 @@ export const Clientschema = yup.object().shape({
     .required("A phone number is required"),
   company: yup.string().required("Company name is required"),
   address: yup.string().required("address is required"),
-  propic: yup.mixed().nullable().required("A file is required"),
 });
 
 // ........department....................
@@ -201,4 +200,35 @@ export const Applicationschema = yup.object().shape({
 });
 
 
+// ............Resignations Employee...............
 
+
+const Initivalue={
+  employee:'',
+  noticedate:'',
+  resignation_date:'',
+  reason:'',
+  department:''
+}
+export const Resignationsschema = yup.object().shape({
+  employee: yup.string().required("employee name is required"),
+  noticedate: yup.string().required("Notice date name is required"),
+  resignation_date:yup.string().required("Resignation date is required"),
+  reason:yup.string().required("Reason is required"),
+  department:yup.string().required("department is required"),
+});
+
+
+
+export const projectschema=yup.object().shape(
+  {
+    pro_name:yup.string().matches(/^[A-Za-z ]*$/, "Please enter valid project name ,only characters").required("Project name is required"),
+    client:yup.string().required("Client name is required"),
+    teammem:yup.string().required("Team memebers required"),
+    start_date:yup.string().required("start date is required"),
+    end_date:yup.string().required("End date is required"),
+    leader:yup.string().required("team leader is required"),
+    department:yup.string().required("Department name is required"),
+    description:yup.string().min(30,"Project description minimum 30 characters").max(250,"Project description maximum 250 characters").required("Project details is required")
+  }
+)

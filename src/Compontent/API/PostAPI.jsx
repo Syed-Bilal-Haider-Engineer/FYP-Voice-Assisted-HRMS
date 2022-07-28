@@ -4,15 +4,14 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 export const POST = ({ values, url, Addstate }) => {
 
+console.log("values",values);
+
   const navigate = useNavigate();
   const ToastyHandler = (msg, status) => {
     if (status == false) {
       toast.error(`${msg}`);
     } else {
       toast.success(`${msg}`);
-      // setTimeout(() => {
-      //   navigate("/login");
-      // }, 3000);
     }
   };
   const usersPost = async () => {
@@ -32,7 +31,19 @@ export const POST = ({ values, url, Addstate }) => {
           const encrypt=window.btoa(string);
            localStorage.setItem("user",encrypt);
         }
-        
+         console.log("response.data.token",response.data.token);
+        if(response.data.token==0){
+          navigate('/')
+        }
+        else if(response.data.token==1)
+        {
+            navigate('/Employeedashboard')
+        }
+        else if(response.data.token==2)
+        {
+               navigate('/');
+        }
+
         Addstate("");
         if (status == true) {
           ToastyHandler(msg, status);

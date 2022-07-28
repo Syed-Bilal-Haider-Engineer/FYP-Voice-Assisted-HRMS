@@ -1,9 +1,9 @@
 import React from "react";
 import Home from "./Home";
-import FaqAI from './Faq/Faqapp';
 import Category from "./Category";
 import Joblist from "./Joblist";
 import Applyjob from "./Works";
+import FaqApp from './Faq/Faqapp';
 function Main() {
   return (
     <>
@@ -11,7 +11,7 @@ function Main() {
       <Category />
       <Joblist />
       <Applyjob />
-      <FaqAI/>
+      <FaqApp/>
     </>
   );
 }

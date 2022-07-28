@@ -12,6 +12,7 @@ import { makeStyles } from "@mui/styles";
 import clsx from "clsx";
 import { Paper } from "@mui/material";
 import { NavLink, Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 const useStyles = makeStyles({
   list: {
     width: 250,
@@ -35,6 +36,8 @@ const link = {
   textDecoration:'none'
 };
 export default function Header() {
+
+
   var Role,checkstatus;
   console.log(checkstatus);
   if(localStorage.getItem("user"))
@@ -277,13 +280,7 @@ export default function Header() {
                       onClick={toggleDrawer(anchor, true)}
                       style={{ zIndex: 1 }}
                     >
-                      {/* <MenuIcon
-                        style={{
-                          fontSize: "38px",
-                          cursor: "pointer",
-                          color: "white",
-                        }}
-                      ></MenuIcon> */}
+                      
                       Click Here
                     </Button>
                     <Paper style={{ background: "#1C0D38" }}>

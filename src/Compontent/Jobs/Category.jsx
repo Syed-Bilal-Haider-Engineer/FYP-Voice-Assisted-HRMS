@@ -1,7 +1,9 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import Add_category from "./Addcategory";
-import useGet from '../API/API';
+import useGet from "../API/API";
+import { POST } from "../API/PostAPI";
 import { useSelector } from "react-redux";
+
 import {
   Container,
   Box,
@@ -10,25 +12,31 @@ import {
   Divider,
   Stack,
   Grid,
-  Pagination
+  Pagination,
 } from "@mui/material";
-const url="";
+const url = "http://localhost/HRMS/Category/deletecategory.php";
 function Category() {
-
-  var i=0;
-  const CategoryInfo = useSelector(state => state.categoryreducer);
+  const [add, setAddState] = React.useState();
+  const Action = {
+    cursor: "pointer",
+  };
+  var i = 0;
+  const CategoryInfo = useSelector((state) => state.categoryreducer);
   console.log("userInfo", CategoryInfo);
-  
- 
   //......paginations..........
   const [postsPerPage, setPostsPerPage] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
   const handleChangepage = (event, value) => {
     setCurrentPage(value);
   };
-
   const pageCount = Math.ceil(CategoryInfo.length / postsPerPage);
-
+  // ............Delete Hanlder..............
+  const CategoryDelete = (id) => {
+    const values = {
+      id,
+    };
+    setAddState(values);
+  };
   return (
     <>
       <>
@@ -75,65 +83,67 @@ function Category() {
                         </tr>
                       </thead>
                       <tbody>
-                        {CategoryInfo.length > 0 && CategoryInfo.slice(
+                        {CategoryInfo.length > 0 &&
+                          CategoryInfo.slice(
                             currentPage * postsPerPage - postsPerPage,
                             currentPage * postsPerPage
-                          ).map((Items)=>{
+                          ).map((Items) => {
                             i++;
-                            return <>
-                            <tr>
-                            <td>{i}</td>
-                            <td>{Items.catname}</td>
-                            <td className="text-right">
-                              <div className="dropdown dropdown-action">
-                                <a
-                                  href="#"
-                                  className="action-icon dropdown-toggle"
-                                  data-toggle="dropdown"
-                                  aria-expanded="false"
-                                >
-                                  <i className="material-icons">more_vert</i>
-                                </a>
-                                <div className="dropdown-menu dropdown-menu-right">
-                                  <a
-                                    className="dropdown-item"
-                                    href="#"
-                                    data-toggle="modal"
-                                    data-target="#edit_department"
-                                  >
-                                    <i className="fa fa-pencil m-r-5" /> Edit
-                                  </a>
-                                  <a
-                                    className="dropdown-item"
-                                    href="#"
-                                    data-toggle="modal"
-                                    data-target="#delete_department"
-                                  >
-                                    <i className="fa fa-trash-o m-r-5" /> Delete
-                                  </a>
-                                </div>
-                              </div>
-                            </td>
-                          </tr>
-                          
-                          </>
-                         
-                          })
-                        }
-                        
+                            return (
+                              <>
+                                <tr>
+                                  <td>{i}</td>
+                                  <td>{Items.catname}</td>
+                                  <td className="text-right">
+                                    <div className="dropdown dropdown-action">
+                                      <a
+                                        href="#"
+                                        className="action-icon dropdown-toggle"
+                                        data-toggle="dropdown"
+                                        aria-expanded="false"
+                                      >
+                                        <i className="material-icons">
+                                          more_vert
+                                        </i>
+                                      </a>
+                                      <div className="dropdown-menu dropdown-menu-right">
+                                        <span
+                                          className="dropdown-item"
+                                          data-toggle="modal"
+                                          data-target="#edit_department"
+                                          style={Action}
+                                        >
+                                          <i className="fa fa-pencil m-r-5" />{" "}
+                                          Edit
+                                        </span>
+                                        <span
+                                          onClick={() => {
+                                            CategoryDelete(Items.Catid);
+                                          }}
+                                          className="dropdown-item"
+                                          style={Action}
+                                        >
+                                          <i className="fa fa-trash-o m-r-5" />{" "}
+                                          Delete
+                                        </span>
+                                      </div>
+                                    </div>
+                                  </td>
+                                </tr>
+                              </>
+                            );
+                          })}
                       </tbody>
                     </table>
                   </div>
                 </div>
               </div>
             </div>
-            <Box  m="15px">
-              
+            <Box m="15px">
               <Stack
                 direction={"row"}
                 alignItems="center"
                 justifyContent="flex-end"
-
               >
                 <Pagination
                   count={pageCount}
@@ -142,20 +152,10 @@ function Category() {
                 />
               </Stack>
             </Box>
-            {/* /Page Content */}
-            {/* Add Department Modal */}
             <Add_category />
-            {/* /Add Department Modal */}
-            {/* Edit Department Modal */}
-            {/* <?php include_once("includes/modals/department/edit_department.php");?> */}
-            {/* /Edit Department Modal */}
-            {/* Delete Department Modal */}
-            {/* <?php include_once("includes/modals/department/delete_department.php");?> */}
-            {/* /Delete Department Modal */}
           </div>
-          {/* /Page Wrapper */}
         </div>
-        {/* /Main Wrapper */}
+        {add && <POST values={add} url={url} Addstate={setAddState} />}
       </>
     </>
   );

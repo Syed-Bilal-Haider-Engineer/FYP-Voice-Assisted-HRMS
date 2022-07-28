@@ -1,24 +1,41 @@
 import React from "react";
 import { Formik, Field, Form } from "formik";
 import Errorsg from "../Msgerror/Errormsg";
-import schema from "../Yup/Yup";
+import { Resignationsschema } from "../Yup/Yup";
+import { useSelector } from "react-redux";
+const Initivalue = {
+  employee: "",
+  noticedate: "",
+  resignation_date: "",
+  reason: "",
+  department: "",
+};
 
-const Initivalue={
-  employee:'',
-  noticedate:'',
-  resignation_date:'',
-  reason:''
+var userid, checkstatus, ID;
+if (localStorage.getItem("user")) {
+  const Islogin = window.atob(localStorage.getItem("user"));
+  userid = JSON.parse(Islogin);
+  ID = userid.id;
 }
+
+console.log("ID=", ID);
 function Addresignations() {
+  // ...............Department..............
+  const department = useSelector((state) => state.Departmentreducer);
+  console.log("department", department);
+
+// .....................Designations....................
+const Employeesvalues=useSelector(state=>state.Fetchemployeereducer);
+
+console.log("Employeestate",Employeesvalues);
   return (
     <Formik
       initialValues={Initivalue}
-      validationSchema={schema}
+      validationSchema={Resignationsschema}
       onSubmit={(values, { resetForm }) => {
         console.log(values);
         alert("submit");
         resetForm();
-        //  window.location.replace('Login','/')
       }}
     >
       <div
@@ -41,7 +58,7 @@ function Addresignations() {
             </div>
             <div className="modal-body">
               <Form>
-              <div className="form-group">
+                <div className="form-group">
                   <label>
                     Employee Resignations <span className="text-danger">*</span>
                     <br />
@@ -50,11 +67,32 @@ function Addresignations() {
                     as="select"
                     className="select selectinput"
                     name="employee"
-                   
                   >
-                    <option>Hassan</option>
-                    <option>Ali</option>
-                    <option>SEO Analyst</option>
+                     {Employeesvalues.length > 0 &&
+                      Employeesvalues.map((items, index) =>
+                        items.EmployeeID == ID ? (
+                          <option value={items.EmployeeID}>{items.designation}</option>
+                        ) : null
+                      )}
+                  </Field>
+                  <Errorsg name="employee" className="error" />
+                </div>
+                <div className="form-group">
+                  <label>
+                    Department <span className="text-danger">*</span>
+                    <br />
+                  </label>
+                  <Field
+                    as="select"
+                    className="select selectinput"
+                    name="department"
+                  >
+                    {department.length > 0 &&
+                      department.map((items, index) =>
+                        items.id == ID ? (
+                          <option value={items.id}>{items.Department}</option>
+                        ) : null
+                      )}
                   </Field>
                   <Errorsg name="employee" className="error" />
                 </div>
@@ -65,8 +103,8 @@ function Addresignations() {
                   <div className="cal-icon">
                     <Field
                       name="noticedate"
-                      type="text"
-                      className="form-control datetimepicker"
+                      type="date"
+                      className="form-control"
                     />
                     <Errorsg name="noticedate" className="error" />
                   </div>
@@ -77,8 +115,8 @@ function Addresignations() {
                   </label>
                   <div className="cal-icon">
                     <Field
-                      type="text"
-                      className="form-control datetimepicker"
+                      type="date"
+                      className="form-control"
                       name="resignation_date"
                     />
                     <Errorsg name="resignation_date" className="error" />
@@ -92,13 +130,13 @@ function Addresignations() {
                     as="textarea"
                     className="form-control"
                     rows={4}
-                    defaultValue={""}
+                   
                     name="reason"
                   />
                   <Errorsg name="reason" className="error" />
                 </div>
                 <div className="submit-section">
-                  <button className="btn btn-primary submit-btn">Submit</button>
+                  <button type="submit" className="btn btn-primary submit-btn">Submit</button>
                 </div>
               </Form>
             </div>

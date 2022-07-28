@@ -1,82 +1,79 @@
 import React from "react";
-import Addclient from "./Addclient";
-const selectinput = {
-  width: "100%",
-  height: "45px",
-  border: "1px solid lightgray",
-  marginLeft: "10px",
-  borderRadius: "6px",
-};
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { POST } from "../API/PostAPI";
+import Addclient from './Addclient';
 function Client() {
+  const client = useSelector((state) => state.Clientreducer);
+  console.log("client", client);
+
+  // ............Remove client.............
+  const url="http://localhost/HRMS/Client/Removeclient.php";
+  const [add, setAddState] = React.useState();
+  const ClientRemoveHandler=(id)=>{
+  const values={
+    id
+  }
+  setAddState(values);
+  }
+
   return (
     <>
       {/* <!-- Page Wrapper --> */}
-      <div class="page-wrapper">
+      <div className="page-wrapper">
         {/* <!-- Page Content --> */}
-        <div class="content container-fluid">
+        <div className="content container-fluid">
           {/* <!-- Page Header --> */}
-          <div class="page-header">
-            <div class="row align-items-center">
-              <div class="col">
-                <h3 class="page-title">Clients</h3>
-                <ul class="breadcrumb">
-                  <li class="breadcrumb-item">
+          <div className="page-header">
+            <div className="row align-items-center">
+              <div className="col">
+                <h3 className="page-title">Clients</h3>
+                <ul className="breadcrumb">
+                  <li className="breadcrumb-item">
                     <a href="index.php">Dashboard</a>
                   </li>
-                  <li class="breadcrumb-item active">Clients</li>
+                  <li className="breadcrumb-item active">Clients</li>
                 </ul>
               </div>
-              <div class="col-auto float-right ml-auto">
+              <div className="col-auto float-right ml-auto">
                 <a
                   href="#"
-                  class="btn add-btn"
+                  className="btn add-btn"
                   data-toggle="modal"
                   data-target="#add_client"
                 >
-                  <i class="fa fa-plus"></i> Add Client
+                  <i className="fa fa-plus"></i> Add Client
                 </a>
-                <div class="view-icons">
-                  <a href="clients.php" class="grid-view btn btn-link">
-                    <i class="fa fa-th"></i>
-                  </a>
-                  <a
-                    href="clients-list.php"
-                    class="list-view btn btn-link active"
-                  >
-                    <i class="fa fa-bars"></i>
-                  </a>
-                </div>
               </div>
             </div>
           </div>
-          {/* <!-- /Page Header --> */}
-
-          {/* <!-- Search Filter --> */}
-          <div class="row filter-row">
-            <div class="col-sm-6 col-md-3">
-              <div class="form-group form-focus">
-                <input type="text" class="form-control floating" />
-                <label class="focus-label">Client ID</label>
+          {/* <!-- /Page Header -->
+					
+					<!-- Search Filter --> */}
+          <div className="row filter-row">
+            <div className="col-sm-6 col-md-3">
+              <div className="form-group form-focus">
+                <input type="text" className="form-control floating" />
+                <label className="focus-label">Client ID</label>
               </div>
             </div>
-            <div class="col-sm-6 col-md-3">
-              <div class="form-group form-focus">
-                <input type="text" class="form-control floating" />
-                <label class="focus-label">Client Name</label>
+            <div className="col-sm-6 col-md-3">
+              <div className="form-group form-focus">
+                <input type="text" className="form-control floating" />
+                <label className="focus-label">Client Name</label>
               </div>
             </div>
-            <div class="col-sm-6 col-md-3">
-              <div class="form-group form-focus select-focus">
-                <select class="select floating" style={selectinput}>
+            <div className="col-sm-6 col-md-3">
+              <div className="form-group form-focus select-focus ">
+                <select className="select floating selectinput">
                   <option>Select Company</option>
                   <option>Global Technologies</option>
                   <option>Delta Infotech</option>
                 </select>
-               
               </div>
             </div>
-            <div class="col-sm-6 col-md-3">
-              <a href="#" class="btn btn-success btn-block">
+            <div className="col-sm-6 col-md-3">
+              <a href="#" className="btn btn-success btn-block">
                 {" "}
                 Search{" "}
               </a>
@@ -84,112 +81,112 @@ function Client() {
           </div>
           {/* <!-- Search Filter --> */}
 
-          <div class="row">
-            <div class="col-md-12">
-              <div class="table-responsive">
-                <table class="table table-striped custom-table datatable">
+          <div className="row">
+            <div className="col-md-12">
+              <div className="table-responsive">
+                <table className="table table-striped custom-table datatable">
                   <thead>
                     <tr>
                       <th>Name</th>
                       <th>Client ID</th>
-                      <th>Contact Person</th>
+                      <th>Client name</th>
                       <th>Email</th>
                       <th>Mobile</th>
                       <th>Status</th>
-                      <th class="text-right">Action</th>
+                      <th className="text-right">Action</th>
                     </tr>
                   </thead>
 
                   <tbody>
-                    <tr>
-                      <td>
-                        <h2 class="table-avatar">
-                          <a href="client-profile.php" class="avatar">
-                            <img src="clients/Picture)" alt="" />
-                          </a>
-                          <a href="client-profile.php">Company</a>
-                        </h2>
-                      </td>
-                      <td>ClientId</td>
-                      <td>FirstName-LastName</td>
-                      <td>Email</td>
-                      <td>Phone</td>
-                      <td>
-                        <div class="dropdown action-label">
-                          <a
-                            href="#"
-                            class="btn btn-white btn-sm btn-rounded dropdown-toggle"
-                            data-toggle="dropdown"
-                            aria-expanded="false"
-                          >
-                            <i class="fa fa-dot-circle-o text-success"></i>{" "}
-                            Active{" "}
-                          </a>
-                          <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">
-                              <i class="fa fa-dot-circle-o text-success"></i>{" "}
-                              Active
-                            </a>
-                            <a class="dropdown-item" href="#">
-                              <i class="fa fa-dot-circle-o text-danger"></i>{" "}
-                              Inactive
-                            </a>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="text-right">
-                        <div class="dropdown dropdown-action">
-                          <a
-                            href="#"
-                            class="action-icon dropdown-toggle"
-                            data-toggle="dropdown"
-                            aria-expanded="false"
-                          >
-                            <i class="material-icons">more_vert</i>
-                          </a>
-                          <div class="dropdown-menu dropdown-menu-right">
-                            <a
-                              class="dropdown-item"
-                              href="#"
-                              data-toggle="modal"
-                              data-target="#edit_client"
-                            >
-                              <i class="fa fa-pencil m-r-5"></i> Edit
-                            </a>
-                            <a
-                              class="dropdown-item"
-                              href="#"
-                              data-toggle="modal"
-                              data-target="#delete_client"
-                            >
-                              <i class="fa fa-trash-o m-r-5"></i> Delete
-                            </a>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
+                    {client.length > 0 &&
+                      client.map((items, i) => {
+                        const {
+                          id,
+                          ClientId,
+                          Phone,
+                          Company,
+                          Email,
+                          UserName,
+                          Picture,
+                          Status,
+                        } = items;
+                        return (
+                          <>
+                            <tr>
+                              <td>
+                                <h2 className="table-avatar">
+                                  <a
+                                    href="client-profile.php"
+                                    className="avatar"
+                                  >
+                                    <img src={`http://localhost/HRMS/Uploads/${Picture}`} alt="" />
+                                  </a>
+                                  <span>{Company}</span>
+                                </h2>
+                              </td>
+                              <td>{ClientId}</td>
+                              <td>{UserName}</td>
+                              <td>{Email}</td>
+                              <td>{Phone}</td>
+                              <td>
+                                <select style={{border:'none',padding:'5px'}}>
+                                  {Status == 1 ? (
+                                    <option value={Status}> Active</option>
+                                  ) : (
+                                    <option value={Status}>InActive</option>
+                                  )}
+                                </select>
+                              </td>
+                              <td className="text-right">
+                                <div className="dropdown dropdown-action" style={{cursor:'pointer'}}>
+                                  <a
+                                    href="#"
+                                    className="action-icon dropdown-toggle"
+                                    data-toggle="dropdown"
+                                    aria-expanded="false"
+                                  >
+                                    <i className="material-icons">more_vert</i>
+                                  </a>
+                                  <div className="dropdown-menu dropdown-menu-right">
+                                    <span
+                                      className="dropdown-item"
+                                      
+                                      data-toggle="modal"
+                                      data-target="#edit_client"
+                                    >
+                                      <i className="fa fa-pencil m-r-5"></i>{" "}
+                                      Edit
+                                    </span>
+                                    <span
+                                      className="dropdown-item"
+                                      
+                                      data-toggle="modal"
+                                      data-target="#delete_client"
+                                      onClick={()=>{
+                                        ClientRemoveHandler(id)
+                                      }}
+                                    >
+                                      <i className="fa fa-trash-o m-r-5"></i>{" "}
+                                      Delete
+                                    </span>
+                                  </div>
+                                </div>
+                              </td>
+                            </tr>
+                          </>
+                        );
+                      })}
                   </tbody>
                 </table>
               </div>
             </div>
           </div>
         </div>
-        <Addclient />
-        {/* <!-- /Page Content -->
-			
-				<!-- Add Client Modal -->
-			
-				<!-- /Add Client Modal -->
-				
-				<!-- Edit Client Modal -->
-				<!-- <?php include_once("includes/modals/clients/edit_client.php"); ?> -->
-				<!-- /Edit Client Modal -->
-				
-				<!-- Delete Client Modal -->
-				<!-- <?php include_once("includes/modals/clients/delete_client.php"); ?> -->
-				<!-- /Delete Client Modal --> */}
+       
       </div>
-      {/* <!-- /Page Wrapper --> */}
+      <Addclient/>
+      {add && <POST values={add} url={url} Addstate={setAddState} />}
+   
     </>
   );
 }

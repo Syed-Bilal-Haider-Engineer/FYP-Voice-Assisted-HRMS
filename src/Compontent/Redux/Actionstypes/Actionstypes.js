@@ -7,5 +7,9 @@ export const ActionTypes = {
     designation:"designation",
     fetchHoliday:'fetchHoliday',
     Userapplications:'userapplications',
-    Employee:'Employee'
+    Employee:'Employee',
+    Employeeleave:'Employeeleave',
+    Client:'Client',
+    project:'projectdetails',
+    jobsearch:"jobsearch"
 }

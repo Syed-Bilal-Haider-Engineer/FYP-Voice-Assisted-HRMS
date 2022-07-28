@@ -1,18 +1,41 @@
-import React from "react";
-
+import React,{useState} from "react";
+import {Link} from 'react-router-dom';
+import {useSelector} from 'react-redux';
+import {
+  Container,
+  Box,
+  Typography,
+  Button,
+  Divider,
+  Stack,
+  Grid,
+  Pagination
+} from "@mui/material";
 function Employee_list() {
+  const Employeestate=useSelector(state=>state.Fetchemployeereducer);
+  console.log("Employeestate",Employeestate);
+  const [postsPerPage, setPostsPerPage] = useState(5);
+   const [currentPage, setCurrentPage] = useState(1);
+   const handleChangepage = (event, value) => {
+     setCurrentPage(value);
+   };
+ 
+   const pageCount = Math.ceil(Employeestate.length / postsPerPage);
+
+   var Role,checkstatus;
+   if(localStorage.getItem("user"))
+   {
+   const Islogin=window.atob(localStorage.getItem("user"));
+    Role=JSON.parse(Islogin);
+    checkstatus=Role.token;
+   };
+ 
+   console.log("checkstatus App.js",checkstatus)
   return (
     <>
       <>
         {/* Main Wrapper */}
         <div className="main-wrapper">
-          {/* Header */}
-          {/* <?php include_once("includes/header.php");?> */}
-          {/* /Header */}
-          {/* Sidebar */}
-          {/* <?php include_once("includes/sidebar.php");?> */}
-          {/* /Sidebar */}
-          {/* Page Wrapper */}
           <div className="page-wrapper">
             {/* Page Content */}
             <div className="content container-fluid">
@@ -29,6 +52,7 @@ function Employee_list() {
                     </ul>
                   </div>
                   <div className="col-auto float-right ml-auto">
+                  { checkstatus==2 ? (
                     <a
                       href="#"
                       className="btn add-btn"
@@ -36,22 +60,21 @@ function Employee_list() {
                       data-target="#add_employee"
                     >
                       <i className="fa fa-plus" /> Add Employee
-                    </a>
+                    </a>):null }
                     <div className="view-icons">
-                      <a
-                        href="employees.php"
-                        title="Grid View"
-                        className="grid-view btn btn-link active"
-                      >
-                        <i className="fa fa-th" />
-                      </a>
-                      <a
-                        href="employees-list.php"
-                        title="Tabular View"
-                        className="list-view btn btn-link"
-                      >
-                        <i className="fa fa-bars" />
-                      </a>
+                    <Link
+                     to="/Employee"
+                      title="Grid View"
+                      className="grid-view btn btn-link active"
+                    >
+                      <i className="fa fa-th" />
+                    </Link>
+                    <Link to="/Employee_list"
+                      title="Tabular View"
+                      className="list-view btn btn-link"
+                    >
+                      <i className="fa fa-bars" />
+                    </Link>
                     </div>
                   </div>
                 </div>
@@ -73,14 +96,14 @@ function Employee_list() {
                 </div>
                 <div className="col-sm-6 col-md-3">
                   <div className="form-group form-focus select-focus">
-                    <select className="select floating">
+                    <select className="select floating selectinput">
                       <option>Select Designation</option>
                       <option>Web Developer</option>
                       <option>Web Designer</option>
                       <option>Android Developer</option>
                       <option>Ios Developer</option>
                     </select>
-                    <label className="focus-label">Designation</label>
+                    
                   </div>
                 </div>
                 <div className="col-sm-6 col-md-3">
@@ -98,45 +121,39 @@ function Employee_list() {
                       <thead>
                         <tr>
                           <th>Name</th>
-                          <th>Employee ID</th>
                           <th>Email</th>
                           <th>Mobile</th>
-                          <th className="text-nowrap">Join Date</th>
+                         <th>Designations</th>
+                         <th>Address</th>
                           <th>Role</th>
                           <th className="text-right no-sort">Action</th>
                         </tr>
                       </thead>
-                      {/* <?php
-										$sql = "SELECT * FROM employees";
-										$query = $dbh->prepare($sql);
-										$query->execute();
-										$results=$query->fetchAll(PDO::FETCH_OBJ);
-										$cnt=1;
-										if($query->rowCount() > 0)
-										{
-										foreach($results as $row)
-										{	
-									?> */}
                       <tbody>
-                        <tr>
+                      {Employeestate.length >0 && Employeestate.slice(
+                            currentPage * postsPerPage - postsPerPage,
+                            currentPage * postsPerPage
+                          ).map((items,i)=>{
+                            return <>
+                            <tr>
                           <td>
                             <h2 className="table-avatar">
-                              <a href="profile.php" className="avatar">
+                              <a href="#" className="avatar">
                                 <img
                                   alt="picture"
-                                  src="employees/<?php echo htmlentities($row->Picture);?>"
+                                  src={`http://localhost/HRMS/Uploads/${items.picture}`}
                                 />
                               </a>
-                              <a href="profile.php">
-                                FirstName-LastName<span>Designation</span>
-                              </a>
+                             <span>
+                             {items.fname} {items.lname}<span>{items.designation}</span>
+                                </span>
                             </h2>
                           </td>
-                          <td>Employee_Id</td>
-                          <td>Email</td>
-                          <td>Phone</td>
-                          <td>Joining_Date</td>
-                          <td>Designation</td>
+                          <td>{items.email}</td>
+                          <td>{items.phone}</td>
+                          <td>{items.designation}</td>
+                          <td>{items.address}</td>
+                          <td>{items.role==0 ? 'Employee':'Admin'}  </td>
                           <td className="text-right">
                             <div className="dropdown dropdown-action">
                               <a
@@ -156,18 +173,14 @@ function Employee_list() {
                                 >
                                   <i className="fa fa-pencil m-r-5" /> Edit
                                 </a>
-                                <a
-                                  className="dropdown-item"
-                                  href="#"
-                                  data-toggle="modal"
-                                  data-target="#delete_employee"
-                                >
-                                  <i className="fa fa-trash-o m-r-5" /> Delete
-                                </a>
+                               
                               </div>
                             </div>
                           </td>
                         </tr>
+                            </>
+                        
+                         })}
                       </tbody>
                     </table>
                   </div>
@@ -175,15 +188,18 @@ function Employee_list() {
               </div>
             </div>
             {/* /Page Content */}
-            {/* Add Employee Modal */}
-            {/* <?php include_once("includes/modals/employee/add_employee.php"); ?> */}
-            {/* /Add Employee Modal */}
-            {/* Edit Employee Modal */}
-            {/* <?php include_once("includes/modals/employee/edit_employee.php"); ?> */}
-            {/* /Edit Employee Modal */}
-            {/* Delete Employee Modal */}
-            {/* <?php include_once("includes/modals/employee/delete_employee.php"); ?> */}
-            {/* /Delete Employee Modal */}
+            <Box  m="15px">
+              <Stack
+                direction={"row"}
+                alignItems="center"
+                justifyContent="flex-end">
+                <Pagination
+                  count={pageCount}
+                  page={currentPage}
+                  onChange={handleChangepage}
+                />
+              </Stack>
+            </Box>
           </div>
           {/* /Page Wrapper */}
         </div>

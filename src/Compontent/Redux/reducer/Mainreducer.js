@@ -122,6 +122,43 @@ const Fetchemployeereducer=(state=Fetchemployee,actions)=>{
       return state;
     }
 }
+
+const Fetchemployeeleave=[];
+const Fetchemployeeleavereducer=(state=Fetchemployeeleave,actions)=>{
+    switch(actions.type){
+        case ActionTypes.Employeeleave:
+            const Employeevalue=actions.payload;
+            state=[...Employeevalue];
+        return state;
+        default:
+      return state;
+    }
+}
+
+const Clientinformation=[];
+
+const Clientreducer=(state=Clientinformation,actions)=>{
+    switch(actions.type){
+        case ActionTypes.Client:
+            const clientvalues=actions.payload;
+            state=[...clientvalues];
+        return state;
+        default:
+      return state;
+    }
+}
+
+const project=[];
+const Projectreducer=(state=project,actions)=>{
+    switch(actions.type){
+        case ActionTypes.project:
+            const projectvalue=actions.payload;
+            state=[...projectvalue];
+        return state;
+        default:
+      return state;
+    }
+}
 const reducer=combineReducers(
     {
         Userregisteration,
@@ -132,6 +169,9 @@ const reducer=combineReducers(
         Designationreducer,
         Fetchholidayreducer,
         fetchuserAppliations,
-        Fetchemployeereducer
+        Fetchemployeereducer,
+        Fetchemployeeleavereducer,
+        Clientreducer,
+        Projectreducer
     });
 export default reducer

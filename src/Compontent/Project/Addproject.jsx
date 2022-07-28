@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Formik, Field, Form } from "formik";
+import { toast } from "react-toastify";
+import axios from "axios";
 import Errorsg from "../Msgerror/Errormsg";
-import schema from "../Yup/Yup";
-
+import { projectschema } from "../Yup/Yup";
+import { useSelector } from "react-redux";
+const url = "http://localhost/HRMS/Project/Addproject.php";
 const selectinput = {
   width: "100%",
   height: "45px",
@@ -18,18 +21,55 @@ const Initivalue = {
   leader: "",
   department: "",
   description: "",
-  file: "",
 };
+
 function Addproject() {
+  const departmentinfo = useSelector((state) => state.Departmentreducer);
+  const employees = useSelector((state) => state.Fetchemployeereducer);
+  const Client = useSelector((state) => state.Clientreducer);
+  // console.log(
+  //   "departmentinfo:",
+  //   departmentinfo,
+  //   "-employees",
+  //   employees,
+  //   "-Client:",
+  //   Client
+  // );
+
+  const inputRef = useRef(null);
+  const formData = new FormData();
+  const filehandler = async (values) => {
+    const img = inputRef.current.files[0];
+    formData.append("pro_name", values.pro_name);
+    formData.append("client", values.client);
+    formData.append("teammem", values.teammem);
+    formData.append("start_date", values.start_date);
+    formData.append("end_date", values.end_date);
+    formData.append("img", img);
+    formData.append("leader", values.leader);
+    formData.append("department", values.department);
+    formData.append("description", values.description);
+    try {
+      const response = await axios.post(url, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      const msg = response.data;
+      if (response.status == 200) {
+        toast.success(`${msg}`);
+      }
+    } catch (error) {
+      toast.success(`${error}`);
+    }
+  };
+
   return (
     <Formik
       initialValues={Initivalue}
-      validationSchema={schema}
+      validationSchema={projectschema}
       onSubmit={(values, { resetForm }) => {
         console.log(values);
-        alert("submit");
+        filehandler(values);
         resetForm();
-        //  window.location.replace('Login','/')
       }}
     >
       <div
@@ -77,8 +117,17 @@ function Addproject() {
                         className="select"
                         style={selectinput}
                       >
-                        <option>Select Clients</option>
-                        <option value=""></option>
+                        <option disabled>Select client</option>
+                        {Client.length > 0 &&
+                          Client.map((items) => {
+                            return (
+                              <>
+                                <option value={items.id}>
+                                  {items.FirstName}-{items.LastName}{" "}
+                                </option>
+                              </>
+                            );
+                          })}
                       </Field>
                       <Errorsg name="client" className="error" />
                     </div>
@@ -113,10 +162,21 @@ function Addproject() {
                     <div className="form-group">
                       <label>Add Project Leader</label>
                       <Field
-                        className="form-control"
-                        type="text"
+                        as="select"
+                        className="select"
+                        style={selectinput}
                         name="leader"
-                      />
+                      >
+                        {employees.length > 0 &&
+                          employees.map((items, index) => {
+                            const { EmployeeID, username } = items;
+                            return (
+                              <>
+                                <option value={username}>{username}</option>
+                              </>
+                            );
+                          })}
+                      </Field>
                       <Errorsg name="leader" className="error" />
                     </div>
                   </div>
@@ -130,8 +190,16 @@ function Addproject() {
                         className="select"
                         style={selectinput}
                       >
-                        <option>Select Employee</option>
-                        <option value="">Hassan</option>
+                        <option>Select team memebers</option>
+                        {employees.length > 0 &&
+                          employees.map((items, index) => {
+                            const { EmployeeID, username } = items;
+                            return (
+                              <>
+                                <option value={EmployeeID}>{username}</option>
+                              </>
+                            );
+                          })}
                       </Field>
                       <Errorsg name="teammem" className="error" />
                     </div>
@@ -149,7 +217,16 @@ function Addproject() {
                         style={selectinput}
                       >
                         <option>Select department</option>
-                        <option value="">Development</option>
+                        {departmentinfo.length > 0 &&
+                          departmentinfo.map((items, index) => {
+                            return (
+                              <>
+                                <option value={items.id}>
+                                  {items.Department}
+                                </option>
+                              </>
+                            );
+                          })}
                       </Field>
                       <Errorsg name="department" className="error" />
                     </div>
@@ -164,14 +241,19 @@ function Addproject() {
                     name="description"
                     className="form-control summernote"
                     placeholder="Enter your message here"
-                    defaultValue={""}
                   />
                   <Errorsg name="description" className="error" />
                 </div>
                 <div className="form-group">
                   <label>Upload Files</label>
-                  <Field className="form-control" type="file" name="file" />
-                  <Errorsg name="file" className="error" />
+                  <br />
+                  <input
+                    type="file"
+                    className="form-control"
+                    required=""
+                    name="file"
+                    ref={inputRef}
+                  />
                 </div>
                 <div className="submit-section">
                   <button className="btn btn-primary submit-btn">Submit</button>
