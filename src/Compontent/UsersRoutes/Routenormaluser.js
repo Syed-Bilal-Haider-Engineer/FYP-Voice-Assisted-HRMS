@@ -26,10 +26,9 @@ function Routenormaluser() {
    <ThemeProvider theme={theme}>
   <Header />
    <Routes>
+   <Route path="/" element={<Main />}  exact/>
    <Route path="/login" element={<Login />} exact /> 
     <Route path="/signup" element={<Signup />} exact />
-    <Route path="/" element={<Main />}  exact/>
-    
     <Route path="/contact" element={<Contactus />}  exact/>
      <Route path="/Apply" element={<Exprience />} exact/>
      <Route path="/Jobdetails/:productsid" element={<Jobdetails/>} exact />

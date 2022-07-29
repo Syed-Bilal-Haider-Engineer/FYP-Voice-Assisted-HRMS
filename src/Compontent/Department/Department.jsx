@@ -133,13 +133,7 @@ function Department() {
             {/* /Page Content */}
             {/* Add Department Modal */}
             <Adddepart />
-            {/* /Add Department Modal */}
-            {/* Edit Department Modal */}
-            {/* <?php include_once("includes/modals/department/edit_department.php");?> */}
-            {/* /Edit Department Modal */}
-            {/* Delete Department Modal */}
-            {/* <?php include_once("includes/modals/department/delete_department.php");?> */}
-            {/* /Delete Department Modal */}
+           
           </div>
           {/* /Page Wrapper */}
         </div>

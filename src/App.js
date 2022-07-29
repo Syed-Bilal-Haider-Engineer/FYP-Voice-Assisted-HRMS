@@ -5,7 +5,6 @@ import Logout from "./Compontent/Recuriement/Logout";
 import { Route, Routes } from "react-router-dom";
 import useGet from "./Compontent/API/API";
 import axios from "axios";
-
 function App() {
   //.........Private and Protected route.........
   useGet("http://localhost/HRMS/Designations/Designations.php", "Designation");
@@ -33,6 +32,7 @@ function App() {
 
   return (
     <>
+    
       {(checkstatus == 1 || checkstatus == 2) ? <Routesuser /> : null}
       {/* .............Normal Users Routes.......... */}
       {checkstatus == 0 || checkstatus == undefined ? (
@@ -40,7 +40,7 @@ function App() {
       ) : null}
       <Routes>
         <Route path="/Logout" element={<Logout />} />
-        {/* <Route path="/signup" element={<Signup />} exact /> */}
+       
       </Routes>
 
     </>

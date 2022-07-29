@@ -1,7 +1,7 @@
 import React from "react";
 import Addproject from "./Addproject";
 import {useSelector} from 'react-redux';
-import {Link} from 'react-router-dom';
+import {NavLink,Link} from 'react-router-dom';
 function Projects() {
 
   const projectinfo=useSelector(state=>state.Projectreducer);
@@ -92,7 +92,7 @@ function Projects() {
                 
                  <div className="col-lg-4 col-sm-6 col-md-4 col-xl-3" key={index}>
                   <div className="card">
-                  <Link to={`Projectsview/${project_id}`}> 
+                  <NavLink to={`Projectsview/${project_id}`}> 
                     <div className="card-body">
                       <div className="dropdown dropdown-action profile-action">
                         <a
@@ -157,7 +157,7 @@ function Projects() {
                         />
                       </div>
                     </div>
-                    </Link>
+                    </NavLink>
                   </div>
                 </div>
                
