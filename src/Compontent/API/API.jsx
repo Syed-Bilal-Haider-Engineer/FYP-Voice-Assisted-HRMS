@@ -2,15 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Showusers,Getcategory,fetchvister,fetchJob,Fetchdepartment,Fetchdesignation,
     fetchHolidays,Userapplications,FetchEmployee,FetchEmployeeleave,project,
-    Clientinfo} from '../Redux/Actions/Actions';
-
+    Clientinfo,Tasksdata,Notice} from '../Redux/Actions/Actions';
 import axios from "axios";
+import Loading from '../../Loading';
+
 const useGet = (url,type) => {
   const usedispatch=useDispatch();
+  const [loading, setLoading] = useState(false);
+
     const fetchdata = async () => {
+        setLoading(true);
         await axios
             .get(url)
             .then((response) => {
+                setLoading(false);
                 console.log(response.data);
                 const value = response.data;
                 if(type=="user")
@@ -56,6 +61,14 @@ const useGet = (url,type) => {
                  {
                     usedispatch(project(value));
                  }
+                 else if(type=='Tasks')
+                 {
+                    usedispatch(Tasksdata(value))
+                 }
+                 else if(type=='notice')
+                 {
+                    usedispatch(Notice(value))
+                 }
             })
             .catch((error) => {
                 console.log(error);
@@ -64,6 +77,8 @@ const useGet = (url,type) => {
     useEffect(() => {
         fetchdata();
     }, []);
+
+    return  <Loading loading={loading} /> 
 }
 export default useGet;
 

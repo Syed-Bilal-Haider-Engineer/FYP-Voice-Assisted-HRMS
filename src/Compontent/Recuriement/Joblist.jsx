@@ -64,10 +64,9 @@ function Joblist() {
                             currentPage * postsPerPage - postsPerPage,
                             currentPage * postsPerPage
                           ).map((Items,i) => {
-             const {job_id,category,title,posting_date,description,job_city,last_date,logo,status,no_of_positons}=Items;
-            return (
-              <>
-                <Fade top>
+             const {job_id,category,title,posting_date,description,job_city,last_date,logo,status,no_of_positons,company_name}=Items;
+             if(status==1)
+            return <Fade top>
                   <Link to={`/Jobdetails/${job_id}`}>
                   <Box
 
@@ -79,11 +78,10 @@ function Joblist() {
                       alignItems: "center",
                       padding: " 36px 30px",
                       cursor:'pointer',
+                      boxShadow: "2px 2px 20px lightgray",
                       mt: 1,
                       flexDirection: { md: "row", xs: "column" },
-                      "&:hover": {
-                        boxShadow: "5px 5px 20px lightgray",
-                      },
+                      
                     }}
                   >
                     <Box sx={{ width: { md: "20%", xs: "90%" } }}>
@@ -108,10 +106,10 @@ function Joblist() {
                           display: "flex",
                           justifyContent: "space-between",
                           alignItems: "center",
-                          color: "lightgray",
+                          color: "black",
                         }}
                       >
-                        <Typography>company name</Typography>
+                        <Typography>{company_name}</Typography>
                         <Typography>last date: {last_date}</Typography>
                         <Typography>{job_city}</Typography>
                       </Box>
@@ -123,8 +121,8 @@ function Joblist() {
                         textAlign: "right",
                       }}
                     >
-                      {checkstatus==0 &&
-                      <Button
+                      {checkstatus==0 || checkstatus == undefined ?
+                     ( <Button
                         sx={{
                           width: { md: "80px", xs: "100%" },
                           height: "40px",
@@ -140,14 +138,14 @@ function Joblist() {
                           {" "}
                           Apply
                         </NavLink>
-                      </Button>}
+                      </Button>):''}
                       <Typography mt={1}>{posting_date}</Typography>
                     </Box>
                   </Box>
                   </Link>
+                
                 </Fade>
-              </>
-            );
+           
           })}
         </Container>
         <Box  my="15px" mx="100px">

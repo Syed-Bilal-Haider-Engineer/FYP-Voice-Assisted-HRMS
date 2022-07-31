@@ -92,7 +92,7 @@ function Projects() {
                 
                  <div className="col-lg-4 col-sm-6 col-md-4 col-xl-3" key={index}>
                   <div className="card">
-                  <NavLink to={`Projectsview/${project_id}`}> 
+                  <NavLink to={`/Admindashboard/Projectsview/${project_id}`}> 
                     <div className="card-body">
                       <div className="dropdown dropdown-action profile-action">
                         <a

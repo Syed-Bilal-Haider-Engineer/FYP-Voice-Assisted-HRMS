@@ -4,7 +4,8 @@ import { Formik, Field, Form } from "formik";
 import Errorsg from "../Msgerror/Errormsg";
 import { Loginschema } from "../Yup/Yup";
 import {POST} from '../API/PostAPI';
-import { useNavigate } from "react-router-dom";
+import { useNavigate,Link } from "react-router-dom";
+
 const url="http://localhost/HRMS/visters/Login.php";
 function Login() {
   const navigate = useNavigate();
@@ -22,8 +23,6 @@ function Login() {
           // console.log(values);
           setAddState(values);
           resetForm();
-          alert("submit");
-         
         }}
       >
         <div className="main-wrapper">
@@ -93,12 +92,12 @@ function Login() {
                         Login
                       </button>
                       <div className="col-auto pt-2">
-                        <a
+                        <Link
                           className="text-muted float-right"
-                          href="forgot-password.php"
+                         to="/Signup"
                         >
                           Signup..
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   </Form>

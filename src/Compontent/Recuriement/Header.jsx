@@ -140,7 +140,7 @@ export default function Header() {
                   fontSize: "20px",
                 }}
               >
-                <NavLink to="/">HRMS</NavLink>
+                <NavLink to="/" style={{color:'white'}}>HRMS</NavLink>
               </Box>
             </Box>
             <Box
@@ -203,7 +203,8 @@ export default function Header() {
                       Signup
                     </NavLink>
                   </Box>
-                  {checkstatus==undefined ?<Box
+                  {checkstatus==0 || checkstatus==1 || checkstatus==3 ?null:
+                  (<Box
                     mr={6}
                     fontSize="20px"
                     zIndex="1"
@@ -219,7 +220,7 @@ export default function Header() {
                     <NavLink to="/login" style={link}>
                       Login
                     </NavLink>
-                  </Box> :''}
+                  </Box>)}
                   <Box
                     mr={6}
                     fontSize="20px"
@@ -250,7 +251,7 @@ export default function Header() {
                       },
                     }}
                   >
-                    <Link to="/contact" style={link}>
+                    <Link to="/Contactus" style={link}>
                       Contact
                     </Link>
                   </Box>

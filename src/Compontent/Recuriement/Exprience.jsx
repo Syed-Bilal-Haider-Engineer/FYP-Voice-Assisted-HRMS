@@ -1,16 +1,16 @@
 import React,{useContext, useEffect,useRef} from "react";
 import logo from "../../Images/logo2.png";
-import { NavLink } from "react-router-dom";
+import { NavLink,useNavigate} from "react-router-dom";
 import { Formik, Field, Form } from "formik";
 import Errorsg from "../Msgerror/Errormsg";
 import { toast } from "react-toastify";
 import axios from "axios";
 import {Applicationschema} from "../Yup/Yup";
 function Apply() {
+  const navigate=useNavigate();
   const url="http://localhost/HRMS/Application/Application.php";
   const formData = new FormData();
 const Initivalue={
-  id:'',
    designation:"",
    companyname:'',
     des:"",
@@ -18,7 +18,6 @@ const Initivalue={
    instituename:"",
    totalexp:"",
    cgpa:"",
-   attend:"",
     degreeyear:"",
   subject:""
 }
@@ -29,7 +28,13 @@ var Role,checkstatus;
    Role=JSON.parse(Islogin);
    checkstatus=Role.id;
   };
-  console.log("id",checkstatus);
+
+useEffect(()=>{
+  if(checkstatus==undefined)
+  {
+    navigate('/login');
+  }
+},[checkstatus])
 const inputRef = useRef(null);
 const filehandler = async (values) => {
   const img = inputRef.current.files[0];
@@ -37,13 +42,12 @@ const filehandler = async (values) => {
    formData.append("designation",values.designation);
    formData.append("degreeyear",values.degreeyear);
    formData.append("totalexp",values.totalexp);
-   formData.append("companyname",values.cname);
+   formData.append("companyname",values.companyname);
    formData.append("img",img);
    formData.append("description",values.des);
    formData.append("degree",values.degree);
    formData.append("totalexp",values.totalexp);
    formData.append("cgpa",values.cgpa);
-   formData.append('attend',values.attend);
    formData.append('subject',values.subject);
    formData.append("instituename",values.instituename);
    //........Application Educations form............
@@ -65,10 +69,14 @@ const filehandler = async (values) => {
     initialValues={Initivalue}
     validationSchema={Applicationschema}
     onSubmit={(values, { resetForm }) => {
-      values && filehandler(values);
-      
+      const id={
+        id:checkstatus
+      }
+      const uservalues={...values, ...id};
+      uservalues && filehandler(uservalues);
+       console.log("values",uservalues);
       resetForm();
-      //  window.location.replace('Login','/')
+  
     }}>
       <div className="main-wrapper">
         <div className="account-content">
@@ -86,15 +94,7 @@ const filehandler = async (values) => {
                       alignItems: "center",
                     }}
                   >
-                      <div className="form-group">
-                      <Field
-                        className="form-control"
-                        name="id"
-                        required=""
-                        type="hidden"
-                        value={checkstatus}
-                      />  
-                    </div>
+                     
                     <div className="form-group">
                       <label>Univeristy name</label>
                       <Field
@@ -135,7 +135,7 @@ const filehandler = async (values) => {
                       <Errorsg name="degreeyear" className="error" />
                     </div>
                     <div className="form-group">
-                        <label>CPGA</label>
+                        <label>CPGA / Marks</label>
                     <Field
                       className="form-control"
                       name="cgpa"
@@ -144,18 +144,7 @@ const filehandler = async (values) => {
                     />
                     <Errorsg name="cgpa" className="error" />
                   </div>
-                  </div>
-                
-                  
-                  <div className="form-group">
-                    <label>Attend</label>
-                    <Field
-                      className="form-control"
-                      name="attend"
-                      required=""
-                      type="text"
-                    />
-                    <Errorsg name="attend" className="error" />
+            
                   </div>
                   <div className="form-group">
                     <label>Major subjects</label>
@@ -229,7 +218,7 @@ const filehandler = async (values) => {
                   <div className="col-sm-12">
                       <div className="form-group">
                         <label>
-                          File <span className="text-danger">*</span>
+                          Resume <span className="text-danger">*</span>
                         </label>
                         <input
                           type="file"

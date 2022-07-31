@@ -13,8 +13,8 @@ import {
   Grid,
 } from "@mui/material";
 function Category() {
-  const jobinfo = useSelector(state => state.Jobreducer);
-  console.log("jobinfo", jobinfo);
+ 
+  const CategoryInfo = useSelector((state) => state.categoryreducer);
   return (
     <>
       <Box sx={{ py: 16, backgroundColor: "white" }}>
@@ -49,14 +49,13 @@ function Category() {
           </Box>
           <br />
           <Grid container spacing={3}>
-            {jobinfo.length >0 && jobinfo.map((items,i) => {
-              const {category,catname,no_of_positons}=items;
+            {CategoryInfo.length >0 && CategoryInfo.map((items,i) => {
+              const {Catid,catname}=items;
               return (
                 <>
-                  
                   <Grid item xs={12} md={3} sx={{ py: 4 }} key={i}>
                     <Flip top>
-                    <Link to={`Categorydetails/${category}`}>
+                    <Link to={`Categorydetails/${Catid}`}>
                       <Box
                       color={theme.palette.text.primary}
                         sx={{
@@ -76,12 +75,7 @@ function Category() {
                         >
                           {catname}
                         </Typography>
-                        <Typography
-                          variant="subtitle2"
-                          sx={{ color:`${theme.palette.text.hint}` }}
-                        >
-                          ({no_of_positons})
-                        </Typography>
+                       
                       </Box>
                       </Link>
                     </Flip>
@@ -90,27 +84,7 @@ function Category() {
                 </>
               );
             })}
-            <br/>
-            <Button
-              sx={{
-                display:"flex",
-                border: " 1px solid #8b92dd",
-                color: "#8b92dd",
-                padding: "19px 69px",
-                textTransform: " uppercase",
-                cursor: " pointer",
-                display: " inline-block",
-                fontSize: {md:'14px',xs:'10px'},
-                fontWeight: 500,
-                borderRadius: " 5px",
-                transition: "color 0.4s linear",
-                margin: "auto",
-                postion: "relative",
-                marginTop: "80px",
-              }}
-            >
-              Explore Category
-            </Button>
+          
           </Grid>
         </Container>
       </Box>

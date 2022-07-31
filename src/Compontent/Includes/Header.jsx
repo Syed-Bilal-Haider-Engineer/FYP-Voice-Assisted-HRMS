@@ -1,8 +1,15 @@
 import React from "react";
 import logo from "../../Images/logo.png";
 import {Link} from 'react-router-dom';
+import useGet from "../API/API";
+import {useSelector} from 'react-redux';
+import { useState } from "react";
 function Header() {
-
+const url="http://localhost/HRMS/Notice/Notice.php";
+useGet(url,"notice");
+const noticevalue=useSelector(state=>state.noticereducer);
+console.log("noticevalue",noticevalue);
+const [noticelength,setLengthstate]=useState(noticevalue.length);
   return (
     <>
       <div className="header">
@@ -39,7 +46,7 @@ function Header() {
               data-toggle="dropdown"
             >
               <i className="fa fa-bell-o" />{" "}
-              <span className="badge badge-pill">3</span>
+              <span className="badge badge-pill">{noticelength}</span>
             </a>
             <div className="dropdown-menu notifications">
               <div className="topnav-dropdown-header">
@@ -54,121 +61,31 @@ function Header() {
                   <li className="notification-message">
                     <a href="activities.php">
                       <div className="media">
-                        <span className="avatar">
-                          <img alt="" src="assets/img/profiles/avatar-02.jpg" />
-                        </span>
-                        <div className="media-body">
+      {noticevalue.length>0 && noticevalue.map((items,index)=>{
+                return <>
+                   <div className="media-body" key={index}>
                           <p className="noti-details">
-                            <span className="noti-title">John Doe</span> added
-                            new task{" "}
+                            <span className="noti-title" style={{fontWeight:'bold'}}>
+                             {items.title}
+                            </span><br/>
+                           
                             <span className="noti-title">
-                              Patient appointment booking
+                             {items.notice_desc}
                             </span>
-                          </p>
+                          </p><br/>
                           <p className="noti-time">
                             <span className="notification-time">
-                              4 mins ago
+                             Date: {items.date}
                             </span>
                           </p>
                         </div>
+                </>
+      })}
+                     
                       </div>
                     </a>
                   </li>
-                  <li className="notification-message">
-                    <a href="activities.php">
-                      <div className="media">
-                        <span className="avatar">
-                          <img alt="" src="assets/img/profiles/avatar-03.jpg" />
-                        </span>
-                        <div className="media-body">
-                          <p className="noti-details">
-                            <span className="noti-title">Tarah Shropshire</span>{" "}
-                            changed the task name{" "}
-                            <span className="noti-title">
-                              Appointment booking with payment gateway
-                            </span>
-                          </p>
-                          <p className="noti-time">
-                            <span className="notification-time">
-                              6 mins ago
-                            </span>
-                          </p>
-                        </div>
-                      </div>
-                    </a>
-                  </li>
-                  <li className="notification-message">
-                    <a href="activities.php">
-                      <div className="media">
-                        <span className="avatar">
-                          <img alt="" src="assets/img/profiles/avatar-06.jpg" />
-                        </span>
-                        <div className="media-body">
-                          <p className="noti-details">
-                            <span className="noti-title">Misty Tison</span>{" "}
-                            added{" "}
-                            <span className="noti-title">Domenic Houston</span>{" "}
-                            and <span className="noti-title">Claire Mapes</span>{" "}
-                            to project{" "}
-                            <span className="noti-title">
-                              Doctor available module
-                            </span>
-                          </p>
-                          <p className="noti-time">
-                            <span className="notification-time">
-                              8 mins ago
-                            </span>
-                          </p>
-                        </div>
-                      </div>
-                    </a>
-                  </li>
-                  <li className="notification-message">
-                    <a href="activities.php">
-                      <div className="media">
-                        <span className="avatar">
-                          <img alt="" src="assets/img/profiles/avatar-17.jpg" />
-                        </span>
-                        <div className="media-body">
-                          <p className="noti-details">
-                            <span className="noti-title">Rolland Webber</span>{" "}
-                            completed task{" "}
-                            <span className="noti-title">
-                              Patient and Doctor video conferencing
-                            </span>
-                          </p>
-                          <p className="noti-time">
-                            <span className="notification-time">
-                              12 mins ago
-                            </span>
-                          </p>
-                        </div>
-                      </div>
-                    </a>
-                  </li>
-                  <li className="notification-message">
-                    <a href="activities.php">
-                      <div className="media">
-                        <span className="avatar">
-                          <img alt="" src="assets/img/profiles/avatar-13.jpg" />
-                        </span>
-                        <div className="media-body">
-                          <p className="noti-details">
-                            <span className="noti-title">Bernardo Galaviz</span>{" "}
-                            added new task{" "}
-                            <span className="noti-title">
-                              Private chat module
-                            </span>
-                          </p>
-                          <p className="noti-time">
-                            <span className="notification-time">
-                              2 days ago
-                            </span>
-                          </p>
-                        </div>
-                      </div>
-                    </a>
-                  </li>
+                 
                 </ul>
               </div>
               <div className="topnav-dropdown-footer">
@@ -176,32 +93,7 @@ function Header() {
               </div>
             </div>
           </li>
-          {/* /Notifications */}
-          {/* Message Notifications */}
-          <li className="nav-item dropdown">
-            <a
-              href="#"
-              className="dropdown-toggle nav-link"
-              data-toggle="dropdown"
-            >
-              <i className="fa fa-comment-o" />{" "}
-              <span className="badge badge-pill">8</span>
-            </a>
-            <div className="dropdown-menu notifications">
-              <div className="topnav-dropdown-header">
-                <span className="notification-title">Messages</span>
-                <a href="javascript:void(0)" className="clear-noti">
-                  {" "}
-                  Clear All{" "}
-                </a>
-              </div>
-             
-              <div className="topnav-dropdown-footer">
-                <a href="chat.php">View all Messages</a>
-              </div>
-            </div>
-          </li>
-          {/* /Message Notifications */}
+        
           <li className="nav-item dropdown has-arrow main-drop">
             <a
               href="#"

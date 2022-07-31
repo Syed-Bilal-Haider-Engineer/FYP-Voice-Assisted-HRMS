@@ -10,7 +10,6 @@ import Employee_list from "../Employee/Employee_list";
 import Holiday from "../Holiday/Holiday";
 import Department from "../Department/Department";
 import Terminations from "../Terminations/Terminations.jsx";
-import Roles from "../Permissiom/Roles";
 import Projectlist from "../Project/Projectlist";
 import Projects from "../Project/Projects";
 import Projectsview from "../Project/Projectsview";
@@ -31,13 +30,13 @@ import Leads from "../Leads/Leads";
 import Clientprofile from "../Users/Clientprofile";
 import Client from "../Clients/Client";
 import Dashboard from "../Dashboard/Dashboard";
+import history from './Historycomponent';
 function Routesuser() {
-
   return <>
        <Header />
        <div className="main-wrapper">
          <Sidebar />
-         <Routes>
+         <Routes history={history}  refresh={true}>
            <Route path="/" element={<Dashboard />} />
            <Route path="/Employeedashboard" element={<Employeedashboard />} />
            <Route path="/Designations" element={<Designations />} />
@@ -47,7 +46,6 @@ function Routesuser() {
            <Route path="/Holiday" element={<Holiday />} />
            <Route path="/Department" element={<Department />} />
            <Route path="/Terminations" element={<Terminations />} />
-           <Route path="/Roles" element={<Roles />} />
            <Route path="/Projectsview/:projectid" element={<Projectsview />} exact/>
            <Route path="/Projects" element={<Projects />} />
            <Route path="/Projectlist" element={<Projectlist />} />

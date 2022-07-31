@@ -1,8 +1,8 @@
 import React from "react";
 import { Formik, Field, Form } from "formik";
 import Errorsg from "../Msgerror/Errormsg";
-import schema from "../Yup/Yup";
-
+import {Promotionschema} from "../Yup/Yup";
+import {useSelector} from 'react-redux';
 const selectinput = {
   width: "100%",
   height: "45px",
@@ -15,15 +15,16 @@ const Initivalue = {
   employee: "",
 };
 function Addpromotion() {
+  const Employeestate=useSelector(state=>state.Fetchemployeereducer);
+  console.log("Employeestate",Employeestate);
   return (
     <Formik
       initialValues={Initivalue}
-      validationSchema={schema}
+      validationSchema={Promotionschema}
       onSubmit={(values, { resetForm }) => {
         console.log(values);
         alert("submit");
         resetForm();
-        //  window.location.replace('Login','/')
       }}
     >
       <div id="add_promotion" className="modal custom-modal fade" role="dialog">

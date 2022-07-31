@@ -105,14 +105,7 @@ function Vister() {
                                   <i className="material-icons">more_vert</i>
                                 </a>
                                 <div className="dropdown-menu dropdown-menu-right">
-                                  <span
-                                    className="dropdown-item"
-                                    href="#"
-                                    data-toggle="modal"
-                                    data-target="#edit_department"
-                                  >
-                                    <i className="fa fa-pencil m-r-5" /> Edit
-                                  </span>
+                                 
                                   <span
                                     className="dropdown-item"
                                    onClick={()=>{

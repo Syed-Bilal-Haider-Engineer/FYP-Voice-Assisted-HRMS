@@ -141,7 +141,7 @@ function Projectlist() {
                          
                            <span className="badge bg-inverse-success">  {status}</span>
                         </td>
-                       <Link to={`Projectsview/${project_id}`}> <td>View </td></Link>
+                       <Link to={`/Admindashboard/Projectsview/${project_id}`}> <td>View </td></Link>
                        
                         <td className="text-right">
                           <div className="dropdown dropdown-action">

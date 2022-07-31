@@ -1,6 +1,12 @@
 import React from "react";
 import Addtimesheet from "./Addtimesheet";
+import useGet from "../API/API";
+import {useSelector} from 'react-redux';
 function Timesheet() {
+  const url="http://localhost/HRMS/Tasks/Fetchtask.php";
+  useGet(url,"Tasks");
+  const tasks=useSelector(state=>state.Tasksreducer);
+  console.log("tasks",tasks);
   return (
     <>
       <>
@@ -42,41 +48,29 @@ function Timesheet() {
                     <table className="table table-striped custom-table mb-0 datatable">
                       <thead>
                         <tr>
-                          <th>Employee</th>
-                          <th>Date</th>
-                          <th>Projects</th>
-                          <th className="text-center">Assigned Hours</th>
-                          <th className="text-center">Hours</th>
+                          <th>Project</th>
+                          <th>Deadline</th>
                           <th className="d-none d-sm-table-cell">
                             Description
                           </th>
+                          <th>status</th>
                           <th className="text-right">Actions</th>
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
+                        {
+                          tasks.length >0 && tasks.map(( items,index)=>{
+                            return <>
+                               <tr key={index}>
                           <td>
-                            <h2 className="table-avatar">
-                              <a href="profile.php" className="avatar">
-                                <img
-                                  alt=""
-                                  src="assets/img/profiles/avatar-08.jpg"
-                                />
-                              </a>
-                              <a href="profile.php">
-                                Catherine Manseau <span>Android Developer</span>
-                              </a>
-                            </h2>
+                           {items.project_name}
                           </td>
-                          <td>8 Mar 2019</td>
-                          <td>
-                            <h2>Video Calling App</h2>
-                          </td>
-                          <td className="text-center">20</td>
-                          <td className="text-center">12</td>
+                          <td>{items.end_date}</td>
                           <td className="d-none d-sm-table-cell col-md-4">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing
-                            elit. Donec vel elit neque.
+                           {items.task_desc}
+                          </td>
+                          <td style={{color:'red'}}>
+                           {items.status}
                           </td>
                           <td className="text-right">
                             <div className="dropdown dropdown-action">
@@ -97,18 +91,15 @@ function Timesheet() {
                                 >
                                   <i className="fa fa-pencil m-r-5" /> Edit
                                 </a>
-                                <a
-                                  className="dropdown-item"
-                                  href="#"
-                                  data-toggle="modal"
-                                  data-target="#delete_workdetail"
-                                >
-                                  <i className="fa fa-trash-o m-r-5" /> Delete
-                                </a>
+                               
                               </div>
                             </div>
                           </td>
                         </tr>
+                            </>
+                          })
+                        }
+                     
                       </tbody>
                     </table>
                   </div>

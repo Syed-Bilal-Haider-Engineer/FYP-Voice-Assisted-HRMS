@@ -29,17 +29,7 @@ function Notice() {
                   >
                     <i class="fa fa-plus"></i> Add Notice
                   </a>
-                  <div class="view-icons">
-                    <a href="clients.php" class="grid-view btn btn-link">
-                      <i class="fa fa-th"></i>
-                    </a>
-                    <a
-                      href="clients-list.php"
-                      class="list-view btn btn-link active"
-                    >
-                      <i class="fa fa-bars"></i>
-                    </a>
-                  </div>
+                
                 </div>
               </div>
             </div>

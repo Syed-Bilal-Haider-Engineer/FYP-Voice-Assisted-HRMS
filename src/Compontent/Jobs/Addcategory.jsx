@@ -17,7 +17,6 @@ function Addcategory() {
       onSubmit={(values, { resetForm }) => {
         console.log(values);
         setAddState(values);
-        alert("submit");
         resetForm();
         
       }}

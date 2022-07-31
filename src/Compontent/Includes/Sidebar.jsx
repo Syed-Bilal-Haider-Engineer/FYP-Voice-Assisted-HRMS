@@ -14,7 +14,7 @@ function Sidebar() {
 
   return (
     <>
-      <div className="sidebar" id="sidebar">
+    <div className="sidebar" id="sidebar" >
         <div className="sidebar-inner slimscroll">
           <div id="sidebar-menu" className="sidebar-menu">
             <ul>
@@ -34,29 +34,30 @@ function Sidebar() {
                   <i className="la la-user" /> <span> Employees</span>{" "}
                   <span className="menu-arrow" />
                 </a>
-                <ul style={{ display: "none" }}>
+               
+                <ul>
                   <li>
-                    <Link to="/Employee_leave">Employee Leave </Link>
+                    <Link to="/Admindashboard/Employee_leave">Employee Leave </Link>
                   </li>
                  
                   <li>
-                    <Link to="/Timesheet">Timesheet</Link>
+                    <Link to="/Admindashboard/Timesheet">Timesheet</Link>
                   </li>
                   {checkstatus==2 ? ( <>
                     <li>
-                    <Link to="/Employee">All Employees </Link>
+                    <Link to="/Admindashboard/Employee">All Employees </Link>
                   </li>
                   <li>
-                    <Link to="/Holiday">Holidays</Link>
+                    <Link to="/Admindashboard/Holiday">Holidays</Link>
                   </li>
                   <li>
-                    <Link to="/Department">Departments</Link>
+                    <Link to="/Admindashboard/Department">Departments</Link>
                   </li>
                   <li>
-                    <Link to="/Designations">Designations</Link>
+                    <Link to="/Admindashboard/Designations">Designations</Link>
                   </li> </>): (null )}
                 </ul>
-              </li>
+                </li>
               {  checkstatus==2 ? ( <>
                  <li className="submenu">
                  <a href="#">
@@ -65,49 +66,47 @@ function Sidebar() {
                  </a>
                  <ul style={{ display: "none" }}>
                    <li>
-                     <Link to="/Jobslisting">Jobs </Link>
+                     <Link to="/Admindashboard/Jobslisting">Jobs </Link>
                    </li>
                    <li>
-                     <Link to="/Category">Category </Link>
+                     <Link to="/Admindashboard/Category">Category </Link>
                    </li>
                    <li>
-                     <Link to="/Applications">Applications </Link>
+                     <Link to="/Admindashboard/Applications">Applications </Link>
                    </li>
                    <li>
-                     <Link to="/Vister">Vister </Link>
+                     <Link to="/Admindashboard/Vister">Vister </Link>
                    </li>
                  </ul>
                </li>
                <li>
-                 <Link to="/Client">
+                 <Link to="/Admindashboard/Client">
                    <i className="la la-users" /> <span>Clients</span>
                  </Link>
                </li>
                <li>
-               <Link to="/Leads">
+                    <Link to="/Admindashboard/Timesheet">Timesheet</Link>
+                  </li>
+               <li>
+               <Link to="/Admindashboard/Leads">
                  <i className="la la-user-secret" /> <span>Leads</span>
                </Link>
              </li>
              <li>
-                <Link to="/Terminations">
+                <Link to="/Admindashboard/Terminations">
                   <i className="la la-times-circle" />
                   <span>Termination</span>
                 </Link>
               </li>
               <li>
-                <Link to="/Notice">
+                <Link to="/Admindashboard/Notice">
                   <i className="la la-times-circle" />
                   <span>Notice</span>
                 </Link>
               </li>
               <li>
-                <Link to="/Promotions">
+                <Link to="/Admindashboard/Promotions">
                   <i className="la la-bullhorn" /> <span>Promotion</span>
-                </Link>
-              </li>
-              <li>
-                <Link to="/Roles">
-                  <i className="la la-bullhorn" /> <span>Permission</span>
                 </Link>
               </li>
              </>
@@ -122,7 +121,7 @@ function Sidebar() {
                 </a>
                 <ul style={{ display: "none" }}>
                   <li>
-                    <Link to="/Projects">Projects</Link>
+                    <Link to="/Admindashboard/Projects">Projects</Link>
                   </li>
                 </ul>
               </li>
@@ -130,7 +129,9 @@ function Sidebar() {
               <li className="menu-title">
                 <span>HR</span>
               </li>
-
+              <li>
+                    <Link to="/Admindashboard/Projects">Projects</Link>
+                  </li>
               <li className="submenu">
                 <a href="#">
                   <i className="la la-money" /> <span> Payroll </span>{" "}
@@ -138,27 +139,27 @@ function Sidebar() {
                 </a>
                 <ul style={{ display: "none" }}>
                   <li>
-                    <Link to="/Salary"> Employee Salary </Link>
+                    <Link to="/Admindashboard/Salary"> Employee Salary </Link>
                   </li>
                   <li>
-                    <Link to="/Salarysetting">Salary setting</Link>
+                    <Link to="/Admindashboard/Salarysetting">Salary setting</Link>
                   </li>
                   <li>
-                    <Link to="/Salaryview"> Payslip </Link>
+                    <Link to="/Admindashboard/Salaryview"> Payslip </Link>
                   </li>
                 </ul>
               </li>
 
               
               <li>
-                <Link to="/Resignations">
+                <Link to="/Admindashboard/Resignations">
                   <i className="la la-external-link-square" />{" "}
                   <span>Resignations</span>
                 </Link>
               </li>
              
               <li>
-                <Link to="/Contactus">
+                <Link to="/Admindashboard/Contactus">
                 <i className="la la-times-circle" />
                   <span>Contact</span>
                 </Link>
@@ -173,7 +174,7 @@ function Sidebar() {
                 </a>
                 <ul style={{ display: "none" }}>
                   <li>
-                    <Link to="/Profile">Employee Profile</Link>
+                    <Link to="/Admindashboard/Profile">Employee Profile</Link>
                   </li>
                  
                 </ul>
@@ -184,7 +185,7 @@ function Sidebar() {
                 </a>
               </li>
               <li>
-                <Link to="/Logout">
+                <Link to="/Admindashboard/Logout">
                   <i className="la la-power-off" /> <span>Logout</span>
                 </Link>
               </li>

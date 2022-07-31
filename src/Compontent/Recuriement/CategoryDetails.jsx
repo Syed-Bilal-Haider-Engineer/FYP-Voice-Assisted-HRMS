@@ -43,18 +43,13 @@ function Categorydetails() {
                   py: 3,
                 }}
               >
-            {
-              CategoryDetails&&CategoryDetails.map((items,i)=>(
-                items.category==categoryID ? (items.catname):''
-              ))
-            }
+            Category details jobs
               </Typography>
             </Fade>
           </Box>
-          {CategoryDetails&&CategoryDetails.map((items,i)=>(
+ {CategoryDetails&&CategoryDetails.map((items,i)=>(
             items.category==categoryID ? ( <Fade top>
                   <Box
-
                   key={i}
                     sx={{
                       width: "100%",
@@ -94,10 +89,10 @@ function Categorydetails() {
                           display: "flex",
                           justifyContent: "space-between",
                           alignItems: "center",
-                          color: "lightgray",
+                          color: "black",
                         }}
                       >
-                        <Typography>company name</Typography>
+                        <Typography>{items.company_name}</Typography>
                         <Typography>last date:{items.last_date} </Typography>
                         <Typography>{items.job_city}</Typography>
                       </Box>
@@ -109,8 +104,8 @@ function Categorydetails() {
                         textAlign: "right",
                       }}
                     >
-                      {checkstatus==0 &&
-                      <Button
+                      {checkstatus==0 || checkstatus==undefined ?
+                      (<Button
                         sx={{
                           width: { md: "80px", xs: "100%" },
                           height: "40px",
@@ -126,7 +121,7 @@ function Categorydetails() {
                           {" "}
                           Apply
                         </NavLink>
-                      </Button>}
+                      </Button>):''}
                       <Typography mt={1}></Typography>
                     </Box>
                   </Box>
@@ -135,6 +130,7 @@ function Categorydetails() {
          
           ):null))
         } 
+         
          
         </Container>
       </Box>

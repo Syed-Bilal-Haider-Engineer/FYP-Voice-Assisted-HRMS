@@ -138,8 +138,7 @@ export const employeeshema = yup.object().shape({
     .string()
     .required("Confirm password required")
     .oneOf([yup.ref("password"), null], "Passwords must match"),
-  username: yup
-    .string().required("Selected user is required"),
+  username: yup.string().required("Selected user is required"),
   department: yup.string().required("Department is required"),
   designation: yup.string().required("Designations is required"),
 });
@@ -169,66 +168,82 @@ export const jobschema = yup.object().shape({});
 
 // ..............User schema.__inputType...............
 export const userschema = yup.object().shape({
-  username: yup.string().matches(/^[A-Za-z ]*$/, "Please enter valid user name").required("Name is required"),
-  email:yup.string().email("Please enter vaild email").required("Email required"),
+  username: yup
+    .string()
+    .matches(/^[A-Za-z ]*$/, "Please enter valid user name")
+    .required("Name is required"),
+  email: yup
+    .string()
+    .email("Please enter vaild email")
+    .required("Email required"),
   password: yup
-  .string()
-  .min(8, "minimam 8 characters")
-  .max(32, "Maximum 32 characters")
-  .required(),
+    .string()
+    .min(8, "minimam 8 characters")
+    .max(32, "Maximum 32 characters")
+    .required(),
   confirm_pass: yup
-  .string()
-  .required("Confirm password required")
-  .oneOf([yup.ref("password"), null], "Passwords must match"),
-  phone:yup.number()
-  .typeError("That doesn't look like a phone number")
-  .positive("A phone number can't start with a minus")
-  .integer("A phone number can't include a decimal point")
-  .min(11, "Please enter valied numder")
-  .required("A phone number is required"),
+    .string()
+    .required("Confirm password required")
+    .oneOf([yup.ref("password"), null], "Passwords must match"),
+  phone: yup
+    .number()
+    .typeError("That doesn't look like a phone number")
+    .positive("A phone number can't start with a minus")
+    .integer("A phone number can't include a decimal point")
+    .min(11, "Please enter valied numder")
+    .required("A phone number is required"),
 });
-
 
 // ...........Applications schema............
 export const Applicationschema = yup.object().shape({
-  instituename: yup.string().matches(/^[A-Za-z ]*$/, "Please enter valid University name").required("univeristy name is required"),
-  degree: yup.string().matches(/^[A-Za-z ]*$/, "Please enter valid degree name").required("degree name is required"),
-  cgpa:yup.string().max(4,"Maximum 4").required("CGPA is required"),
-  subject:yup.string().required("Subject is required"),
-  designation:yup.string().required("Designation is required"),
-  degreeyear:yup.string().required("Degree is required")
+  instituename: yup
+    .string()
+    .matches(/^[A-Za-z ]*$/, "Please enter valid University name")
+    .required("univeristy name is required"),
+  degree: yup
+    .string()
+    .matches(/^[A-Za-z ]*$/, "Please enter valid degree name")
+    .required("degree name is required"),
+  cgpa: yup.string().max(4, "Maximum 4").required("CGPA is required"),
+  subject: yup.string().required("Subject is required"),
+  degreeyear: yup.string().required("Degree is required"),
 });
-
 
 // ............Resignations Employee...............
 
-
-const Initivalue={
-  employee:'',
-  noticedate:'',
-  resignation_date:'',
-  reason:'',
-  department:''
-}
 export const Resignationsschema = yup.object().shape({
   employee: yup.string().required("employee name is required"),
   noticedate: yup.string().required("Notice date name is required"),
-  resignation_date:yup.string().required("Resignation date is required"),
-  reason:yup.string().required("Reason is required"),
-  department:yup.string().required("department is required"),
+  resignation_date: yup.string().required("Resignation date is required"),
+  reason: yup.string().required("Reason is required"),
+  department: yup.string().required("department is required"),
 });
 
+export const projectschema = yup.object().shape({
+  pro_name: yup
+    .string()
+    .matches(/^[A-Za-z ]*$/, "Please enter valid project name ,only characters")
+    .required("Project name is required"),
+  client: yup.string().required("Client name is required"),
+  teammem: yup.string().required("Team memebers required"),
+  start_date: yup.string().required("start date is required"),
+  end_date: yup.string().required("End date is required"),
+  leader: yup.string().required("team leader is required"),
+  department: yup.string().required("Department name is required"),
+  description: yup
+    .string()
+    .min(30, "Project description minimum 30 characters")
+    .max(250, "Project description maximum 250 characters")
+    .required("Project details is required"),
+});
 
+export const taskschema = yup.object().shape({
+  description: yup.string().required("Project name is required"),
+  status: yup.string().required("Status is required complete or working"),
+});
 
-export const projectschema=yup.object().shape(
-  {
-    pro_name:yup.string().matches(/^[A-Za-z ]*$/, "Please enter valid project name ,only characters").required("Project name is required"),
-    client:yup.string().required("Client name is required"),
-    teammem:yup.string().required("Team memebers required"),
-    start_date:yup.string().required("start date is required"),
-    end_date:yup.string().required("End date is required"),
-    leader:yup.string().required("team leader is required"),
-    department:yup.string().required("Department name is required"),
-    description:yup.string().min(30,"Project description minimum 30 characters").max(250,"Project description maximum 250 characters").required("Project details is required")
-  }
-)
+export const Promotionschema =yup.object().shape({
+  promotion_from:yup.string().required("Promotion from is required"),
+  promotion_to:yup.string().required("Promotion to is required"),
+  employee:yup.string().required("Employee is required")
+})

@@ -91,3 +91,17 @@ export const jobsearch=(values)=>{
     payload:values
   }
 }
+
+export const Tasksdata=(values)=>{
+  return {
+    type:ActionTypes.Tasks,
+    payload:values
+  }
+}
+
+export const Notice=(values)=>{
+  return {
+    type:ActionTypes.notice,
+    payload:values
+  }
+}

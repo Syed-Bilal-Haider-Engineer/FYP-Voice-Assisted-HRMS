@@ -44,7 +44,7 @@ function FaqAI() {
               else if (commandData.command === 'home') {
                 navigate('/');
               }
-            
+              
             },
           });
         }

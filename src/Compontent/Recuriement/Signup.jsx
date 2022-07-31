@@ -2,6 +2,7 @@ import React, { useEffect,useState } from "react";
 import logo from "../../Images/logo2.png";
 import { Formik, Field, Form } from "formik";
 import Errorsg from "../Msgerror/Errormsg";
+import { NavLink } from "react-router-dom";
 import schema from "../Yup/Yup";
 import {POST} from '../API/PostAPI';
 
@@ -146,12 +147,12 @@ function Signup() {
                         Singup
                       </button>
                       <div className="col-auto pt-2">
-                        <a
+                        <NavLink
                           className="text-muted float-right"
-                          href=""
+                         to="/login"
                         >
                           Login..
-                        </a>
+                        </NavLink>
                       </div>
                     </div>
                   </Form>

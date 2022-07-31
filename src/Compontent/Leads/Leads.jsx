@@ -29,37 +29,30 @@ function Leads() {
               <table className="table table-striped table-nowrap custom-table mb-0 datatable">
                 <thead>
                   <tr>
-                    <th>#</th>
                     <th>Lead Name</th>
-                    <th>Email</th>
-                    <th>Phone</th>
                     <th>Project</th>
-                    <th>Assigned Staff</th>
                     <th>Status</th>
-                    <th>Created</th>
                     <th className="text-right">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>1</td>
+                  {projectteamLead.length > 0 && projectteamLead.map((items,index)=>{
+                   return <>
+                   <tr key={index}>
+                
                     <td>
                       <h2 className="table-avatar">
-                        <a href="#" className="avatar">
-                          <img alt="" src="assets/img/profiles/avatar-11.jpg" />
-                        </a>
-                        <a href="#">Wilmer Deluna</a>
+                        <a href="#">{items.leader}</a>
                       </h2>
                     </td>
-                    <td>wilmerdeluna@example.com</td>
-                    <td>9876543210</td>
                     <td>
-                      <a href="project-view.php">Hospital Administration</a>
+                      <a href="project-view.php">{items.project_name}</a>
                     </td>
-                    <td>
-                      <span className="badge bg-inverse-success">Working</span>
-                    </td>
-                    <td>10 hours ago</td>
+                    {items.status=="Working" ?(<td>
+                      <span className="badge "  style={{color:'red'}}>{items.status}</span>
+                    </td>):(<td>
+                      <span className="badge bg-inverse-success">{items.status}</span>
+                    </td>)}
                     <td className="text-right">
                       <div className="dropdown dropdown-action">
                         <a
@@ -81,6 +74,9 @@ function Leads() {
                       </div>
                     </td>
                   </tr>
+                   </>
+                  })}
+                  
                 
                 </tbody>
               </table>

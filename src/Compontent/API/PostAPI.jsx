@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import Loading from '../../Loading';
 export const POST = ({ values, url, Addstate }) => {
-
+  const [loading, setLoading] = useState(false);
 console.log("values",values);
 
   const navigate = useNavigate();
+  const { state } = useLocation();
+
   const ToastyHandler = (msg, status) => {
     if (status == false) {
       toast.error(`${msg}`);
@@ -15,12 +18,15 @@ console.log("values",values);
     }
   };
   const usersPost = async () => {
+    setLoading(true);
     await axios
       .post(url,values)
       .then((response) => {
+        setLoading(false);
             console.log("server responces",response.data);
         const status = response.data.status;
         const msg = response.data.message;
+        // .......login ............
         if (response.data.token) {
           console.log("id",response.data.id);
           const token = {
@@ -30,6 +36,7 @@ console.log("values",values);
           const string = JSON.stringify(token);
           const encrypt=window.btoa(string);
            localStorage.setItem("user",encrypt);
+          
         }
          console.log("response.data.token",response.data.token);
         if(response.data.token==0){
@@ -37,11 +44,12 @@ console.log("values",values);
         }
         else if(response.data.token==1)
         {
-            navigate('/Employeedashboard')
+          navigate('/Admindashboard/Employeedashboard')
         }
         else if(response.data.token==2)
         {
-               navigate('/');
+          navigate('/Admindashboard/');
+
         }
 
         Addstate("");
@@ -53,6 +61,7 @@ console.log("values",values);
       })
       .catch((error) => {
         console.log(error);
+        setLoading(false);
         const msg = error.message;
         const status = error.status;
         console.log("error message=", msg, "status=", status);
@@ -60,9 +69,11 @@ console.log("values",values);
           ToastyHandler(msg, status);
         }
       });
-    // console.log("values",values,"url",url);
   };
   useEffect(() => {
     values && usersPost();
   }, [values]);
+
+
+  return <>  <Loading loading={loading} /> </>
 };

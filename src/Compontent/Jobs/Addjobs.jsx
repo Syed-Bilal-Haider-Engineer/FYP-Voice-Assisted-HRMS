@@ -3,8 +3,6 @@ import { Formik, Field, Form } from "formik";
 import Errorsg from "../Msgerror/Errormsg";
 import { jobschema } from "../Yup/Yup";
 import { useSelector } from "react-redux";
-import {POST} from '../API/PostAPI';
-import useGet from "../API/API";
 import { toast } from "react-toastify";
 import axios from "axios";
 const urlpost="http://localhost/HRMS/Job/Addjob.php";
@@ -22,9 +20,19 @@ const Initivalue = {
   status: "",
   Notice: "",
   skills:"",
-  position:''
+  position:'',
+  company:''
 };
-
+const Status=[
+  {
+    id:0,
+    value:"InActive"
+  },
+  {
+    id:1,
+    value:"Active"
+  }
+]
 function Addjobs() {
   const [add,setAddState]=React.useState(false);
   var jobform;
@@ -32,6 +40,7 @@ function Addjobs() {
   const CategoryInfo = useSelector((state) => state.categoryreducer);
   const inputRef = useRef(null);
   const filehandler = async (values) => {
+    console.log("Job values",values);
     const img = inputRef.current.files[0];
      formData.append("title",values.title);
      formData.append("enddate",values.enddate);
@@ -42,26 +51,32 @@ function Addjobs() {
      formData.append("Notice",values.Notice);
      formData.append('skills',values.skills);
      formData.append('position',values.position);
+     formData.append('company',values.company);
      try {
       const response = await axios.post(urlpost,formData,{headers:{ "Content-Type": "multipart/form-data" }});
-      const msg=response.data;
-      if(response.status==200)
+      const msg=response.data.message;
+      console.log("Job responsece",response.data);
+      if(response.data.status==true)
       {
         toast.success(`${msg}`);
       }
+      else if(response.data.status==false)
+      {
+        toast.error(`${msg}`);
+      }
     } catch(error) {
-      toast.success(`${error}`);
+      toast.error(`${error}`);
     }
   };
-  console.log(CategoryInfo,"CategoryInfo------<>")
+  // console.log(CategoryInfo,"CategoryInfo------<>")
   return (
     <>
       <Formik
         initialValues={Initivalue}
-        validationSchema={jobschema}
+        // validationSchema={jobschema}
         onSubmit={(values, { resetForm }) => {
           filehandler(values);
-          alert("submit");
+          console.log("Job values",values);
           resetForm();
         }}
       >
@@ -126,7 +141,20 @@ function Addjobs() {
                         />
                         <Errorsg name="title" className="error" />
                       </div>
+                      <div className="form-group">
+                        <label>
+                          Company name: <span className="text-danger">*</span>
+                        </label>
+                        <Field
+                          className="form-control"
+                          required=""
+                          name="company"
+                          type="text"
+                        />
+                        <Errorsg name="company" className="error" />
+                      </div>
                     </div>
+                 
                     <div className="col-sm-6">
                       <div className="form-group">
                         <label>
@@ -164,7 +192,7 @@ function Addjobs() {
                           className="select"
                           style={selectinput}
                         >
-                          {CategoryInfo.map((items) => {
+                          {CategoryInfo.length >0 && CategoryInfo.map((items) => {
                             return (
                               <>
                                 <option value={items.Catid}>
@@ -185,9 +213,15 @@ function Addjobs() {
                           name="status"
                           className="select"
                           style={selectinput}
-                        >
-                          <option>Active</option>
-                          <option>Inactive</option>
+                        > {
+                          Status.map((items,index)=>{
+                           return <>
+                            <option value={items.id}>{items.value}</option>
+                        
+                           </>
+                          })
+                        }
+                         
                         </Field>
                         <Errorsg name="status" className="error" />
                       </div>

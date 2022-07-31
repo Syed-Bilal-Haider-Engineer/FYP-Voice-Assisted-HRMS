@@ -12,20 +12,13 @@ import { ThemeProvider } from "@mui/material/styles";
 import Jobdetails from '../Recuriement/Jobdetails';
 import Categorydetails from '../Recuriement/CategoryDetails';
 import theme from '../../Theme/Theme';
-
+import history from './Historycomponent';
 function Routenormaluser() {
 
-  var Role, checkstatus;
-  if (localStorage.getItem("user")) {
-    const Islogin = window.atob(localStorage.getItem("user"));
-    Role = JSON.parse(Islogin);
-    checkstatus = Role.token;
-  }
-  console.log("checkstatus App.js", checkstatus);
   return <>
    <ThemeProvider theme={theme}>
   <Header />
-   <Routes>
+   <Routes history={history} refresh={true}>
    <Route path="/" element={<Main />}  exact/>
    <Route path="/login" element={<Login />} exact /> 
     <Route path="/signup" element={<Signup />} exact />

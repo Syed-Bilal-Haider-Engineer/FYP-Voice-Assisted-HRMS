@@ -159,6 +159,30 @@ const Projectreducer=(state=project,actions)=>{
       return state;
     }
 }
+
+const Tasks=[];
+const Tasksreducer=(state=Tasks,actions)=>{
+    switch(actions.type){
+        case ActionTypes.Tasks:
+            const tasksvalue=actions.payload;
+            state=[...tasksvalue];
+        return state;
+        default:
+      return state;
+    }
+}
+
+const notice=[];
+const noticereducer=(state=Tasks,actions)=>{
+    switch(actions.type){
+        case ActionTypes.notice:
+            const noticevalue=actions.payload;
+            state=[...noticevalue];
+        return state;
+        default:
+      return state;
+    }
+}
 const reducer=combineReducers(
     {
         Userregisteration,
@@ -172,6 +196,8 @@ const reducer=combineReducers(
         Fetchemployeereducer,
         Fetchemployeeleavereducer,
         Clientreducer,
-        Projectreducer
+        Projectreducer,
+        Tasksreducer,
+        noticereducer
     });
 export default reducer

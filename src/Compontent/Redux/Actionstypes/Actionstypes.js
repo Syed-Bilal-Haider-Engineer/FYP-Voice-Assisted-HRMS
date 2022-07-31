@@ -11,5 +11,7 @@ export const ActionTypes = {
     Employeeleave:'Employeeleave',
     Client:'Client',
     project:'projectdetails',
-    jobsearch:"jobsearch"
+    jobsearch:"jobsearch",
+    Tasks:'Tasks',
+    notice:'notice'
 }

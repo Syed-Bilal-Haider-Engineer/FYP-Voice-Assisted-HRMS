@@ -22,9 +22,6 @@ function Jobdetails() {
   console.log("id",id);
   const jobdetails = useSelector(state => state.Jobreducer);
   console.log("jobdetails",jobdetails);
-
-  
-
   return (
     <>
       <Home />
@@ -66,8 +63,8 @@ function Jobdetails() {
                   alignItems:'center'
                 }}
               >
-                {checkstatus==0 &&
-                <Button
+                {checkstatus==0 || checkstatus==undefined ?
+                (<Button
                   sx={{
                     width: { md: "80px", xs: "100%" },
                     height: "40px",
@@ -82,7 +79,7 @@ function Jobdetails() {
                     {" "}
                     Apply
                   </NavLink>
-                </Button>}
+                </Button>):''}
                 <Typography mt={1}>
                   {element.last_date}
                 </Typography>
