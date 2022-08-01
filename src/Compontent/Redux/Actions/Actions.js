@@ -86,6 +86,7 @@ export const project=(values)=>{
 }
 
 export const jobsearch=(values)=>{
+  console.log("values",values);
   return {
     type:ActionTypes.jobsearch,
     payload:values

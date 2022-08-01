@@ -7,6 +7,7 @@ import { Container, Box, Stack, Pagination } from "@mui/material";
 
 function Jobslisting() {
   const url = "http://localhost/HRMS/Job/Jobs.php";
+  const StatusURL = "http://localhost/HRMS/Job/JobActiveInActive.php";
   const type = "job";
   var i = 0;
   const jobinfo = useSelector((state) => state.Jobreducer);
@@ -14,6 +15,10 @@ function Jobslisting() {
   useGet(url, type);
   var i = 0;
   // ......paginations.........
+  const [jobidtstate, setjobstate] = useState("");
+  // ........pass object.........
+  const [jobstatusstate, statuschangestate] = useState("");
+
   const [postsPerPage, setPostsPerPage] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
   const handleChangepage = (event, value) => {
@@ -30,6 +35,11 @@ function Jobslisting() {
     };
     setAddState(values);
   };
+
+  const ChangeStatusHandler = (id) => {
+    statuschangestate({id,jobidtstate });
+  };
+  console.log("jobstatusstate",jobstatusstate);
   return (
     <>
       <>
@@ -108,7 +118,7 @@ function Jobslisting() {
                                   <tr style={{ color: "black" }}>
                                     <td>{i}</td>
                                     <td>{title}</td>
-                                    <td>{description}</td>
+                                    <td>{description.substring(0, 100)}</td>
                                     <td>{catname}</td>
                                     <td>{no_of_positons}</td>
                                     <td>{job_city}</td>
@@ -132,14 +142,18 @@ function Jobslisting() {
                                           fontSize: "12px",
                                           border: "none",
                                         }}
+                                        onChange={(e) => {
+                                          setjobstate(e.target.value);
+                                          ChangeStatusHandler(job_id);
+                                        }}
                                       >
                                         {status == 0 ? (
                                           <option>InActive</option>
                                         ) : (
                                           <option>Active</option>
                                         )}
-                                        <option>Active</option>
-                                        <option>InActive</option>
+                                        <option value="1">Active</option>
+                                        <option value="0">InActive</option>
                                       </select>
                                     </td>
                                     <td className="text-right">
@@ -212,6 +226,7 @@ function Jobslisting() {
           {/* /Page Wrapper */}
         </div>
         {add && <POST values={add} url={removeURL} Addstate={setAddState} />}
+        {jobstatusstate && <POST values={jobstatusstate} url={StatusURL} Addstate={statuschangestate} />}
       </>
     </>
   );

@@ -84,20 +84,18 @@ function Sidebar() {
                    <i className="la la-users" /> <span>Clients</span>
                  </Link>
                </li>
-               <li>
-                    <Link to="/Admindashboard/Timesheet">Timesheet</Link>
-                  </li>
+             
                <li>
                <Link to="/Admindashboard/Leads">
                  <i className="la la-user-secret" /> <span>Leads</span>
                </Link>
              </li>
-             <li>
+             {/* <li>
                 <Link to="/Admindashboard/Terminations">
                   <i className="la la-times-circle" />
                   <span>Termination</span>
                 </Link>
-              </li>
+              </li> */}
               <li>
                 <Link to="/Admindashboard/Notice">
                   <i className="la la-times-circle" />
@@ -129,9 +127,7 @@ function Sidebar() {
               <li className="menu-title">
                 <span>HR</span>
               </li>
-              <li>
-                    <Link to="/Admindashboard/Projects">Projects</Link>
-                  </li>
+              
               <li className="submenu">
                 <a href="#">
                   <i className="la la-money" /> <span> Payroll </span>{" "}
@@ -148,15 +144,13 @@ function Sidebar() {
                     <Link to="/Admindashboard/Salaryview"> Payslip </Link>
                   </li>
                 </ul>
-              </li>
-
-              
-              <li>
+              </li>              
+              {/* <li>
                 <Link to="/Admindashboard/Resignations">
                   <i className="la la-external-link-square" />{" "}
                   <span>Resignations</span>
                 </Link>
-              </li>
+              </li> */}
              
               <li>
                 <Link to="/Admindashboard/Contactus">

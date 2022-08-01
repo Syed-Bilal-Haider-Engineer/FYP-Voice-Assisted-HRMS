@@ -63,13 +63,13 @@ function Employee_list() {
                     </a>):null }
                     <div className="view-icons">
                     <Link
-                     to="/Employee"
+                     to="/Admindashboard/Employee"
                       title="Grid View"
                       className="grid-view btn btn-link active"
                     >
                       <i className="fa fa-th" />
                     </Link>
-                    <Link to="/Employee_list"
+                    <Link to="/Admindashboard/Employee_list"
                       title="Tabular View"
                       className="list-view btn btn-link"
                     >

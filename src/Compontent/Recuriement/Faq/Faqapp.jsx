@@ -6,11 +6,12 @@ import {jobsearch} from '../../Redux/Actions/Actions';
 import {useDispatch} from 'react-redux';
 import FaqApp from './Faq';
 function FaqAI() {
-   const [searchJob,setSearchJob]=useState();
+  const usedispatch=useDispatch();
     const alanBtnInstance = useRef(null);
     const [index, setIndex] = useState(null);
     const [currentFaqId, setCurrentFaqId] = useState(null);
     const navigate=useNavigate();
+
     useEffect(() => {
         if (!alanBtnInstance.current) {
           alanBtnInstance.current =
@@ -33,7 +34,7 @@ function FaqAI() {
               else if(commandData.command==='todoApp')
               {
                 console.log(" commandData.data", commandData.data);
-                setSearchJob(commandData.data);
+                usedispatch(jobsearch(commandData.data));
               }
               else if (commandData.command === 'login') {
                 navigate('/login');

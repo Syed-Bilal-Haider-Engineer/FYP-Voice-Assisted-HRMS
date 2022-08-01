@@ -3,7 +3,7 @@ import Add_category from "./Addcategory";
 import useGet from "../API/API";
 import { POST } from "../API/PostAPI";
 import { useSelector } from "react-redux";
-
+import Editecategory from './Editecategory';
 import {
   Container,
   Box,
@@ -17,6 +17,7 @@ import {
 const url = "http://localhost/HRMS/Category/deletecategory.php";
 function Category() {
   const [add, setAddState] = React.useState();
+  const [setupdate, setUpdatestate] = React.useState();
   const Action = {
     cursor: "pointer",
   };
@@ -37,6 +38,10 @@ function Category() {
     };
     setAddState(values);
   };
+
+  const Updatecategory=(id)=>{
+    setUpdatestate(id);
+  }
   return (
     <>
       <>
@@ -110,8 +115,11 @@ function Category() {
                                         <span
                                           className="dropdown-item"
                                           data-toggle="modal"
-                                          data-target="#edit_department"
+                                          data-target="#add_category"
                                           style={Action}
+                                          onClick={()=>{
+                                            Updatecategory(Items.Catid);
+                                          }}
                                         >
                                           <i className="fa fa-pencil m-r-5" />{" "}
                                           Edit
@@ -156,6 +164,7 @@ function Category() {
           </div>
         </div>
         {add && <POST values={add} url={url} Addstate={setAddState} />}
+        {setupdate && <Editecategory values={setupdate} Editefun={setUpdatestate} />}
       </>
     </>
   );

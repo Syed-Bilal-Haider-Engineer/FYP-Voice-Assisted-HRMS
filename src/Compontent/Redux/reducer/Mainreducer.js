@@ -46,7 +46,6 @@ const Visterreducer=(state=vister,actions)=>{
 
 // .................Job reducer...........
 const Job=[];
-const searchJob = "";
 const Jobreducer=(state=Job,actions)=>{
     // console.log("Actions payload",actions.payload);
     switch(actions.type){
@@ -54,6 +53,14 @@ const Jobreducer=(state=Job,actions)=>{
             const Jobinfo=actions.payload;
             state=[...Jobinfo];
         return state;
+        case ActionTypes.jobsearch:
+            const searchkey=actions.payload;
+            console.log("searchkey",searchkey);
+           const newstate=state.filter((items)=>{
+            const {catname,company_name,job_city,title}=items;
+                return catname==searchkey || company_name==searchkey || job_city==searchkey || title==searchkey;
+            })
+        return newstate;
         default:
       return state;
     }
@@ -127,8 +134,8 @@ const Fetchemployeeleave=[];
 const Fetchemployeeleavereducer=(state=Fetchemployeeleave,actions)=>{
     switch(actions.type){
         case ActionTypes.Employeeleave:
-            const Employeevalue=actions.payload;
-            state=[...Employeevalue];
+            const Employeevalueleave=actions.payload;
+            state=[...Employeevalueleave];
         return state;
         default:
       return state;
@@ -173,7 +180,7 @@ const Tasksreducer=(state=Tasks,actions)=>{
 }
 
 const notice=[];
-const noticereducer=(state=Tasks,actions)=>{
+const noticereducer=(state=notice,actions)=>{
     switch(actions.type){
         case ActionTypes.notice:
             const noticevalue=actions.payload;

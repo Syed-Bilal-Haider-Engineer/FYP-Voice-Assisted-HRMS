@@ -106,7 +106,7 @@ const [noticelength,setLengthstate]=useState(noticevalue.length);
               <span>name</span>
             </a>
             <div className="dropdown-menu">
-              <Link className="dropdown-item" to="/Profile">
+              <Link className="dropdown-item" to="/Admindashboard/Profile">
                 My Profile
               </Link>
               <a className="dropdown-item" href="settings.php">
@@ -130,15 +130,15 @@ const [noticelength,setLengthstate]=useState(noticevalue.length);
             <i className="fa fa-ellipsis-v" />
           </a>
           <div className="dropdown-menu dropdown-menu-right">
-            <Link className="dropdown-item" to="/Profile">
+            <Link className="dropdown-item" to="/Admindashboard/Profile">
               My Profile
             </Link>
             <a className="dropdown-item" href="settings.php">
               Settings
             </a>
-            <a className="dropdown-item" href="login.php">
+            <Link className="dropdown-item" to="/logout">
               Logout
-            </a>
+            </Link>
           </div>
         </div>
         {/* /Mobile Menu */}

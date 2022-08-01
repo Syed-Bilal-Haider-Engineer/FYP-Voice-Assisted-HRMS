@@ -3,9 +3,8 @@ import Addleave from "./Addleave";
 import { useSelector } from "react-redux";
 import { POST } from "../API/PostAPI";
 function Employee_leave() {
-
-const [remove,setAdd]=React.useState();
-const [Leave,setleave]=React.useState();
+  const [remove, setAdd] = React.useState();
+  const [Leave, setleave] = React.useState();
   var userdetials, checkstatus, id;
   if (localStorage.getItem("user")) {
     const Islogin = window.atob(localStorage.getItem("user"));
@@ -20,25 +19,24 @@ const [Leave,setleave]=React.useState();
   const Employeestate = useSelector((state) => state.Fetchemployeereducer);
   console.log("Employeestate", Employeeleave);
 
-
   // ...............Remove Leave Handler......................
- const removeURL="http://localhost/HRMS/Employee/Removeleave.php";
- const LeaveURL="http://localhost/HRMS/Employee/Changestatus.php";
-  const Removeleave=(id)=>{
-  const values={
-    id
-  }
-  setAdd(values);
-  }
+  const removeURL = "http://localhost/HRMS/Employee/Removeleave.php";
+  const LeaveURL = "http://localhost/HRMS/Employee/Changestatus.php";
+  const Removeleave = (id) => {
+    const values = {
+      id,
+    };
+    setAdd(values);
+  };
 
-  const ActionsLeaveHandler=(e)=>{
+  const ActionsLeaveHandler = (e) => {
     e.preventDefault();
-    const status={
-      status:e.target.value,
-      id
-    }
-    setleave(status)
-  }
+    const status = {
+      status: e.target.value,
+      id,
+    };
+    setleave(status);
+  };
   return (
     <>
       <div className="main-wrapper">
@@ -102,45 +100,62 @@ const [Leave,setleave]=React.useState();
                               <td>{items.Ending_On}</td>
                               <td>{items.Days}</td>
                               <td>{items.Reason}</td>
-                              <td>
-                                <select style={{border:'none',borderRadius:'4px',padding:'5px'}} onChange={ActionsLeaveHandler}>
-                                  <option>{items.status}</option>
-                                  <option value="accept">Accept</option>
-                                  <option value="reject">Reject</option>
-                                </select>
-                              </td>
-                              <td className="text-right">
-                                <div className="dropdown dropdown-action" style={{
-                                  cursor:"pointer"
-                                }}>
-                                  <span
-                                  
-                                    className="action-icon dropdown-toggle"
-                                    data-toggle="dropdown"
-                                    aria-expanded="false"
+                              {checkstatus == 2 ? (
+                                <td>
+                                  <select
+                                    style={{
+                                      border: "none",
+                                      borderRadius: "4px",
+                                      padding: "5px",
+                                     float:'right'
+                                    }}
+                                    onChange={ActionsLeaveHandler}
                                   >
-                                    <i className="material-icons">more_vert</i>
-                                  </span>
-                                  <div className="dropdown-menu dropdown-menu-right">
+                                    <option>{items.status}</option>
+                                    <option value="accept">Accept</option>
+                                    <option value="reject">Reject</option>
+                                  </select>
+                                </td>
+                              ) : (
+                                <td style={{ color: "red" }}>{items.status}</td>
+                              )}
+
+                              {checkstatus == 1 ? (
+                                <td className="text-right">
+                                  <div
+                                    className="dropdown dropdown-action"
+                                    style={{
+                                      cursor: "pointer",
+                                    }}
+                                  >
                                     <span
-                                      className="dropdown-item"
-                                    
+                                      className="action-icon dropdown-toggle"
+                                      data-toggle="dropdown"
+                                      aria-expanded="false"
                                     >
-                                      <i className="fa fa-pencil m-r-5" /> Edit
+                                      <i className="material-icons">
+                                        more_vert
+                                      </i>
                                     </span>
-                                    <span
-                                      className="dropdown-item"
-                                      href="#"
-                                     onClick={()=>{
-                                       Removeleave(items.id)
-                                     }}
-                                    >
-                                      <i className="fa fa-trash-o m-r-5" />{" "}
-                                      Delete
-                                    </span>
+                                    <div className="dropdown-menu dropdown-menu-right">
+                                      <span className="dropdown-item">
+                                        <i className="fa fa-pencil m-r-5" />{" "}
+                                        Edit
+                                      </span>
+                                      <span
+                                        className="dropdown-item"
+                                        href="#"
+                                        onClick={() => {
+                                          Removeleave(items.id);
+                                        }}
+                                      >
+                                        <i className="fa fa-trash-o m-r-5" />{" "}
+                                        Delete
+                                      </span>
+                                    </div>
                                   </div>
-                                </div>
-                              </td>
+                                </td>
+                              ) : null}
                             </tr>
                           );
                         })}
@@ -154,7 +169,7 @@ const [Leave,setleave]=React.useState();
           {/* Add Leave Modal */}
           <Addleave />
         </div>
-        {  Leave && <POST values={Leave} url={LeaveURL} Addstate={setleave}/>}
+        {Leave && <POST values={Leave} url={LeaveURL} Addstate={setleave} />}
         {remove && <POST values={remove} url={removeURL} Addstate={setAdd} />}
         {/* /Page Wrapper */}
       </div>

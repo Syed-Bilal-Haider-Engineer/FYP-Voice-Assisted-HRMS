@@ -95,7 +95,7 @@ function Vister() {
                             <td>{Items.phone}</td>
                             
                             <td>
-                              <div className="dropdown dropdown-action" style={{cursor:'pointer'}}>
+                              <div className="dropdown dropdown-action" style={{cursor:'pointer',textAlign:'right'}}>
                                 <a
                                   href="#"
                                   className="action-icon dropdown-toggle"

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Fade from "react-reveal/Fade";
 import useGet from '../API/API';
 import theme from '../../Theme/Theme';
+import {jobsearch} from '../Redux/Actions/Actions';
 import {
   Container,
   Box,
@@ -20,7 +21,6 @@ function Home() {
 const [Search, setSearch] = useState("");
   useGet(url,type);
   const match = useMediaQuery("(max-width:700px)");
-  const img = "";
   const inputstyle = {
     width: match ? "100%" : "40%",
     height: "70px",
@@ -34,7 +34,10 @@ const [Search, setSearch] = useState("");
     outline: "none",
     backgroundColor: `${theme.palette.text.secondary}`,
   };
-
+  const SearchJobhandler=()=>{
+    dispatch(jobsearch(Search));
+    setSearch('');
+  }
   return (
     <>
       <Box
@@ -58,8 +61,6 @@ const [Search, setSearch] = useState("");
                   pb: 2,
                   lineHeight: { md: "100px", xs: "60px" },
                   background: "linear-gradient(#ff9b44 0%, #fc6075 100%)",
-                  backgroundClip: " text",
-                  textFillColor: " transparent",
                   backgroundClip: "text",
                   textFillColor: " transparent",
                   textStroke: "2px rgb(245, 245, 245)",
@@ -110,6 +111,7 @@ const [Search, setSearch] = useState("");
                     "linear-gradient(to right, #ff9b44 0%, #fc6075 100%)",
                 },
               }}
+              onClick={SearchJobhandler}
             >
               Find Jobs
             </Button>

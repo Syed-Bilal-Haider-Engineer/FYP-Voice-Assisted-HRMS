@@ -64,7 +64,7 @@ function Applications() {
                           <th>email</th>
                           <th>Phone</th>
                           <th>Selections</th>
-                          <th className="text-right">Action</th>
+                          
                         </tr>
                       </thead>
                       <tbody>    
@@ -104,7 +104,7 @@ function Applications() {
                                   data-toggle="modal"
                                   data-target="#edit_department"
                                 >
-                                  <i className="fa fa-pencil m-r-5" /> {items.Interview}
+                                   {items.Interview}
                                 </a>
                                 <a
                                   className="dropdown-item"
@@ -112,7 +112,7 @@ function Applications() {
                                   data-toggle="modal"
                                   data-target="#delete_department"
                                 >
-                                  <i className="fa fa-trash-o m-r-5" /> Reject
+                                   Reject
                                 </a>
                                 <a
                                   className="dropdown-item"
@@ -120,7 +120,7 @@ function Applications() {
                                   data-toggle="modal"
                                   data-target="#delete_department"
                                 >
-                                  <i className="fa fa-trash-o m-r-5" /> Interview
+                                   Interview
                                 </a>
                                 <a
                                   className="dropdown-item"
@@ -128,41 +128,12 @@ function Applications() {
                                   data-toggle="modal"
                                   data-target="#delete_department"
                                 >
-                                  <i className="fa fa-trash-o m-r-5" /> Select
+                                  Select
                                 </a>
                               </div>
                             </div>
                           </td>
-                          <td className="text-right">
-                            <div className="dropdown dropdown-action">
-                              <a
-                                href="#"
-                                className="action-icon dropdown-toggle"
-                                data-toggle="dropdown"
-                                aria-expanded="false"
-                              >
-                                <i className="material-icons">more_vert</i>
-                              </a>
-                              <div className="dropdown-menu dropdown-menu-right">
-                                <a
-                                  className="dropdown-item"
-                                  href="#"
-                                  data-toggle="modal"
-                                  data-target="#edit_department"
-                                >
-                                  <i className="fa fa-pencil m-r-5" /> Edit
-                                </a>
-                                <a
-                                  className="dropdown-item"
-                                  href="#"
-                                  data-toggle="modal"
-                                  data-target="#delete_department"
-                                >
-                                  <i className="fa fa-trash-o m-r-5" /> Delete
-                                </a>
-                              </div>
-                            </div>
-                          </td>
+                          
                         </tr>
                           </>
                           })

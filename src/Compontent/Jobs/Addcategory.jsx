@@ -52,8 +52,10 @@ function Addcategory() {
                 <div className="submit-section">
                   <button
                     name="add_department"
-                    type="POST"
+                    type="submit"
                     className="btn btn-primary submit-btn"
+                   
+
                   >
                     Submit
                   </button>
