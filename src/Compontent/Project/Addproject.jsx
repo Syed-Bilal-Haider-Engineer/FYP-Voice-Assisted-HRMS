@@ -27,14 +27,6 @@ function Addproject() {
   const departmentinfo = useSelector((state) => state.Departmentreducer);
   const employees = useSelector((state) => state.Fetchemployeereducer);
   const Client = useSelector((state) => state.Clientreducer);
-  // console.log(
-  //   "departmentinfo:",
-  //   departmentinfo,
-  //   "-employees",
-  //   employees,
-  //   "-Client:",
-  //   Client
-  // );
 
   const inputRef = useRef(null);
   const formData = new FormData();

@@ -1,24 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { POST } from "../API/PostAPI";
-const url = "http://localhost/HRMS/Category/Editcategory.php";
-function Editecategory({ values, Editefun }) {
+const url = "http://localhost/HRMS/Holiday/Editeholiday.php";
+function Updatehoilday({ values, Editefun }) {
 
   const [add, setAddState] = React.useState("");
-  const [categoryname, setnamestate] = useState();
-
-  const CategoryInfo = useSelector((state) => state.categoryreducer);
+  const [holdayname, setnamestate] = useState();
+  const [holidaydatestate,setholidaystate]=useState();
+  const holidaydetails = useSelector((state) => state.Fetchholidayreducer);
   useEffect(() => {
-    const result=CategoryInfo.length > 0 && CategoryInfo.find((items) => {
-        return items.Catid == values;
+    const result=holidaydetails.length > 0 && holidaydetails.find((items) => {
+        return items.id == values;
       });
-      setnamestate(result.catname)
+      setnamestate(result.Holiday_Name);
+      setholidaystate(result.Holiday_Date);
   }, [values]);
  
  const SubmitHandler=(e)=>{
   e.preventDefault();
   const Updatecategory={
-    categoryname,
+    holdayname,
+    holidaydatestate,
     values
   }
   setAddState(Updatecategory);
@@ -26,17 +28,19 @@ function Editecategory({ values, Editefun }) {
  const CloseHandler=()=>{
   Editefun('');
  }
+
   return (
     <>
+   
         <div
-          id="Update_category"
+          id="update_holiday"
           className="modal custom-modal fade"
           role="dialog"
         >
           <div className="modal-dialog modal-dialog-centered" role="document">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title">Update category</h5>
+                <h5 className="modal-title">Update Holiday</h5>
                 <button
                   type="button"
                   className="close"
@@ -51,16 +55,31 @@ function Editecategory({ values, Editefun }) {
                 <form onSubmit={SubmitHandler}>
                   <div className="form-group">
                     <label>
-                      Category Name <span className="text-danger">*</span>
+                      Holiday Name <span className="text-danger">*</span>
                     </label>
 
                     <input
                       name="category"
                       className="form-control"
                       type="text" 
-                      value={categoryname}
+                      value={holdayname}
                       onChange={(e)=>{
                         setnamestate(e.target.value)
+                      }}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label>
+                      Holiday date <span className="text-danger">*</span>
+                    </label>
+
+                    <input
+                      name="category"
+                      className="form-control"
+                      type="text" 
+                      value={holidaydatestate}
+                      onChange={(e)=>{
+                        setholidaystate(e.target.value)
                       }}
                     />
 
@@ -86,4 +105,4 @@ function Editecategory({ values, Editefun }) {
   );
 }
 
-export default Editecategory;
+export default Updatehoilday;

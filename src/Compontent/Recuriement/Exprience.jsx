@@ -1,12 +1,16 @@
-import React,{useContext, useEffect,useRef} from "react";
+import React,{useContext, useEffect,useRef,useState} from "react";
 import logo from "../../Images/logo2.png";
 import { NavLink,useNavigate} from "react-router-dom";
 import { Formik, Field, Form } from "formik";
 import Errorsg from "../Msgerror/Errormsg";
 import { toast } from "react-toastify";
+import Loading from '../../Loading';
 import axios from "axios";
+import {emailAPI} from './url';
 import {Applicationschema} from "../Yup/Yup";
 function Apply() {
+  // ......loading state.......
+  const [loading, setLoading] = useState(false);
   const navigate=useNavigate();
   const url="http://localhost/HRMS/Application/Application.php";
   const formData = new FormData();
@@ -53,13 +57,29 @@ const filehandler = async (values) => {
    //........Application Educations form............
 
    try {
+    setLoading(true)
     const response = await axios.post(url,formData,{headers:{ "Content-Type": "multipart/form-data" }});
     const msg=response.data;
     if(response.status==200)
     {
+      
+    //  const email="qmuhammad144@gmail.com";
+     let body = {
+      email: "qmuhammad144@gmail.com"
+     }
+     axios
+      .post(emailAPI + "/sendMail", body)
+      .then((resp) => {
+        // successFul("success");
+        console.log("resp.data", resp.data);
+
+     
+      })
+    setLoading(false);
       toast.success(`${msg}`);
     }
   } catch(error) {
+    setLoading(false)
     toast.success(`${error}`);
   }
 };
@@ -254,6 +274,7 @@ const filehandler = async (values) => {
         </div>
       </div>
       </Formik>
+      <Loading loading={loading} />
     </>
   );
 }

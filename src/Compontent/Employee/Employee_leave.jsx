@@ -82,7 +82,7 @@ function Employee_leave() {
                         <th>No of Days</th>
                         <th>Reason</th>
                         <th>status</th>
-                        <th className="text-right">Actions</th>
+                       
                       </tr>
                     </thead>
                     <tbody>

@@ -13,9 +13,7 @@ function Employee() {
     Role=JSON.parse(Islogin);
     checkstatus=Role.token;
    };
- 
-   console.log("checkstatus App.js",checkstatus)
-   
+  
   return (
     <>
       {/* Main Wrapper */}

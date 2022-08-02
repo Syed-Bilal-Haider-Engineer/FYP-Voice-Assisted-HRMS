@@ -15,6 +15,7 @@ import {
 function Category() {
  
   const CategoryInfo = useSelector((state) => state.categoryreducer);
+  console.log('CategoryInfo', CategoryInfo);
   return (
     <>
       <Box sx={{ py: 16, backgroundColor: "white" }}>

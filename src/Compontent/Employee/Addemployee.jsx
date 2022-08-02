@@ -2,8 +2,11 @@ import React,{useRef} from "react";
 import { Formik, Field, Form} from "formik";
 import Errorsg from "../Msgerror/Errormsg";
 import { employeeshema } from "../Yup/Yup";
-import {useSelector} from "react-redux";
+import {useSelector,useDispatch} from "react-redux";
 import { toast } from "react-toastify";
+import {
+  FetchEmployee,
+} from "../Redux/Actions/Actions";
 import axios from "axios";
 const selectinput = {
   width: "100%",
@@ -22,6 +25,7 @@ const Initivalue = {
 
 const urlpost="http://localhost/HRMS/Employee/AddEmployee.php";
 function Addemployee() {
+  const usedispatch=useDispatch();
   const department = useSelector((state) => state.Departmentreducer);
   const designation=useSelector(state=>state.Designationreducer);
   const Applicationdetails=useSelector(state=>state.fetchuserAppliations);
@@ -38,7 +42,12 @@ function Addemployee() {
      formData.append("img",img);
      try {
       const response = await axios.post(urlpost,formData,{headers:{ "Content-Type": "multipart/form-data" }});
+      console.log("response.data",response.data);
       const msg=response.data.message;
+      if(response.data.employeeinfo)
+      {
+        usedispatch(FetchEmployee(response.data.employeeinfo));
+      }
       if(response.data.status==true)
       {
         toast.success(`${msg}`);
@@ -95,7 +104,7 @@ function Addemployee() {
                       </option>
                       {Applicationdetails.length > 0 &&
                         Applicationdetails.map((items, index) => (
-                          items.Interview=='select'?(
+                          items.Interview=='Select'?(
                             
                             <option value={items.id}>{items.username}</option>
                           

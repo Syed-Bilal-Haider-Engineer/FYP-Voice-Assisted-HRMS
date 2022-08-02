@@ -1,20 +1,19 @@
 import React from "react";
 import { NavLink, Link } from "react-router-dom";
 function Sidebar() {
-     //.........Private and Protected route.........
-     var Role,checkstatus;
-     if(localStorage.getItem("user"))
-     {
-     const Islogin=window.atob(localStorage.getItem("user"));
-      Role=JSON.parse(Islogin);
-      checkstatus=Role.token;
-     };
-   
-     console.log("checkstatus App.js",checkstatus)
+  //.........Private and Protected route.........
+  var Role, checkstatus;
+  if (localStorage.getItem("user")) {
+    const Islogin = window.atob(localStorage.getItem("user"));
+    Role = JSON.parse(Islogin);
+    checkstatus = Role.token;
+  }
+
+  console.log("checkstatus App.js", checkstatus);
 
   return (
     <>
-    <div className="sidebar" id="sidebar" >
+      <div className="sidebar" id="sidebar">
         <div className="sidebar-inner slimscroll">
           <div id="sidebar-menu" className="sidebar-menu">
             <ul>
@@ -22,96 +21,166 @@ function Sidebar() {
                 <span>Main</span>
               </li>
               <li className="submenu">
-                <a href="#">
+                <Link to="/Admindashboard/">
                   <i className="la la-dashboard" /> <span> Dashboard</span>{" "}
-                </a>
+                </Link>
               </li>
-              <li className="menu-title">
-                <span>Employees</span>
-              </li>
-              <li className="submenu">
-                <a href="#" className="noti-dot">
-                  <i className="la la-user" /> <span> Employees</span>{" "}
-                  <span className="menu-arrow" />
-                </a>
-               
-                <ul>
-                  <li>
-                    <Link to="/Admindashboard/Employee_leave">Employee Leave </Link>
-                  </li>
-                 
-                  <li>
-                    <Link to="/Admindashboard/Timesheet">Timesheet</Link>
-                  </li>
-                  {checkstatus==2 ? ( <>
-                    <li>
-                    <Link to="/Admindashboard/Employee">All Employees </Link>
-                  </li>
-                  <li>
-                    <Link to="/Admindashboard/Holiday">Holidays</Link>
-                  </li>
-                  <li>
-                    <Link to="/Admindashboard/Department">Departments</Link>
-                  </li>
-                  <li>
-                    <Link to="/Admindashboard/Designations">Designations</Link>
-                  </li> </>): (null )}
-                </ul>
-                </li>
-              {  checkstatus==2 ? ( <>
-                 <li className="submenu">
-                 <a href="#">
-                   <i className="la la-user" /> <span> Recuriements</span>
-                   <span className="menu-arrow" />
-                 </a>
-                 <ul style={{ display: "none" }}>
-                   <li>
-                     <Link to="/Admindashboard/Jobslisting">Jobs </Link>
-                   </li>
-                   <li>
-                     <Link to="/Admindashboard/Category">Category </Link>
-                   </li>
-                   <li>
-                     <Link to="/Admindashboard/Applications">Applications </Link>
-                   </li>
-                   <li>
-                     <Link to="/Admindashboard/Vister">Vister </Link>
-                   </li>
-                 </ul>
-               </li>
-               <li>
-                 <Link to="/Admindashboard/Client">
-                   <i className="la la-users" /> <span>Clients</span>
-                 </Link>
-               </li>
-             
-               <li>
-               <Link to="/Admindashboard/Leads">
-                 <i className="la la-user-secret" /> <span>Leads</span>
-               </Link>
-             </li>
-             {/* <li>
+              <div
+                className="dropdown"
+                style={{
+                  display: "flex",
+                  justifyContent: "flex-start",
+                  alignItems: "center",
+                  paddingLeft: "10px",
+                }}
+              >
+                <i
+                  className="la la-user"
+                  style={{ color: "#b7c0cd", float: "left", fontSize: "30px" }}
+                />
+                <button
+                  style={{ color: "#b7c0cd", fontSize: "18px" }}
+                  className="btn  dropdown-toggle"
+                  type="button"
+                  id="dropdownMenuButton"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  Employees
+                </button>
+
+                <div
+                  className="dropdown-menu"
+                  aria-labelledby="dropdownMenuButton"
+                >
+                  <Link
+                    to="/Admindashboard/Employee_leave"
+                    className="dropdown-item"
+                  >
+                    Employee Leave{" "}
+                  </Link>
+                  <Link
+                    to="/Admindashboard/Timesheet"
+                    className="dropdown-item"
+                  >
+                    Timesheet
+                  </Link>
+                  {checkstatus == 2 ? (
+                    <>
+                      <Link
+                        to="/Admindashboard/Employee"
+                        className="dropdown-item"
+                      >
+                        All Employees{" "}
+                      </Link>
+                     
+                      <Link
+                        to="/Admindashboard/Holiday"
+                        className="dropdown-item"
+                      >
+                        Holidays
+                      </Link>
+                      <Link
+                        to="/Admindashboard/Department"
+                        className="dropdown-item"
+                      >
+                        Departments
+                      </Link>
+                      <Link
+                        to="/Admindashboard/Designations"
+                        className="dropdown-item"
+                      >
+                        Designations
+                      </Link>
+                    </>
+                  ) : null}
+                </div>
+              </div>
+
+              {checkstatus == 2 ? (
+                <>
+                  <div
+                    className="dropdown"
+                    style={{
+                      display: "flex",
+                      justifyContent: "flex-start",
+                      alignItems: "center",
+                      paddingLeft: "10px",
+                    }}
+                  >
+                    <i
+                      className="la la-user"
+                      style={{
+                        color: "#b7c0cd",
+                        float: "left",
+                        fontSize: "30px",
+                      }}
+                    />
+                    <button
+                      style={{ color: "#b7c0cd", fontSize: "18px" }}
+                      className="btn  dropdown-toggle"
+                      type="button"
+                      id="dropdownMenuButton"
+                      data-toggle="dropdown"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                    >
+                      Recuriements
+                    </button>
+
+                    <div
+                      className="dropdown-menu"
+                      aria-labelledby="dropdownMenuButton"
+                    >
+                      <Link
+                        to="/Admindashboard/Jobslisting"
+                        className="dropdown-item"
+                      >
+                        Jobs
+                      </Link>
+                      <Link
+                        to="/Admindashboard/Category"
+                        className="dropdown-item"
+                      >
+                        Category
+                      </Link>
+                      <Link
+                        to="/Admindashboard/Applications"
+                        className="dropdown-item"
+                      >
+                        Applications
+                      </Link>
+                      <Link
+                        to="/Admindashboard/Vister"
+                        className="dropdown-item"
+                      >
+                        Vister
+                      </Link>
+
+                      <Link
+                        to="/Admindashboard/Promotions"
+                        className="dropdown-item"
+                      >
+                        Promotions
+                      </Link>
+                      <Link
+                        to="/Admindashboard/Notice"
+                        className="dropdown-item"
+                      >
+                        Notice
+                      </Link>
+                      {/* <li>
                 <Link to="/Admindashboard/Terminations">
                   <i className="la la-times-circle" />
                   <span>Termination</span>
                 </Link>
               </li> */}
-              <li>
-                <Link to="/Admindashboard/Notice">
-                  <i className="la la-times-circle" />
-                  <span>Notice</span>
-                </Link>
-              </li>
-              <li>
-                <Link to="/Admindashboard/Promotions">
-                  <i className="la la-bullhorn" /> <span>Promotion</span>
-                </Link>
-              </li>
-             </>
-              ):null}
-             
+                    </div>
+                  </div>
+                </>
+              ) : null}
 
-                 
               <li className="submenu">
                 <a href="#">
                   <i className="la la-rocket" /> <span> Projects</span>{" "}
@@ -123,11 +192,36 @@ function Sidebar() {
                   </li>
                 </ul>
               </li>
-              
+              <li
+                style={{
+                  display: "flex",
+                  justifyContent: "flex-start",
+                  alignItems: "center",
+                  color: "#b7c0cd",
+                  fontSize: "26px",
+                  padding: "5px 15px",
+                }}
+              >
+                <i className="la la-money" />
+                <Link to="/Admindashboard/Leads">Leads</Link>
+              </li>
+              <li
+                style={{
+                  display: "flex",
+                  justifyContent: "flex-start",
+                  alignItems: "center",
+                  color: "#b7c0cd",
+                  fontSize: "26px",
+                  padding: "5px 15px",
+                }}
+              >
+                <i className="la la-user" />
+                <Link to="/Admindashboard/Client">Client</Link>
+              </li>
               <li className="menu-title">
                 <span>HR</span>
               </li>
-              
+
               <li className="submenu">
                 <a href="#">
                   <i className="la la-money" /> <span> Payroll </span>{" "}
@@ -138,23 +232,25 @@ function Sidebar() {
                     <Link to="/Admindashboard/Salary"> Employee Salary </Link>
                   </li>
                   <li>
-                    <Link to="/Admindashboard/Salarysetting">Salary setting</Link>
+                    <Link to="/Admindashboard/Salarysetting">
+                      Salary setting
+                    </Link>
                   </li>
                   <li>
                     <Link to="/Admindashboard/Salaryview"> Payslip </Link>
                   </li>
                 </ul>
-              </li>              
+              </li>
               {/* <li>
                 <Link to="/Admindashboard/Resignations">
                   <i className="la la-external-link-square" />{" "}
                   <span>Resignations</span>
                 </Link>
               </li> */}
-             
+
               <li>
                 <Link to="/Admindashboard/Contactus">
-                <i className="la la-times-circle" />
+                  <i className="la la-times-circle" />
                   <span>Contact</span>
                 </Link>
               </li>
@@ -170,7 +266,6 @@ function Sidebar() {
                   <li>
                     <Link to="/Admindashboard/Profile">Employee Profile</Link>
                   </li>
-                 
                 </ul>
               </li>
               <li>

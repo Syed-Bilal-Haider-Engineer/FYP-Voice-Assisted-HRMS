@@ -2,22 +2,26 @@ import React from "react";
 import Addholiday from "./Addholiday";
 import { useSelector } from "react-redux";
 import { POST } from "../API/PostAPI";
+import Updatehoilday from './Updateholiday';
 function Holiday() {
   const holidaydetails = useSelector((state) => state.Fetchholidayreducer);
   console.log("holidaydetails", holidaydetails);
   var i = 0;
   // ..............Remove Holiday...............
   const [remove, setAdd] = React.useState();
-
+  const [update,setupdatestate]=React.useState();
   const removeURL = "http://localhost/HRMS/Holiday/RemoveHoliday.php";
   const Removeholiday = (id) => {
     console.log("holiday Id",id);
     const values = {
-      id,
+      id
     };
     setAdd(values);
   };
 
+  const updateHoliday=(id)=>{
+    setupdatestate(id)
+  }
   return (
     <>
       <div className="main-wrapper">
@@ -92,7 +96,10 @@ function Holiday() {
                                         className="dropdown-item"
                                         href="#"
                                         data-toggle="modal"
-                                        data-target="#edit_holiday"
+                                        data-target="#update_holiday"
+                                        onClick={()=>{
+                                          updateHoliday(items.id);
+                                        }}
                                       >
                                         <i className="fa fa-pencil m-r-5" />{" "}
                                         Edit
@@ -126,6 +133,7 @@ function Holiday() {
   
       </div>
       {remove && <POST values={remove} url={removeURL} Addstate={setAdd} />}
+      {update && <Updatehoilday values={update} Editefun={setupdatestate} />}
     </>
   );
 }

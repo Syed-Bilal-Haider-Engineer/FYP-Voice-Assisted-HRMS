@@ -18,11 +18,11 @@ const Userregisteration=(state=usersave,actions)=>{
 //...............category redux.....................
 const catgeory=[];
 const categoryreducer=(state=catgeory,actions)=>{
-    // console.log("Actions payload",actions.payload);
+    console.log("Actions payload",actions.payload);
     switch(actions.type){
         case ActionTypes.Getcategory:
-            const Categorystate=actions.payload;
-            state=[...Categorystate];
+            const categorystate=actions.payload;
+            state=[...categorystate];
         return state;
         default:
       return state;

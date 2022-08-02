@@ -2,9 +2,10 @@ import React, { useRef, useState } from "react";
 import { Formik, Field, Form } from "formik";
 import Errorsg from "../Msgerror/Errormsg";
 import { jobschema } from "../Yup/Yup";
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { fetchJob } from "../Redux/Actions/Actions"
 const urlpost="http://localhost/HRMS/Job/Addjob.php";
 const selectinput = {
   width: "100%",
@@ -34,8 +35,7 @@ const Status=[
   }
 ]
 function Addjobs() {
-  const [add,setAddState]=React.useState(false);
-  var jobform;
+ const usedispatch=useDispatch();
   const formData = new FormData();
   const CategoryInfo = useSelector((state) => state.categoryreducer);
   const inputRef = useRef(null);
@@ -55,7 +55,13 @@ function Addjobs() {
      try {
       const response = await axios.post(urlpost,formData,{headers:{ "Content-Type": "multipart/form-data" }});
       const msg=response.data.message;
-      console.log("Job responsece",response.data);
+      
+      // Updated data fetch from DB
+      if(response.data.Jobdetails)
+      {
+       usedispatch(fetchJob(response.data.Jobdetails));
+      }
+
       if(response.data.status==true)
       {
         toast.success(`${msg}`);

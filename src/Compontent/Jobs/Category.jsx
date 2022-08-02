@@ -4,6 +4,7 @@ import useGet from "../API/API";
 import { POST } from "../API/PostAPI";
 import { useSelector } from "react-redux";
 import Editecategory from './Editecategory';
+import {Link} from 'react-router-dom';
 import {
   Container,
   Box,
@@ -14,6 +15,7 @@ import {
   Grid,
   Pagination,
 } from "@mui/material";
+import { ServerStyleSheets } from "@mui/styles";
 const url = "http://localhost/HRMS/Category/deletecategory.php";
 function Category() {
   const [add, setAddState] = React.useState();
@@ -27,21 +29,19 @@ function Category() {
   //......paginations..........
   const [postsPerPage, setPostsPerPage] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
-  const handleChangepage = (event, value) => {
-    setCurrentPage(value);
-  };
+  const handleChangepage = (event, value) => { setCurrentPage(value); }
   const pageCount = Math.ceil(CategoryInfo.length / postsPerPage);
   // ............Delete Hanlder..............
   const CategoryDelete = (id) => {
-    const values = {
-      id,
-    };
+    const values = { id};
     setAddState(values);
   };
 
   const Updatecategory=(id)=>{
     setUpdatestate(id);
   }
+  // ........Category Request send of Server............
+  useGet("http://localhost/HRMS/Category/getcategory.php", "category");
   return (
     <>
       <>
@@ -58,7 +58,7 @@ function Category() {
                     <h3 className="page-title">Category</h3>
                     <ul className="breadcrumb">
                       <li className="breadcrumb-item">
-                        <a href="index.php">Dashboard</a>
+                        <Link to="/Admindashboard">Dashboard</Link>
                       </li>
                       <li className="breadcrumb-item active">Category</li>
                     </ul>
@@ -115,7 +115,7 @@ function Category() {
                                         <span
                                           className="dropdown-item"
                                           data-toggle="modal"
-                                          data-target="#add_category"
+                                          data-target="#Update_category"
                                           style={Action}
                                           onClick={()=>{
                                             Updatecategory(Items.Catid);

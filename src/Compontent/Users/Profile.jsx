@@ -116,16 +116,6 @@ function Profile() {
                                       </div>
                                     </div>
                                   </div>
-                                  <div className="pro-edit">
-                                    <a
-                                      data-target="#profile_info"
-                                      data-toggle="modal"
-                                      className="edit-icon"
-                                      href="#"
-                                    >
-                                      <i className="fa fa-pencil" />
-                                    </a>
-                                  </div>
                                 </div>
                               </div>
                             </>

@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import Adddesignation from "./Adddesignation";
-
+import Updatedesignation from './Updatedesignation';
 function Designations() {
+  const [designationstate,setdesignationstate]=useState('');
   const designation=useSelector(state=>state.Designationreducer);
    var i=0;
-
+  //  ....edite designation....
+   const editedesignation=(id)=>{
+    setdesignationstate(id)
+   }
   return (
   
       <>
@@ -78,17 +82,20 @@ function Designations() {
                                     href="#"
                                     data-toggle="modal"
                                     data-target="#edit_designation"
+                                    onClick={()=>{
+                                      editedesignation(items.id) 
+                                    }}
                                   >
                                     <i className="fa fa-pencil m-r-5" /> Edit
                                   </a>
-                                  <a
+                                  {/* <a
                                     className="dropdown-item"
                                     href="#"
                                     data-toggle="modal"
                                     data-target="#delete_designation"
                                   >
                                     <i className="fa fa-trash-o m-r-5" /> Delete
-                                  </a>
+                                  </a> */}
                                 </div>
                               </div>
                             </td>
@@ -105,17 +112,12 @@ function Designations() {
             {/* /Page Content */}
             {/* Add Designation Modal */}
             <Adddesignation />
-            {/* /Add Designation Modal */}
-            {/* Edit Designation Modal */}
-            {/* <?php include_once("includes/modals/designation/edit_designation.php");?> */}
-            {/* /Edit Designation Modal */}
-            {/* Delete Designation Modal */}
-            {/* <?php include_once("includes/modals/designation/delete_designation.php");?> */}
-            {/* /Delete Designation Modal */}
+           
           </div>
           {/* /Page Wrapper */}
         </div>
         {/* /Main Wrapper */}
+        {designationstate && <Updatedesignation  values={designationstate}  Editefun={setdesignationstate}/>}
       </>
    
   );

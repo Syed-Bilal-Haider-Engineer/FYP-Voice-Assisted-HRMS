@@ -1,5 +1,5 @@
-import React,{useState} from "react";
-import {useSelector} from 'react-redux';
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import {
   Container,
   Box,
@@ -8,13 +8,17 @@ import {
   Divider,
   Stack,
   Grid,
-  Pagination
+  Pagination,
 } from "@mui/material";
+import { POST } from "../API/PostAPI";
+import useGet from "../API/API";
+import { useEffect } from "react";
 function Applications() {
-  const Applicationdetails=useSelector(state=>state.fetchuserAppliations);
-  // const designation=useSelector(state=>state.Designationreducer);
-  console.log("fetchuserAppliations",Applicationdetails);
-  var i=0;
+  const url = "http://localhost/HRMS/Application/Changestatus.php";
+  const [setstatus, setstatusstate] = useState();
+  const Applicationdetails = useSelector((state) => state.fetchuserAppliations);
+  console.log("fetchuserAppliations", Applicationdetails);
+  var i = 0;
   // .............Paginations...........
   const [postsPerPage, setPostsPerPage] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
@@ -22,6 +26,19 @@ function Applications() {
     setCurrentPage(value);
   };
   const pageCount = Math.ceil(Applicationdetails.length / postsPerPage);
+  // .......Fetch Applications Handler..........
+
+    useGet("http://localhost/HRMS/Application/Fetchapplicationsuser.php", "Applications");
+ 
+  // .............Decison making...........
+  const DecisionHandler = (id, status) => {
+    console.log("status",status);
+    const value = {
+      id,
+      status,
+    };
+    setstatusstate(value);
+  };
   return (
     <>
       <>
@@ -64,94 +81,92 @@ function Applications() {
                           <th>email</th>
                           <th>Phone</th>
                           <th>Selections</th>
-                          
                         </tr>
                       </thead>
-                      <tbody>    
-                          {Applicationdetails.length > 0 && Applicationdetails.slice(
+                      <tbody>
+                        {Applicationdetails.length > 0 &&
+                          Applicationdetails.slice(
                             currentPage * postsPerPage - postsPerPage,
                             currentPage * postsPerPage
-                          ).map((items,index)=>{
+                          ).map((items, index) => {
                             i++;
-                          return <>
-                           <tr style={{ color: "black" }}>
-                          <td>{i}</td>
-                          <td>{items.description}</td>
-                          <td>{items.instituename}</td>
-                          <td>{items.description}</td>
-                          <td>{items.degree}</td>
-                          <td>{items.cgpa}</td>
-                          <td>{items.address}</td>
-                          <td>{items.totalexp}</td>
-                          <td>{items.cname}</td>
-                          <td>{items.email}</td>
-                          <td>{items.phone}</td>
-                          
-                          <td className="text-right">
-                            <div className="dropdown dropdown-action">
-                              <a
-                                href="#"
-                                className="action-icon dropdown-toggle"
-                                data-toggle="dropdown"
-                                aria-expanded="false"
-                              >
-                                <i className="material-icons">more_vert</i>
-                              </a>
-                              <div className="dropdown-menu dropdown-menu-right">
-                                <a
-                                  className="dropdown-item"
-                                  href="#"
-                                  data-toggle="modal"
-                                  data-target="#edit_department"
-                                >
-                                   {items.Interview}
-                                </a>
-                                <a
-                                  className="dropdown-item"
-                                  href="#"
-                                  data-toggle="modal"
-                                  data-target="#delete_department"
-                                >
-                                   Reject
-                                </a>
-                                <a
-                                  className="dropdown-item"
-                                  href="#"
-                                  data-toggle="modal"
-                                  data-target="#delete_department"
-                                >
-                                   Interview
-                                </a>
-                                <a
-                                  className="dropdown-item"
-                                  href="#"
-                                  data-toggle="modal"
-                                  data-target="#delete_department"
-                                >
-                                  Select
-                                </a>
-                              </div>
-                            </div>
-                          </td>
-                          
-                        </tr>
-                          </>
-                          })
-                        }
-                       
+                            return (
+                              <>
+                                <tr style={{ color: "black" }} key={index}>
+                                  <td>{i}</td>
+                                  <td>{items.designation}</td>
+                                  <td>{items.instituename}</td>
+                                  <td>{items.description.substring(0, 50)}</td>
+                                  <td>{items.degree}</td>
+                                  <td>{items.cgpa}</td>
+                                  <td>{items.address}</td>
+                                  <td>{items.totalexp}</td>
+                                  <td>{items.cname}</td>
+                                  <td>{items.email}</td>
+                                  <td>{items.phone}</td>
+
+                                  <td className="text-right">
+                                    <div className="dropdown dropdown-action">
+                                      <a
+                                        href="#"
+                                        className="action-icon dropdown-toggle"
+                                        data-toggle="dropdown"
+                                        aria-expanded="false"
+                                      >
+                                        <i className="material-icons">
+                                          more_vert
+                                        </i>
+                                      </a>
+                                      <div className="dropdown-menu dropdown-menu-right">
+                                        <span className="dropdown-item">
+                                          {items.Interview}
+                                        </span>
+                                        <hr/>
+                                        <span
+                                          className="dropdown-item"
+                                          onClick={() => {
+                                            DecisionHandler(items.id, "Reject");
+                                          }}
+                                        >
+                                          Reject
+                                        </span>
+                                        <span
+                                          className="dropdown-item"
+                                          onClick={() => {
+                                            DecisionHandler(
+                                              items.id,
+                                              "Interview"
+                                            );
+                                          }}
+                                        >
+                                          Interview
+                                        </span>
+                                        <span
+                                          className="dropdown-item"
+                                          onClick={() => {
+                                            DecisionHandler(items.id, "Select");
+                                          }}
+                                        >
+                                          Select
+                                        </span>
+                                      </div>
+                                    </div>
+                                  </td>
+                                </tr>
+                              </>
+                            );
+                          })}
                       </tbody>
                     </table>
                   </div>
                 </div>
               </div>
             </div>
-            <Box  m="15px">
-              
+            <Box m="15px">
               <Stack
                 direction={"row"}
                 alignItems="center"
                 justifyContent="flex-end"
-
               >
                 <Pagination
                   count={pageCount}
@@ -160,19 +175,11 @@ function Applications() {
                 />
               </Stack>
             </Box>
-            {/* /Page Content */}
-            {/* Add Department Modal */}
-            {/* <?php include_once("includes/modals/department/add_department.php");?> */}
-            {/* /Add Department Modal */}
-            {/* Edit Department Modal */}
-            {/* <?php include_once("includes/modals/department/edit_department.php");?> */}
-            {/* /Edit Department Modal */}
-            {/* Delete Department Modal */}
-            {/* <?php include_once("includes/modals/department/delete_department.php");?> */}
-            {/* /Delete Department Modal */}
           </div>
-          {/* /Page Wrapper */}
         </div>
+        {setstatus && (
+          <POST values={setstatus} url={url} Addstate={setstatusstate} />
+        )}
         {/* /Main Wrapper */}
       </>
     </>

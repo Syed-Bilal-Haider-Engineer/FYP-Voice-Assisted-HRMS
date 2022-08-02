@@ -2,61 +2,114 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate, useLocation } from "react-router-dom";
-import Loading from '../../Loading';
+import Loading from "../../Loading";
+import { useDispatch } from "react-redux";
+import {
+  Showusers,
+  Getcategory,
+  fetchvister,
+  fetchJob,
+  Fetchdepartment,
+  Fetchdesignation,
+  fetchHolidays,
+  Userapplications,
+  FetchEmployee,
+  FetchEmployeeleave,
+  project,
+  Clientinfo,
+  Tasksdata,
+  Notice,
+} from "../Redux/Actions/Actions";
+
 export const POST = ({ values, url, Addstate }) => {
+  console.log("values",values);
+
+  const usedispatch = useDispatch();
   const [loading, setLoading] = useState(false);
-console.log("values",values);
-
   const navigate = useNavigate();
-  const { state } = useLocation();
-
-  const ToastyHandler = (msg, status) => {
+  const toastyHandler = (msg, status) => {
     if (status == false) {
       toast.error(`${msg}`);
+      Addstate("");
     } else {
       toast.success(`${msg}`);
+      Addstate("");
     }
   };
   const usersPost = async () => {
     setLoading(true);
     await axios
-      .post(url,values)
+      .post(url, values)
       .then((response) => {
         setLoading(false);
-            console.log("server responces",response.data);
         const status = response.data.status;
         const msg = response.data.message;
+        console.log("response.data",response.data);
+        // .....Post Update and Delete Response Implimentation..........
+        if (response.data.Editecategory) {
+          usedispatch(Getcategory(response.data.Editecategory));
+        }
+        else if(response.data.Jobdetails)
+        {
+         usedispatch(fetchJob(response.data.Jobdetails));
+        }
+        else if(response.data.visterdetails)
+        {
+          usedispatch(fetchvister(response.data.visterdetails));
+        }
+        else if(response.data.leavedetails)
+        {
+          usedispatch(FetchEmployeeleave(response.data.leavedetails));
+        }
+        else if(response.data.applicationstatus)
+        {
+          usedispatch(Userapplications(response.data.applicationstatus));
+        }
+        else if(response.data.holidaydetails)
+        {
+          usedispatch(fetchHolidays(response.data.holidaydetails));
+        }
+        else if(response.data.departments)
+        {
+          usedispatch(Fetchdepartment(response.data.departments));
+        }
+        else if(response.data.designations)
+        {
+          usedispatch(Fetchdesignation(response.data.designations));
+
+        }
+        // .....End, Post ,deletiona and update....
+
         // .......login ............
         if (response.data.token) {
-          console.log("id",response.data.id);
           const token = {
             token: response.data.token,
-            id:response.data.id
+            id: response.data.id,
           };
+
+          // ......Islogin  token store in Localstorage....
           const string = JSON.stringify(token);
-          const encrypt=window.btoa(string);
-           localStorage.setItem("user",encrypt);
-          
+          const encrypt = window.btoa(string);
+          localStorage.setItem("user", encrypt);
         }
-         console.log("response.data.token",response.data.token);
-        if(response.data.token==0){
-          navigate('/')
-        }
-        else if(response.data.token==1)
-        {
-          navigate('/Admindashboard/Employeedashboard')
-        }
-        else if(response.data.token==2)
-        {
-          navigate('/Admindashboard/');
+        //  console.log("response.data.token",response.data.token);
 
+        // zero mean normal users,
+        // before the employee and one role mean
+        // login Employee and two role mean islogin admin
+        if (response.data.token == 0) {
+          navigate("/");
+        } else if (response.data.token == 1) {
+          navigate("/Admindashboard/Employeedashboard");
+        } else if (response.data.token == 2) {
+          navigate("/Admindashboard/");
         }
+        //  ....Login End.....
 
-        Addstate("");
         if (status == true) {
-          ToastyHandler(msg, status);
+          toastyHandler(msg, status);
         } else {
-          ToastyHandler(msg, status);
+          toastyHandler(msg, status);
         }
       })
       .catch((error) => {
@@ -66,7 +119,7 @@ console.log("values",values);
         const status = error.status;
         console.log("error message=", msg, "status=", status);
         if (status == false) {
-          ToastyHandler(msg, status);
+          toastyHandler(msg, status);
         }
       });
   };
@@ -74,6 +127,9 @@ console.log("values",values);
     values && usersPost();
   }, [values]);
 
-
-  return <>  <Loading loading={loading} /> </>
+  return (
+    <>
+      <Loading loading={loading} />
+    </>
+  );
 };

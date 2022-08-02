@@ -154,7 +154,7 @@ function Client() {
                                       data-toggle="modal"
                                       data-target="#edit_client"
                                     >
-                                      <i className="fa fa-pencil m-r-5"></i>{" "}
+                                      <i className="fa fa-pencil m-r-5"></i>
                                       Edit
                                     </span>
                                     <span

@@ -7,14 +7,13 @@ import { Container, Box, Stack, Pagination } from "@mui/material";
 
 function Jobslisting() {
   const url = "http://localhost/HRMS/Job/Jobs.php";
-  const StatusURL = "http://localhost/HRMS/Job/JobActiveInActive.php";
+  const statusURL = "http://localhost/HRMS/Job/JobActiveInActive.php";
   const type = "job";
   var i = 0;
   const jobinfo = useSelector((state) => state.Jobreducer);
   console.log("jobinfo", jobinfo);
-  useGet(url, type);
-  var i = 0;
-  // ......paginations.........
+  useGet(url, type);  // ......paginations.........
+  
   const [jobidtstate, setjobstate] = useState("");
   // ........pass object.........
   const [jobstatusstate, statuschangestate] = useState("");
@@ -36,10 +35,12 @@ function Jobslisting() {
     setAddState(values);
   };
 
+  const StatusHandler=(id)=>{
+    statuschangestate({ id, jobidtstate });
+  }
   const ChangeStatusHandler = (id) => {
-    statuschangestate({id,jobidtstate });
+    StatusHandler(id)
   };
-  console.log("jobstatusstate",jobstatusstate);
   return (
     <>
       <>
@@ -148,9 +149,15 @@ function Jobslisting() {
                                         }}
                                       >
                                         {status == 0 ? (
-                                          <option>InActive</option>
+                                          <>
+                                            <option>InActive</option>
+                                            <hr />
+                                          </>
                                         ) : (
-                                          <option>Active</option>
+                                          <>
+                                            <option>Active</option>
+                                            <hr />
+                                          </>
                                         )}
                                         <option value="1">Active</option>
                                         <option value="0">InActive</option>
@@ -219,14 +226,17 @@ function Jobslisting() {
               </Box>
             )}
 
-            {/* /Page Content */}
-            {/* Add Department Modal */}
             <Addjobs />
           </div>
-          {/* /Page Wrapper */}
         </div>
         {add && <POST values={add} url={removeURL} Addstate={setAddState} />}
-        {jobstatusstate && <POST values={jobstatusstate} url={StatusURL} Addstate={statuschangestate} />}
+        {jobstatusstate && (
+          <POST
+            values={jobstatusstate}
+            url={statusURL}
+            Addstate={statuschangestate}
+          />
+        )}
       </>
     </>
   );

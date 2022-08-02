@@ -1,29 +1,31 @@
 import React,{useState} from "react";
 import Adddepart from "./Adddepart";
-import useGet from '../API/API';
 import {useSelector} from 'react-redux';
+import Editedepartment from './Editedepartment';
 import {
   Container,
   Box,
-  Typography,
-  Button,
-  Divider,
   Stack,
   Grid,
   Pagination
 } from "@mui/material";
 function Department() {
+ 
+  const [editestate,editedepartstate]=useState();
 
   const department = useSelector(state => state.Departmentreducer);
-  console.log("department", department);
-  var i=0;
+  // ...Paginations...
   const [postsPerPage, setPostsPerPage] = useState(5);
    const [currentPage, setCurrentPage] = useState(1);
    const handleChangepage = (event, value) => {
      setCurrentPage(value);
    };
- 
    const pageCount = Math.ceil(department.length / postsPerPage);
+
+  //  ...department edite...
+   const editedepart=(id)=>{
+    editedepartstate(id)
+   }
   return (
     <>
       <>
@@ -94,17 +96,13 @@ function Department() {
                                   href="#"
                                   data-toggle="modal"
                                   data-target="#edit_department"
+                                  onClick={()=>{
+                                    editedepart(items.id)
+                                  }}
                                 >
                                   <i className="fa fa-pencil m-r-5" /> Edit
                                 </a>
-                                <a
-                                  className="dropdown-item"
-                                  href="#"
-                                  data-toggle="modal"
-                                  data-target="#delete_department"
-                                >
-                                  <i className="fa fa-trash-o m-r-5" /> Delete
-                                </a>
+                               
                               </div>
                             </div>
                           </td>
@@ -137,7 +135,7 @@ function Department() {
           </div>
           {/* /Page Wrapper */}
         </div>
-        {/* /Main Wrapper */}
+        {editestate && <Editedepartment values={editestate}  Editefun={editedepartstate} />}
       </>
     </>
   );
