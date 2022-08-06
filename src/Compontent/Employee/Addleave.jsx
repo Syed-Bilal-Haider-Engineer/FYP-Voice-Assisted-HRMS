@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState,useEffect } from "react";
 import { Formik, Field, Form } from "formik";
 import Errorsg from "../Msgerror/Errormsg";
 import { Leaveschema } from "../Yup/Yup";
 import { POST } from "../API/PostAPI";
+import { useSelector } from "react-redux";
 var userdetials,checkstatus,userID;
 if(localStorage.getItem("user"))
 {
@@ -11,8 +12,8 @@ const Islogin=window.atob(localStorage.getItem("user"));
  checkstatus=userdetials.token;
  userID=userdetials.id;
 };
+console.log("userID",userID);
 const Initivalue = {
- 
   employee: "",
   starting_at: "",
   ends_on: "",
@@ -25,13 +26,22 @@ const selectinput = {
   border: "1px solid lightgray",
   borderRadius: "6px",
 };
+// .....get email for leave....
 
 function Addleave() {
+  const [emailstate,setemailstate]=useState();
   const url="http://localhost/HRMS/Employee/Addleave.php";
   const [add, setAddState] = React.useState();
   const [id,setId]=React.useState({userID});
-
-  console.log("add",add);
+//  fetch employee leave clientInformation.canShare........
+const Employeestate=useSelector(state=>state.Fetchemployeereducer);
+useEffect(()=>{
+  const result=Employeestate.length > 0 && Employeestate.find((items) => {
+    return items.id == userID;
+  },[Employeestate]);
+  // setemailstate(result.email);
+  console.log("result",result);
+},[]);
   return <>
     <Formik
       initialValues={Initivalue}

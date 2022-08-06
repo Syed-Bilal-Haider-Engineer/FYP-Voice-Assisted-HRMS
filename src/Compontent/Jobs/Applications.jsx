@@ -83,6 +83,7 @@ function Applications() {
                           <th>Selections</th>
                         </tr>
                       </thead>
+                    
                       <tbody>
                         {Applicationdetails.length > 0 &&
                           Applicationdetails.slice(
@@ -92,11 +93,12 @@ function Applications() {
                             i++;
                             return (
                               <>
+                             
                                 <tr style={{ color: "black" }} key={index}>
                                   <td>{i}</td>
                                   <td>{items.designation}</td>
                                   <td>{items.instituename}</td>
-                                  <td>{items.description.substring(0, 50)}</td>
+                                  <td>{items.description}</td>
                                   <td>{items.degree}</td>
                                   <td>{items.cgpa}</td>
                                   <td>{items.address}</td>

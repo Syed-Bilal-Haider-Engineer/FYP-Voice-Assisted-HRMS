@@ -1,5 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
+import {useNavigate} from 'react-router-dom';
 function Dashboard() {
+  const navigate=useNavigate();
+  var userdetials, checkstatus, userID;
+  if (localStorage.getItem("user")) {
+    const Islogin = window.atob(localStorage.getItem("user"));
+    userdetials = JSON.parse(Islogin);
+    checkstatus = userdetials.token;
+    userID = userdetials.id;
+  }
+  useEffect(()=>{
+    if(checkstatus==1)
+    {
+      navigate("/Admindashboard/Employeedashboard");
+    }
+  },[]);
   return (
     <>
       {/* Page Wrapper */}

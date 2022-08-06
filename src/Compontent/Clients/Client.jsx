@@ -92,7 +92,6 @@ function Client() {
                       <th>Client name</th>
                       <th>Email</th>
                       <th>Mobile</th>
-                      <th>Status</th>
                       <th className="text-right">Action</th>
                     </tr>
                   </thead>
@@ -128,15 +127,6 @@ function Client() {
                               <td>{UserName}</td>
                               <td>{Email}</td>
                               <td>{Phone}</td>
-                              <td>
-                                <select style={{border:'none',padding:'5px'}}>
-                                  {Status == 1 ? (
-                                    <option value={Status}> Active</option>
-                                  ) : (
-                                    <option value={Status}>InActive</option>
-                                  )}
-                                </select>
-                              </td>
                               <td className="text-right">
                                 <div className="dropdown dropdown-action" style={{cursor:'pointer'}}>
                                   <a

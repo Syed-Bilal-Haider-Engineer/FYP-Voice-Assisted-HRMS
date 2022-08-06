@@ -4,7 +4,7 @@ import useGet from "../API/API";
 import { useSelector } from "react-redux";
 import { POST } from "../API/PostAPI";
 import { Container, Box, Stack, Pagination } from "@mui/material";
-
+import Editejob from './Editejob';
 function Jobslisting() {
   const url = "http://localhost/HRMS/Job/Jobs.php";
   const statusURL = "http://localhost/HRMS/Job/JobActiveInActive.php";
@@ -13,11 +13,11 @@ function Jobslisting() {
   const jobinfo = useSelector((state) => state.Jobreducer);
   console.log("jobinfo", jobinfo);
   useGet(url, type);  // ......paginations.........
-  
-  const [jobidtstate, setjobstate] = useState("");
   // ........pass object.........
   const [jobstatusstate, statuschangestate] = useState("");
+  const [editejob,seteditejob]=useState(''); 
 
+  // ...pagination.....
   const [postsPerPage, setPostsPerPage] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
   const handleChangepage = (event, value) => {
@@ -33,14 +33,20 @@ function Jobslisting() {
       id,
     };
     setAddState(values);
+    console.log("values",values);
   };
 
-  const StatusHandler=(id)=>{
-    statuschangestate({ id, jobidtstate });
-  }
-  const ChangeStatusHandler = (id) => {
-    StatusHandler(id)
+
+  const ChangeStatusHandler = (e) => {
+    const jobid_statusvalue=e.target.value;
+    const id=jobid_statusvalue.slice(0,2);
+    const statusvalue=jobid_statusvalue.slice(2);
+    statuschangestate({ id, statusvalue });
   };
+
+  const jobeditehandler=(id)=>{
+    seteditejob(id);
+  }
   return (
     <>
       <>
@@ -143,10 +149,7 @@ function Jobslisting() {
                                           fontSize: "12px",
                                           border: "none",
                                         }}
-                                        onChange={(e) => {
-                                          setjobstate(e.target.value);
-                                          ChangeStatusHandler(job_id);
-                                        }}
+                                        onChange={ChangeStatusHandler}
                                       >
                                         {status == 0 ? (
                                           <>
@@ -159,8 +162,8 @@ function Jobslisting() {
                                             <hr />
                                           </>
                                         )}
-                                        <option value="1">Active</option>
-                                        <option value="0">InActive</option>
+                                        <option value={`1 ${job_id}`}>Active</option>
+                                        <option    value={`0 ${job_id}`}>InActive</option>
                                       </select>
                                     </td>
                                     <td className="text-right">
@@ -182,7 +185,11 @@ function Jobslisting() {
                                           <span
                                             className="dropdown-item"
                                             data-toggle="modal"
-                                            data-target="#edit_department"
+                                            data-target="#edite_job"
+                                            onClick={()=>{
+                                              jobeditehandler(job_id);
+                                            }
+                                            }
                                           >
                                             <i className="fa fa-pencil m-r-5" />{" "}
                                             Edit
@@ -229,6 +236,7 @@ function Jobslisting() {
             <Addjobs />
           </div>
         </div>
+         {editejob && <Editejob value={editejob}  editefun={seteditejob}/>}
         {add && <POST values={add} url={removeURL} Addstate={setAddState} />}
         {jobstatusstate && (
           <POST

@@ -2,7 +2,7 @@ import React,{useEffect,useState} from "react";
 import {useSelector} from 'react-redux';
 import {POST} from '../API/PostAPI';
 function Editedepartment({ values, Editefun }) {
-  const url="http://localhost/HRMS/Department/editedepart.php";
+  const url="http://localhost/HRMS/Department/updatedepart.php";
   const [add, setAddState] = React.useState("");
   const [namestate, setnamestate] = useState();
   const department = useSelector(state => state.Departmentreducer);

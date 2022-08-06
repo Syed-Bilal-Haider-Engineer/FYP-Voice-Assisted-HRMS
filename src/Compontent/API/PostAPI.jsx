@@ -19,11 +19,22 @@ import {
   Clientinfo,
   Tasksdata,
   Notice,
+  Attendance,
 } from "../Redux/Actions/Actions";
-
+import { emailAPI } from "../Recuriement/url";
 export const POST = ({ values, url, Addstate }) => {
-  console.log("values",values);
-
+  console.log("post values",values);
+  // .....fetch user login details.......
+  var Role, checkstatus,id,email;
+  if (localStorage.getItem("user")) {
+    const Islogin = window.atob(localStorage.getItem("user"));
+    Role = JSON.parse(Islogin);
+    checkstatus = Role.token;
+    id=Role.id;
+    email=Role.email;
+  }
+  console.log("email",email);
+// .....close login Details........
   const usedispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -42,49 +53,61 @@ export const POST = ({ values, url, Addstate }) => {
       .post(url, values)
       .then((response) => {
         setLoading(false);
+        console.log("response",response.data);
         const status = response.data.status;
         const msg = response.data.message;
-        console.log("response.data",response.data);
+        const emailstatus = response.data.sendemail;
         // .....Post Update and Delete Response Implimentation..........
         if (response.data.Editecategory) {
           usedispatch(Getcategory(response.data.Editecategory));
-        }
-        else if(response.data.Jobdetails)
-        {
-         usedispatch(fetchJob(response.data.Jobdetails));
-        }
-        else if(response.data.visterdetails)
-        {
+        } else if (response.data.Jobdetails) {
+          usedispatch(fetchJob(response.data.Jobdetails));
+        } else if (response.data.visterdetails) {
           usedispatch(fetchvister(response.data.visterdetails));
-        }
-        else if(response.data.leavedetails)
-        {
+        } else if (response.data.leavedetails) {
           usedispatch(FetchEmployeeleave(response.data.leavedetails));
-        }
-        else if(response.data.applicationstatus)
-        {
+          if (emailstatus) {
+            setLoading(true);
+            try {
+              let body = {
+                email:email
+              };
+              axios.post(emailAPI + "/sendMail", body).then((resp) => {
+                console.log("resp.data", resp.data);
+              });
+              setLoading(false);
+            } catch (error) {
+              setLoading(false);
+              console.log("leave email error",error);
+            }
+          }
+        } else if (response.data.applicationstatus) {
           usedispatch(Userapplications(response.data.applicationstatus));
-        }
-        else if(response.data.holidaydetails)
-        {
+        } else if (response.data.holidaydetails) {
           usedispatch(fetchHolidays(response.data.holidaydetails));
-        }
-        else if(response.data.departments)
-        {
+         
+        } else if (response.data.departments) {
           usedispatch(Fetchdepartment(response.data.departments));
-        }
-        else if(response.data.designations)
-        {
+        } else if (response.data.designations) {
           usedispatch(Fetchdesignation(response.data.designations));
-
+        } else if (response.data.attedance) {
+          usedispatch(Attendance(response.data.attedance));
+        }
+        else if(response.data.projectdetails)
+        {
+           usedispatch(project(response.data.projectdetails));
+        }
+        else if(response.data.notice)
+        {
+          usedispatch(Notice(response.data.notice));
         }
         // .....End, Post ,deletiona and update....
-
         // .......login ............
         if (response.data.token) {
           const token = {
             token: response.data.token,
             id: response.data.id,
+            email:response.data.email
           };
 
           // ......Islogin  token store in Localstorage....

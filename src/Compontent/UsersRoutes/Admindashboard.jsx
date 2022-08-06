@@ -31,6 +31,7 @@ import Clientprofile from "../Users/Clientprofile";
 import Client from "../Clients/Client";
 import Dashboard from "../Dashboard/Dashboard";
 import history from './Historycomponent';
+import Attendance from '../Employee/Attendance.jsx';
 function Routesuser() {
   return <>
        <Header />
@@ -65,6 +66,7 @@ function Routesuser() {
            <Route path="/Clientprofile" element={<Clientprofile />} />
            <Route path="/Client" element={<Client />} />
            <Route path="/Notice" element={<Notice />} />
+           <Route path='/Attendance' element={<Attendance/>}/>
          </Routes>
      </div>
      </>

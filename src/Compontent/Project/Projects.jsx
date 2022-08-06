@@ -36,10 +36,10 @@ function Projects() {
                       <i className="fa fa-plus" /> Create Project
                     </a>
                     <div className="view-icons">
-                    <Link to="/Projects" className="grid-view btn btn-link">
+                    <Link to="/Admindashboard/Projects" className="grid-view btn btn-link">
                       <i className="fa fa-th" />
                     </Link>
-                    <Link to="/Projectlist"
+                    <Link to="/Admindashboard/Projectlist"
                      
                       className="list-view btn btn-link active"
                     >
@@ -125,12 +125,7 @@ function Projects() {
                       <h4 className="project-title">
                         <a href="project-view.php">{project_name}</a>
                       </h4>
-                      <small className="block text-ellipsis m-b-15">
-                        <span className="text-xs">1</span>{" "}
-                        <span className="text-muted">open tasks, </span>
-                        <span className="text-xs">9</span>{" "}
-                        <span className="text-muted">tasks completed</span>
-                      </small>
+                
                       <p className="text-muted">
                        {description}
                       </p>

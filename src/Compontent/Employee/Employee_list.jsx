@@ -19,9 +19,7 @@ function Employee_list() {
    const handleChangepage = (event, value) => {
      setCurrentPage(value);
    };
- 
    const pageCount = Math.ceil(Employeestate.length / postsPerPage);
-
    var Role,checkstatus;
    if(localStorage.getItem("user"))
    {
@@ -30,7 +28,6 @@ function Employee_list() {
     checkstatus=Role.token;
    };
  
-   console.log("checkstatus App.js",checkstatus)
   return (
     <>
       <>

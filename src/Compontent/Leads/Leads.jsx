@@ -1,9 +1,24 @@
 import React from "react";
-import {useSelector} from 'react-redux';
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import {POST} from '../API/PostAPI';
 function Leads() {
-  const projectteamLead=useSelector(state=>state.Projectreducer);
-  console.log("Leads",projectteamLead);
-  return (
+  const url="http://localhost/HRMS/Project/Projectstatus.php";
+  const projectteamLead = useSelector((state) => state.Projectreducer);
+  const [statusadd,setstatustate]=useState();
+  const projectstatus=(e)=>{
+   const value=e.target.value;
+   const status=value.slice(0,8).trim();
+   const id=value.slice(8);
+   const projectid=id.trim();
+   const statusvalues={
+    projectid,
+    status
+   }
+   setstatustate(statusvalues);
+  }
+  // console.log("statusaddproject",statusadd)
+  return <>
     <div className="page-wrapper">
       {/* <!-- Page Content --> */}
       <div className="content container-fluid">
@@ -36,48 +51,55 @@ function Leads() {
                   </tr>
                 </thead>
                 <tbody>
-                  {projectteamLead.length > 0 && projectteamLead.map((items,index)=>{
-                   return <>
-                   <tr key={index}>
-                
-                    <td>
-                      <h2 className="table-avatar">
-                        <a href="#">{items.leader}</a>
-                      </h2>
-                    </td>
-                    <td>
-                      <a href="project-view.php">{items.project_name}</a>
-                    </td>
-                    {items.status=="Working" ?(<td>
-                      <span className="badge "  style={{color:'red'}}>{items.status}</span>
-                    </td>):(<td>
-                      <span className="badge bg-inverse-success">{items.status}</span>
-                    </td>)}
-                    <td className="text-right">
-                      <div className="dropdown dropdown-action">
-                        <a
-                          href="#"
-                          className="action-icon dropdown-toggle"
-                          data-toggle="dropdown"
-                          aria-expanded="false"
-                        >
-                          <i className="material-icons">more_vert</i>
-                        </a>
-                        <div className="dropdown-menu dropdown-menu-right">
-                          <a className="dropdown-item" href="#">
-                            <i className="fa fa-pencil m-r-5"></i> Edit
-                          </a>
-                          <a className="dropdown-item" href="#">
-                            <i className="fa fa-trash-o m-r-5"></i> Delete
-                          </a>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                   </>
-                  })}
-                  
-                
+                  {projectteamLead.length > 0 &&
+                    projectteamLead.map((items, index) => {
+                      return (
+                        <>
+                          <tr key={index}>
+                            <td>
+                              <h2 className="table-avatar">
+                                <a href="#">{items.leader}</a>
+                              </h2>
+                            </td>
+                            <td>
+                              <a href="project-view.php">
+                                {items.project_name}
+                              </a>
+                            </td>
+                            {items.status == "Working" ? (
+                              <td>
+                                <span
+                                  className="badge "
+                                  style={{ color: "red" }}
+                                >
+                                  {items.status}
+                                </span>
+                              </td>
+                            ) : (
+                              <td>
+                                <span className="badge bg-inverse-success">
+                                  {items.status}
+                                </span>
+                              </td>
+                            )}
+                            <td>
+                              <select
+                                style={{
+                                  border: "none",
+                                  borderRadius: "4px",
+                                  padding: "5px",
+                                  float: "right",
+                                }}
+                                onChange={projectstatus}
+                              >
+                                <option value={`Working ${items.project_id}`}  >Working</option>
+                                <option value={`complete ${items.project_id}`}>complete</option>
+                              </select>
+                            </td>
+                          </tr>
+                        </>
+                      );
+                    })}
                 </tbody>
               </table>
             </div>
@@ -85,7 +107,8 @@ function Leads() {
         </div>
       </div>
     </div>
-  );
+    {statusadd && <POST values={statusadd} url={url} Addstate={setstatustate} />}
+  </>
 }
 
 export default Leads;

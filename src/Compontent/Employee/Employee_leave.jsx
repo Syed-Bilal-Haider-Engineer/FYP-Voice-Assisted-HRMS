@@ -1,7 +1,9 @@
 import React from "react";
 import Addleave from "./Addleave";
 import { useSelector } from "react-redux";
+import { Container, Box, Stack, Pagination } from "@mui/material";
 import { POST } from "../API/PostAPI";
+import { useState } from "react";
 function Employee_leave() {
   const [remove, setAdd] = React.useState();
   const [Leave, setleave] = React.useState();
@@ -15,9 +17,8 @@ function Employee_leave() {
 
   // ............Employee leave and Employee Information....................
   const Employeeleave = useSelector((state) => state.Fetchemployeeleavereducer);
-  // console.log("Employeeleave",Employeeleave.EmployeeID);
   const Employeestate = useSelector((state) => state.Fetchemployeereducer);
-  console.log("Employeestate", Employeeleave);
+  console.log("Employee informations", Employeestate);
 
   // ...............Remove Leave Handler......................
   const removeURL = "http://localhost/HRMS/Employee/Removeleave.php";
@@ -30,13 +31,26 @@ function Employee_leave() {
   };
 
   const ActionsLeaveHandler = (e) => {
-    e.preventDefault();
-    const status = {
-      status: e.target.value,
-      id,
+    console.log("e.target.value",)
+      var value=e.target.value;
+      const status=value.slice(0,6);
+      const leaveid=value.slice(7);
+    const statusobj= {
+      status,
+      leaveid,
+      id
     };
-    setleave(status);
+    setleave(statusobj);
   };
+
+  // ....pagination start...
+
+  const [postsPerPage, setPostsPerPage] = useState(4);
+  const [currentPage, setCurrentPage] = useState(1);
+  const handleChangepage = (event, value) => {
+    setCurrentPage(value);
+  };
+  const pageCount = Math.ceil(Employeeleave.length / postsPerPage);
   return (
     <>
       <div className="main-wrapper">
@@ -71,7 +85,7 @@ function Employee_leave() {
             {/* /Page Header */}
             <div className="row">
               <div className="col-md-12">
-                <div className="table-responsive">
+                <div className="table-responsive" style={{overflowX:'scroll'}}>
                   <table className="table table-striped custom-table mb-0 datatable">
                     <thead>
                       <tr>
@@ -82,12 +96,15 @@ function Employee_leave() {
                         <th>No of Days</th>
                         <th>Reason</th>
                         <th>status</th>
-                       
                       </tr>
                     </thead>
                     <tbody>
                       {Employeeleave.length > 0 &&
-                        Employeeleave.map((items, index) => {
+                          Employeeleave
+                            .slice(
+                              currentPage * postsPerPage - postsPerPage,
+                              currentPage * postsPerPage
+                            ).map((items, index) => {
                           return (
                             <tr key={index}>
                               {Employeestate.map((element, i) => {
@@ -99,7 +116,7 @@ function Employee_leave() {
                               <td>{items.Starting_At}</td>
                               <td>{items.Ending_On}</td>
                               <td>{items.Days}</td>
-                              <td>{items.Reason}</td>
+                              <td>{items.Reason.substring(0, 80)}</td>
                               {checkstatus == 2 ? (
                                 <td>
                                   <select
@@ -107,13 +124,22 @@ function Employee_leave() {
                                       border: "none",
                                       borderRadius: "4px",
                                       padding: "5px",
-                                     float:'right'
+                                      float: "right",
                                     }}
                                     onChange={ActionsLeaveHandler}
                                   >
                                     <option>{items.status}</option>
-                                    <option value="accept">Accept</option>
-                                    <option value="reject">Reject</option>
+                                    <option
+                                      
+                                      value={`accept ${items.id}`}
+                                    >
+                                      accept
+                                    </option>
+                                    <option
+                                      value={`reject ${items.id}`}
+                                    >
+                                      reject
+                                    </option>
                                   </select>
                                 </td>
                               ) : (
@@ -169,10 +195,27 @@ function Employee_leave() {
           {/* Add Leave Modal */}
           <Addleave />
         </div>
-        {Leave && <POST values={Leave} url={LeaveURL} Addstate={setleave} />}
-        {remove && <POST values={remove} url={removeURL} Addstate={setAdd} />}
+       
         {/* /Page Wrapper */}
+        {/* pagination code */}
+        {Employeeleave.length > 0 && (
+              <Box m="15px">
+                <Stack
+                  direction={"row"}
+                  alignItems="center"
+                  justifyContent="flex-end"
+                >
+                  <Pagination
+                    count={pageCount}
+                    page={currentPage}
+                    onChange={handleChangepage}
+                  />
+                </Stack>
+              </Box>
+            )}
       </div>
+      {Leave && <POST values={Leave} url={LeaveURL} Addstate={setleave} />}
+        {remove && <POST values={remove} url={removeURL} Addstate={setAdd} />}
     </>
   );
 }

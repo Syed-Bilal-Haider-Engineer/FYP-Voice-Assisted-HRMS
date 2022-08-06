@@ -1,5 +1,4 @@
 import React,{useContext, useEffect,useRef,useState} from "react";
-import logo from "../../Images/logo2.png";
 import { NavLink,useNavigate} from "react-router-dom";
 import { Formik, Field, Form } from "formik";
 import Errorsg from "../Msgerror/Errormsg";
@@ -7,13 +6,29 @@ import { toast } from "react-toastify";
 import Loading from '../../Loading';
 import axios from "axios";
 import {emailAPI} from './url';
+import useGet from '../API/API';
 import {Applicationschema} from "../Yup/Yup";
+import {useSelector} from 'react-redux';
 function Apply() {
+  const [emailstate,setemailstate]=useState();
+  // call information visters
+  const type="vister";
+  useGet('http://localhost/HRMS/Visters/fetchVisters.php',type);
+  // ...Fetch vister information...
+  const visterinfo = useSelector(state => state.Visterreducer);
   // ......loading state.......
   const [loading, setLoading] = useState(false);
   const navigate=useNavigate();
   const url="http://localhost/HRMS/Application/Application.php";
   const formData = new FormData();
+  // ......get user id and status.at...
+  var Role, checkstatus,id;
+  if (localStorage.getItem("user")) {
+    const Islogin = window.atob(localStorage.getItem("user"));
+    Role = JSON.parse(Islogin);
+    checkstatus = Role.token;
+    id=Role.id;
+  }
 const Initivalue={
    designation:"",
    companyname:'',
@@ -25,20 +40,23 @@ const Initivalue={
     degreeyear:"",
   subject:""
 }
-var Role,checkstatus;
-  if(localStorage.getItem("user"))
-  {
-  const Islogin=window.atob(localStorage.getItem("user"));
-   Role=JSON.parse(Islogin);
-   checkstatus=Role.id;
-  };
 
+  
 useEffect(()=>{
   if(checkstatus==undefined)
   {
     navigate('/login');
   }
-},[checkstatus])
+},[checkstatus]);
+
+useEffect(()=>{
+  const result=visterinfo.length > 0 && visterinfo.find((items) => {
+    return items.id == id;
+  });
+  setemailstate(result.email);
+},[visterinfo]);
+console.log("normal user",id,"email",emailstate);
+
 const inputRef = useRef(null);
 const filehandler = async (values) => {
   const img = inputRef.current.files[0];
@@ -59,21 +77,20 @@ const filehandler = async (values) => {
    try {
     setLoading(true)
     const response = await axios.post(url,formData,{headers:{ "Content-Type": "multipart/form-data" }});
-    const msg=response.data;
-    if(response.status==200)
+    const msg=response.data.message;
+    const status=response.data.status;
+    if(status==true)
     {
-      
-    //  const email="qmuhammad144@gmail.com";
+      // ..send email of Users..
+    
      let body = {
-      email: "qmuhammad144@gmail.com"
+      email: 'bilalshahbscs@gmail.com'
      }
      axios
       .post(emailAPI + "/sendMail", body)
       .then((resp) => {
         // successFul("success");
         console.log("resp.data", resp.data);
-
-     
       })
     setLoading(false);
       toast.success(`${msg}`);

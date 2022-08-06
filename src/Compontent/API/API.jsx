@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Showusers,Getcategory,fetchvister,fetchJob,Fetchdepartment,Fetchdesignation,
-    fetchHolidays,Userapplications,FetchEmployee,FetchEmployeeleave,project,
+    fetchHolidays,Userapplications,FetchEmployee,FetchEmployeeleave,project,Attendance,
     Clientinfo,Tasksdata,Notice} from '../Redux/Actions/Actions';
 import axios from "axios";
 import Loading from '../../Loading';
@@ -68,6 +68,10 @@ const useGet = (url,type) => {
                  else if(type=='notice')
                  {
                     usedispatch(Notice(value))
+                 }
+                 else if(type=='Attendance')
+                 {
+                    usedispatch(Attendance(value))
                  }
             })
             .catch((error) => {

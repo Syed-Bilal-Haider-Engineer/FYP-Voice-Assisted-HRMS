@@ -124,7 +124,14 @@ const Fetchemployeereducer=(state=Fetchemployee,actions)=>{
         case ActionTypes.Employee:
             const Employeevalue=actions.payload;
             state=[...Employeevalue];
-        return state;
+            return state;
+        case ActionTypes.empsearch:
+            const searchkey=actions.payload;
+            const newstate=state.filter((items)=>{
+                const {fname,lname,username,designation}=items;
+                    return fname==searchkey || lname==searchkey || username==searchkey || designation==searchkey;
+                })
+        return newstate;
         default:
       return state;
     }
@@ -190,6 +197,17 @@ const noticereducer=(state=notice,actions)=>{
       return state;
     }
 }
+const attendance=[];
+const attendancereducer=(state=attendance,actions)=>{
+    switch(actions.type){
+        case ActionTypes.attendance:
+            const attendancevalue=actions.payload;
+            state=[...attendancevalue];
+        return state;
+        default:
+      return state;
+    }
+}
 const reducer=combineReducers(
     {
         Userregisteration,
@@ -205,6 +223,7 @@ const reducer=combineReducers(
         Clientreducer,
         Projectreducer,
         Tasksreducer,
-        noticereducer
+        noticereducer,
+        attendancereducer
     });
 export default reducer

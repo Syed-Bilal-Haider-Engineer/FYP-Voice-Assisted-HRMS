@@ -3,19 +3,13 @@ import useGet from '../API/API';
 import { useSelector } from "react-redux";
 import { POST } from "../API/PostAPI";
 import {
-  Container,
   Box,
-  Typography,
-  Button,
-  Divider,
   Stack,
-  Grid,
   Pagination
 } from "@mui/material";
 const url="http://localhost/HRMS/Visters/fetchVisters.php";
 function Vister() {
   const visterinfo = useSelector(state => state.Visterreducer);
-  console.log("visterinfo", visterinfo);
   const type="vister";
   useGet(url,type);
 

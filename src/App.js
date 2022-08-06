@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Routesuser from "./Compontent/UsersRoutes/Admindashboard";
 import { Route, Routes } from "react-router-dom";
 import useGet from "./Compontent/API/API";
@@ -16,10 +16,9 @@ import Footer from "./Compontent/Recuriement/Footer.jsx";
 import Header from "./Compontent/Recuriement/Header.jsx";
 import Logout from "./Compontent/Recuriement/Logout";
 import theme from './Theme/Theme';
-import {ipaddress} from './Compontent/Recuriement/url';
-import axios from 'axios';
 function App() {
   //.........Private and Protected route.........
+  useGet("http://localhost/HRMS/Attendance/fetchattendance.php","Attendance");
   useGet("http://localhost/HRMS/Designations/Designations.php", "Designation");
   useGet("http://localhost/HRMS/Department/Fetchdepartment.php", "department");
   useGet("http://localhost/HRMS/Application/Fetchapplicationsuser.php", "Applications");
@@ -29,22 +28,8 @@ function App() {
   useGet("http://localhost/HRMS/Category/getcategory.php", "category");
   useGet("http://localhost/HRMS/Client/Client.php", "Client");
   useGet("http://localhost/HRMS/Project/Project.php", "Project");
- 
-  // ...useEffct for IP address....
-  useEffect(()=>{
-     axios
-      .get(ipaddress + "/getIpAddress")
-      .then((resp) => {
-        // successFul("success");
-        console.log("resp.data", resp.data);
-      }).catch((error)=>{
-           console.log("error",error);
-      })
-  },[])
- 
-
-
   // ...................Normal Users.........................
+
   const HomeComponent = () => {
     return (
       <>

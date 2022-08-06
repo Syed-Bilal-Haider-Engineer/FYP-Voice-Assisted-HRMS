@@ -1,4 +1,5 @@
 
+import { Action } from 'history';
 import {ActionTypes} from '../Actionstypes/Actionstypes';
 // ...............User fetch .....................
 export const Showusers =(values)=> {
@@ -103,6 +104,20 @@ export const Tasksdata=(values)=>{
 export const Notice=(values)=>{
   return {
     type:ActionTypes.notice,
+    payload:values
+  }
+}
+
+export const Attendance=(values)=>{
+  return {
+    type:ActionTypes.attendance,
+    payload:values
+  }
+}
+
+export const employeesearch=(values)=>{
+  return {
+    type:Action.empsearch,
     payload:values
   }
 }

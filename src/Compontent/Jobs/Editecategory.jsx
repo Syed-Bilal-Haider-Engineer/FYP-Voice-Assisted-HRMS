@@ -21,6 +21,7 @@ function Editecategory({ values, Editefun }) {
     categoryname,
     values
   }
+  console.log("Updatecategory",Updatecategory);
   setAddState(Updatecategory);
  }
  const CloseHandler=()=>{

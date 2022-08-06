@@ -15,6 +15,7 @@ import Hero from "../../Images/h1_hero.jpg";
 import { useDispatch } from "react-redux";
 
 function Home() {
+ 
   const dispatch = useDispatch();
   const url="http://localhost/HRMS/Job/Jobs.php";
   const type="job";

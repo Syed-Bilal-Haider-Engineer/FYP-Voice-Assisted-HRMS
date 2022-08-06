@@ -1,6 +1,17 @@
-import React from "react";
+import React,{useState} from "react";
 import Addnotice from "./Addnotice";
+import {useSelector} from 'react-redux';
+import { Container, Box, Stack, Pagination } from "@mui/material";
 function Notice() {
+  const noticevalue=useSelector(state=>state.noticereducer);
+
+  // ...pagination start.....
+  const [postsPerPage, setPostsPerPage] = useState(2);
+  const [currentPage, setCurrentPage] = useState(1);
+  const handleChangepage = (event, value) => {
+    setCurrentPage(value);
+  };
+  const pageCount = Math.ceil(noticevalue.length / postsPerPage);
   return (
     <>
       <div className="main-wrapper">
@@ -36,10 +47,19 @@ function Notice() {
 
             {/* /Page Header */}
             <div className="row">
-              <div className="col-md-12">
+              {
+              noticevalue.length > 0 &&
+              noticevalue
+                  .slice(
+                    currentPage * postsPerPage - postsPerPage,
+                    currentPage * postsPerPage
+                  ).map((items,index)=>{
+                const {title,notice_desc,date}=items;
+                  return <>
+                  <div className="col-md-12" key={index}>
                 <div className="card">
                   <div className="card-body">
-                    <h4 className="payslip-title">Subjects</h4>
+                    <h4 className="payslip-title">{title}</h4>
                     <div className="row">
                       <div className="col-sm-12 m-b-20">
                         <p
@@ -50,22 +70,37 @@ function Notice() {
                             fontSize: "bold",
                           }}
                         >
-                          Lorem ipsum dolor sit amet consectetur adipisicing
-                          elit. Id laboriosam facere doloribus animi facilis
-                          optio, magnam fugit obcaecati natus omnis quam
-                          officiis. Eius alias tempore dicta sed odit
-                          aspernatur. Totam!
+                        {notice_desc}
                         </p>
+                        <span>Date:{date}</span>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
+                   </>
+                })
+              }
+              
             </div>
           </div>
           {/* /Page Content */}
         </div>
-        {/* /Page Wrapper */}
+        {noticevalue.length > 0 && (
+              <Box m="15px">
+                <Stack
+                  direction={"row"}
+                  alignItems="center"
+                  justifyContent="flex-end"
+                >
+                  <Pagination
+                    count={pageCount}
+                    page={currentPage}
+                    onChange={handleChangepage}
+                  />
+                </Stack>
+              </Box>
+            )}
       </div>
       {/* /Main Wrapper */}
       <Addnotice />

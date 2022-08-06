@@ -29,7 +29,6 @@ function Addemployee() {
   const department = useSelector((state) => state.Departmentreducer);
   const designation=useSelector(state=>state.Designationreducer);
   const Applicationdetails=useSelector(state=>state.fetchuserAppliations);
-  console.log("Applicationdetails:",Applicationdetails);
   const inputRef = useRef(null);
   const formData = new FormData();
   const filehandler = async (values) => {
@@ -105,7 +104,6 @@ function Addemployee() {
                       {Applicationdetails.length > 0 &&
                         Applicationdetails.map((items, index) => (
                           items.Interview=='Select'?(
-                            
                             <option value={items.id}>{items.username}</option>
                           
                           ):null

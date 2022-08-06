@@ -9,8 +9,6 @@ function Sidebar() {
     checkstatus = Role.token;
   }
 
-  console.log("checkstatus App.js", checkstatus);
-
   return (
     <>
       <div className="sidebar" id="sidebar">
@@ -21,8 +19,8 @@ function Sidebar() {
                 <span>Main</span>
               </li>
               <li className="submenu">
-                <Link to="/Admindashboard/">
-                  <i className="la la-dashboard" /> <span> Dashboard</span>{" "}
+                <Link to="/Admindashboard">
+                  <i className="la la-dashboard" /> <span> Dashboard</span>
                 </Link>
               </li>
               <div
@@ -66,6 +64,12 @@ function Sidebar() {
                   >
                     Timesheet
                   </Link>
+                  <Link
+                    to="/Admindashboard/Attendance"
+                    className="dropdown-item"
+                  >
+                    Attendance
+                  </Link>
                   {checkstatus == 2 ? (
                     <>
                       <Link
@@ -74,7 +78,7 @@ function Sidebar() {
                       >
                         All Employees{" "}
                       </Link>
-                     
+
                       <Link
                         to="/Admindashboard/Holiday"
                         className="dropdown-item"
@@ -126,7 +130,7 @@ function Sidebar() {
                       aria-haspopup="true"
                       aria-expanded="false"
                     >
-                      Recuriements
+                      Recuritments
                     </button>
 
                     <div
@@ -164,12 +168,7 @@ function Sidebar() {
                       >
                         Promotions
                       </Link>
-                      <Link
-                        to="/Admindashboard/Notice"
-                        className="dropdown-item"
-                      >
-                        Notice
-                      </Link>
+
                       {/* <li>
                 <Link to="/Admindashboard/Terminations">
                   <i className="la la-times-circle" />
@@ -181,17 +180,40 @@ function Sidebar() {
                 </>
               ) : null}
 
-              <li className="submenu">
-                <a href="#">
-                  <i className="la la-rocket" /> <span> Projects</span>{" "}
-                  <span className="menu-arrow" />
-                </a>
-                <ul style={{ display: "none" }}>
-                  <li>
-                    <Link to="/Admindashboard/Projects">Projects</Link>
-                  </li>
-                </ul>
-              </li>
+              <div
+                className="dropdown"
+                style={{
+                  display: "flex",
+                  justifyContent: "flex-start",
+                  alignItems: "center",
+                  paddingLeft: "10px",
+                }}
+              >
+                <i
+                  className="la la-user"
+                  style={{ color: "#b7c0cd", float: "left", fontSize: "30px" }}
+                />
+                <button
+                  style={{ color: "#b7c0cd", fontSize: "18px" }}
+                  className="btn  dropdown-toggle"
+                  type="button"
+                  id="dropdownMenuButton"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  Project
+                </button>
+
+                <div
+                  className="dropdown-menu"
+                  aria-labelledby="dropdownMenuButton"
+                >
+                  <Link to="/Admindashboard/Projects" className="dropdown-item">
+                    Project
+                  </Link>
+                </div>
+              </div>
               <li
                 style={{
                   display: "flex",
@@ -205,6 +227,20 @@ function Sidebar() {
                 <i className="la la-money" />
                 <Link to="/Admindashboard/Leads">Leads</Link>
               </li>
+              <li
+                style={{
+                  display: "flex",
+                  justifyContent: "flex-start",
+                  alignItems: "center",
+                  color: "#b7c0cd",
+                  fontSize: "26px",
+                  padding: "5px 15px",
+                }}
+              >
+                <i className="la la-money" />
+                <Link to="/Admindashboard/Notice"> Notice </Link>
+              </li>
+             
               <li
                 style={{
                   display: "flex",

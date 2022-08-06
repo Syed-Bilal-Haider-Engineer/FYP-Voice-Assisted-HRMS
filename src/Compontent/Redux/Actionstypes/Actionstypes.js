@@ -13,5 +13,7 @@ export const ActionTypes = {
     project:'projectdetails',
     jobsearch:"jobsearch",
     Tasks:'Tasks',
-    notice:'notice'
+    notice:'notice',
+    attendance:'attendance',
+    empsearch:'empsearch',
 }

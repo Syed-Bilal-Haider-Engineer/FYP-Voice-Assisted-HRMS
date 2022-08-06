@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { POST } from "../API/PostAPI";
-const url = "http://localhost/HRMS/Holiday/Editeholiday.php";
+const url = "http://localhost/HRMS/Holiday/Holidayedite.php";
 function Updatehoilday({ values, Editefun }) {
 
   const [add, setAddState] = React.useState("");

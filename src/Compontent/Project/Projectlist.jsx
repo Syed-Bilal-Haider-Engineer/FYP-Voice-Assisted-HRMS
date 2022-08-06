@@ -63,21 +63,8 @@ function Projectlist() {
                 </div>
               </div>
               <div className="col-sm-6 col-md-3">
-                <div className="form-group form-focus select-focus">
-                  <select className="select floating">
-                    <option>Select Roll</option>
-                    <option>Web Developer</option>
-                    <option>Web Designer</option>
-                    <option>Android Developer</option>
-                    <option>Ios Developer</option>
-                  </select>
-                  <label className="focus-label">Role</label>
-                </div>
-              </div>
-              <div className="col-sm-6 col-md-3">
                 <a href="#" className="btn btn-success btn-block">
-                  {" "}
-                  Search{" "}
+                  Search
                 </a>
               </div>
             </div>
