@@ -22,8 +22,8 @@ import {
   Attendance,
 } from "../Redux/Actions/Actions";
 import { emailAPI } from "../Recuriement/url";
-export const POST = ({ values, url, Addstate }) => {
-  console.log("post values",values);
+export const POST = ({ values, url, Addstate,hremail }) => {
+  console.log("hremail values",hremail);
   // .....fetch user login details.......
   var Role, checkstatus,id,email;
   if (localStorage.getItem("user")) {
@@ -33,7 +33,6 @@ export const POST = ({ values, url, Addstate }) => {
     id=Role.id;
     email=Role.email;
   }
-  console.log("email",email);
 // .....close login Details........
   const usedispatch = useDispatch();
   const [loading, setLoading] = useState(false);
@@ -47,6 +46,23 @@ export const POST = ({ values, url, Addstate }) => {
       Addstate("");
     }
   };
+
+  // Applications email....
+  const Applicationemailhandler=()=>{
+    try {
+      let body = {
+        email:values.applicationemail
+      };
+      axios.post(emailAPI + "/sendMail", body).then((resp) => {
+        console.log("resp.data", resp.data);
+      });
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      console.log("Application email error",error);
+    }
+  }
+  
   const usersPost = async () => {
     setLoading(true);
     await axios
@@ -70,7 +86,7 @@ export const POST = ({ values, url, Addstate }) => {
             setLoading(true);
             try {
               let body = {
-                email:email
+                email:values.hremail
               };
               axios.post(emailAPI + "/sendMail", body).then((resp) => {
                 console.log("resp.data", resp.data);
@@ -83,6 +99,11 @@ export const POST = ({ values, url, Addstate }) => {
           }
         } else if (response.data.applicationstatus) {
           usedispatch(Userapplications(response.data.applicationstatus));
+           if(response.data.Appstatus==1)
+           {
+            Applicationemailhandler();
+           }
+
         } else if (response.data.holidaydetails) {
           usedispatch(fetchHolidays(response.data.holidaydetails));
          

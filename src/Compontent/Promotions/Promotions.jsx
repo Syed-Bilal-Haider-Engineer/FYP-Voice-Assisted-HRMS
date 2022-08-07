@@ -1,6 +1,8 @@
-import React from "react";
+import React,{useState} from "react";
 import Addpromotion from "./Addpromotion";
+import {useSelector} from 'react-redux';
 function Promotions() {
+  const Employeestate=useSelector(state=>state.Fetchemployeereducer);
   return (
     <>
       <div className="main-wrapper">

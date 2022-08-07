@@ -147,7 +147,6 @@ export const Leaveschema = yup.object().shape({
   employee: yup.string().required("Leave type is required"),
   starting_at: yup.string().required("started date is required"),
   ends_on: yup.string().required("ending is required"),
-  days_count: yup.string().required("days is required"),
   reason: yup
     .string()
     .required("reason is required")

@@ -29,6 +29,8 @@ function Employee() {
   const searchhandler=()=>{
     usedispatch(employeesearch(seacrh));
   }
+
+  console.log("employeeid",employeeid);
   return (
     <>
       {/* Main Wrapper */}
@@ -149,7 +151,7 @@ function Employee() {
                         data-toggle="modal"
                         data-target="#edit_employee"
                         onClick={()=>{
-                          Updateemployee(items.id)
+                          Updateemployee(items.EmployeeID)
                         }}
                       >
                         <i className="fa fa-pencil m-r-5" /> Edit
@@ -175,7 +177,7 @@ function Employee() {
         </div>
         {/* /Page Wrapper */}
       </div>
-     {employeeid&&<Editeemp/>}
+     {employeeid && <Editeemp id={employeeid}/>}
     </>
   );
 }

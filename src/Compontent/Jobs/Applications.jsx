@@ -31,11 +31,12 @@ function Applications() {
     useGet("http://localhost/HRMS/Application/Fetchapplicationsuser.php", "Applications");
  
   // .............Decison making...........
-  const DecisionHandler = (id, status) => {
-    console.log("status",status);
+  const DecisionHandler = (id, status,applicationemail) => {
+    // console.log("status",status);
     const value = {
       id,
       status,
+      applicationemail
     };
     setstatusstate(value);
   };
@@ -80,6 +81,7 @@ function Applications() {
                           <th>Company</th>
                           <th>email</th>
                           <th>Phone</th>
+                          <th>Resume</th>
                           <th>Selections</th>
                         </tr>
                       </thead>
@@ -106,7 +108,7 @@ function Applications() {
                                   <td>{items.cname}</td>
                                   <td>{items.email}</td>
                                   <td>{items.phone}</td>
-
+                                  <td>Cv</td>
                                   <td className="text-right">
                                     <div className="dropdown dropdown-action">
                                       <a
@@ -121,13 +123,13 @@ function Applications() {
                                       </a>
                                       <div className="dropdown-menu dropdown-menu-right">
                                         <span className="dropdown-item">
-                                          {items.Interview}
+                                          {items.status}
                                         </span>
                                         <hr/>
                                         <span
                                           className="dropdown-item"
                                           onClick={() => {
-                                            DecisionHandler(items.id, "Reject");
+                                            DecisionHandler(items.id, "Reject",items.email);
                                           }}
                                         >
                                           Reject
@@ -137,7 +139,8 @@ function Applications() {
                                           onClick={() => {
                                             DecisionHandler(
                                               items.id,
-                                              "Interview"
+                                              "Interview",
+                                              items.email
                                             );
                                           }}
                                         >
@@ -146,7 +149,7 @@ function Applications() {
                                         <span
                                           className="dropdown-item"
                                           onClick={() => {
-                                            DecisionHandler(items.id, "Select");
+                                            DecisionHandler(items.id, "Select",items.email);
                                           }}
                                         >
                                           Select

@@ -131,7 +131,7 @@ function Category() {
                                           className="dropdown-item"
                                           style={Action}
                                         >
-                                          <i className="fa fa-trash-o m-r-5" />{" "}
+                                          <i className="fa fa-trash-o m-r-5" />
                                           Delete
                                         </span>
                                       </div>
