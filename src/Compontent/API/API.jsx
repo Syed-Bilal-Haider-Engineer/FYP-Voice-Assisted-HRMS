@@ -28,7 +28,12 @@ const useGet = (url,type) => {
                 }else if(type=="vister")
                 {
                     usedispatch(fetchvister(value))
-                } else if(type=='job')
+                } 
+                else if(type=="task")
+                {
+                    usedispatch(Tasksdata(value))  
+                }
+                else if(type=='job')
                 {
                     usedispatch(fetchJob(value))
                 }
@@ -60,10 +65,6 @@ const useGet = (url,type) => {
                  else if(type=='Project')
                  {
                     usedispatch(project(value));
-                 }
-                 else if(type=='Tasks')
-                 {
-                    usedispatch(Tasksdata(value))
                  }
                  else if(type=='notice')
                  {

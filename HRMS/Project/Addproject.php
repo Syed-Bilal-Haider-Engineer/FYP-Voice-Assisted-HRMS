@@ -37,14 +37,20 @@ if(isset($_FILES['img'])){
    if($error==true)
    {
     $new_name = time(). "-".basename($file_name);
- 
-
       $sql = "INSERT INTO `project`( `project_name`, `client`, `team_mem`, `start_date`, `end_date`, `leader`, `department`, `description`, `File`, `status`)
       VALUES ('{$pro_name}','{$client}','{$teammem}','{$start_date}','{$end_date}','{$leader}','{$department}','{$description}','{$new_name}','{$status}')";
      $res=mysqli_query($con,$sql) or die("Project Query failed".mysqli_error($con));
      if($res){
         move_uploaded_file($file_tmp,DISH_NAME.$new_name);
-        echo "Project save succesfully";
+        $result=mysqli_query($con,"SELECT * FROM `project` ") or die("project sql query failed");
+        if(mysqli_num_rows($result)>0)
+        {
+            $ouput=mysqli_fetch_all($result,MYSQLI_ASSOC);
+            echo json_encode(array('message'=>'project save  successfully','status'=>true,'projectdetails'=>$ouput));
+        }
+        else{
+             echo json_encode(array('message'=>'No Record found','status'=>false));
+        }
      }else{
       echo "Project not save.";
      }

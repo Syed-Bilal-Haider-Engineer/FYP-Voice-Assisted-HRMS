@@ -80,7 +80,13 @@ export const POST = ({ values, url, Addstate,hremail }) => {
           usedispatch(fetchJob(response.data.Jobdetails));
         } else if (response.data.visterdetails) {
           usedispatch(fetchvister(response.data.visterdetails));
-        } else if (response.data.leavedetails) {
+        } 
+        else if(response.data.tasks)
+        {
+          usedispatch(Tasksdata(response.data.tasks))
+
+        }
+        else if (response.data.leavedetails) {
           usedispatch(FetchEmployeeleave(response.data.leavedetails));
           if (emailstatus) {
             setLoading(true);
@@ -121,6 +127,9 @@ export const POST = ({ values, url, Addstate,hremail }) => {
         else if(response.data.notice)
         {
           usedispatch(Notice(response.data.notice));
+        }
+        else if(response.data.clients){
+          usedispatch(Clientinfo(response.data.clients));
         }
         // .....End, Post ,deletiona and update....
         // .......login ............

@@ -8,8 +8,8 @@ function Leads() {
   const [statusadd,setstatustate]=useState();
   const projectstatus=(e)=>{
    const value=e.target.value;
-   const status=value.slice(0,8).trim();
-   const id=value.slice(8);
+   const id=value.slice(0,2).trim();
+   const status=value.slice(2);
    const projectid=id.trim();
    const statusvalues={
     projectid,
@@ -17,7 +17,7 @@ function Leads() {
    }
    setstatustate(statusvalues);
   }
-  // console.log("statusaddproject",statusadd)
+  console.log("statusaddproject",statusadd)
   return <>
     <div className="page-wrapper">
       {/* <!-- Page Content --> */}
@@ -92,8 +92,8 @@ function Leads() {
                                 }}
                                 onChange={projectstatus}
                               >
-                                <option value={`Working ${items.project_id}`}  >Working</option>
-                                <option value={`complete ${items.project_id}`}>complete</option>
+                                <option value={`${items.project_id} Working`}  >Working</option>
+                                <option value={`${items.project_id} complete`}>complete</option>
                               </select>
                             </td>
                           </tr>

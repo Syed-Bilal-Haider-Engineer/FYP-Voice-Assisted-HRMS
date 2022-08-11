@@ -44,7 +44,13 @@ if(isset($_FILES['img'])){
      $res=mysqli_query($con,$sql) or die("Client Query failed".mysqli_error($con));
      if($res){
         move_uploaded_file($file_tmp,DISH_NAME.$new_name);
-        echo "Client save succesfully";
+        $sql="SELECT *  FROM `clients`";
+        $result=mysqli_query($con,$sql) or die("Client sql query failed".mysqli_error($con));
+        if(mysqli_num_rows($result)>0)
+        {
+            $ouput=mysqli_fetch_all($result,MYSQLI_ASSOC);
+            echo json_encode(array('message' => 'Client save successfully', 'status' => true,'clients'=>$ouput));
+         }
      }else{
       echo "Client not save.";
      }

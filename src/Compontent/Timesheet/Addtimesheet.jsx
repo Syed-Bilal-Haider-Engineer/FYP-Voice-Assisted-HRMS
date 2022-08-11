@@ -30,7 +30,6 @@ if (localStorage.getItem("user")) {
 function Addtimesheet() {
   const [add,setAddState]=React.useState(); 
   const projectinfo = useSelector(state => state.Projectreducer);
-  console.log("projectinfo", projectinfo);
   return (
     <>
       <Formik
@@ -38,8 +37,9 @@ function Addtimesheet() {
         validationSchema={taskschema}
         onSubmit={(values, { resetForm }) => {
           const Taskvalues={...values,ID};
-      
           setAddState(Taskvalues);
+          console.log("Taskvalues:",Taskvalues);
+          // setAddState(Taskvalues);
           resetForm();
           //  window.location.replace('Login','/')
         }}>
@@ -70,7 +70,7 @@ function Addtimesheet() {
                       </label>
                       <br />
                       <Field as="select" name="project" className="select" style={selectinput}>
-                        <option value="select project" disabled>Select Project</option>
+                        <option value="select project" >Select Project</option>
                         {projectinfo.length > 0 && projectinfo.map((items) => {
                           return items.team_mem == ID ? <option value={items.project_id}>{items.project_name}</option> : ''
 

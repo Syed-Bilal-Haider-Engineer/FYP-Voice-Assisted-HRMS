@@ -1,12 +1,16 @@
 import React from "react";
 import Addtimesheet from "./Addtimesheet";
 import useGet from "../API/API";
+import Editetimesheet from './Editetimesheet';
 import {useSelector} from 'react-redux';
+import { useState } from "react";
 function Timesheet() {
-  const url="http://localhost/HRMS/Tasks/Fetchtask.php";
-  useGet(url,"Tasks");
+  const [editevalue,seteditestate]=useState();
   const tasks=useSelector(state=>state.Tasksreducer);
-  console.log("tasks",tasks);
+  const projectinfo=useSelector(state=>state.Projectreducer);
+  const Editehandler=(id)=>{
+    seteditestate(id)
+  }
   return (
     <>
       <>
@@ -50,10 +54,11 @@ function Timesheet() {
                         <tr>
                           <th>Project</th>
                           <th>Deadline</th>
+                          <th>Date</th>
                           <th className="d-none d-sm-table-cell">
                             Description
                           </th>
-                          <th>status</th>
+                          <th></th>
                           <th className="text-right">Actions</th>
                         </tr>
                       </thead>
@@ -62,16 +67,20 @@ function Timesheet() {
                           tasks.length >0 && tasks.map(( items,index)=>{
                             return <>
                                <tr key={index}>
-                          <td>
-                           {items.project_name}
-                          </td>
-                          <td>{items.end_date}</td>
+                                {projectinfo.length>0 && projectinfo.map((element)=>{
+                                  if(element.project_id==items.pro_id){
+                                    return <>   <td>{element.project_name}</td>  <td>{element.end_date}</td></>
+                                  }
+                                })}
+                         
+                        
                           <td className="d-none d-sm-table-cell col-md-4">
                            {items.task_desc}
                           </td>
                           <td style={{color:'red'}}>
                            {items.status}
                           </td>
+                          <td>{items.currentdate}</td>
                           <td className="text-right">
                             <div className="dropdown dropdown-action">
                               <a
@@ -88,6 +97,7 @@ function Timesheet() {
                                   href="#"
                                   data-toggle="modal"
                                   data-target="#edit_todaywork"
+                                  onClick={()=>{Editehandler(items.task_id)}}
                                 >
                                   <i className="fa fa-pencil m-r-5" /> Edit
                                 </a>
@@ -106,14 +116,10 @@ function Timesheet() {
                 </div>
               </div>
             </div>
-            {/* /Page Content */}
-            {/* Add Today Work Modal */}
             <Addtimesheet />
-           
+            {editevalue && <Editetimesheet value={editevalue}/>}
           </div>
-          {/* /Page Wrapper */}
         </div>
-        {/* /Main Wrapper */}
       </>
     </>
   );

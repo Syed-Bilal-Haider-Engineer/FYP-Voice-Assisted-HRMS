@@ -58,12 +58,7 @@ function Sidebar() {
                   >
                     Employee Leave{" "}
                   </Link>
-                  <Link
-                    to="/Admindashboard/Timesheet"
-                    className="dropdown-item"
-                  >
-                    Timesheet
-                  </Link>
+                 
                   <Link
                     to="/Admindashboard/Attendance"
                     className="dropdown-item"
@@ -240,7 +235,24 @@ function Sidebar() {
                 <i className="la la-money" />
                 <Link to="/Admindashboard/Notice"> Notice </Link>
               </li>
-             
+              <li
+                style={{
+                  display: "flex",
+                  justifyContent: "flex-start",
+                  alignItems: "center",
+                  color: "#b7c0cd",
+                  fontSize: "26px",
+                  padding: "5px 15px",
+                }}
+              >
+                <i className="la la-money" />
+              <Link
+                    to="/Admindashboard/Timesheet"
+                    
+                  >
+                    Timesheet
+                  </Link>
+                </li>
               <li
                 style={{
                   display: "flex",

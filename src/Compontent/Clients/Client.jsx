@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { POST } from "../API/PostAPI";
 import Addclient from './Addclient';
 function Client() {
+
+  const statusurl="http://localhost/HRMS/Client/Changestatus.php";
+  const [changestatus,setchagestate]=useState();
   const client = useSelector((state) => state.Clientreducer);
   console.log("client", client);
-
+  
   // ............Remove client.............
   const url="http://localhost/HRMS/Client/Removeclient.php";
   const [add, setAddState] = React.useState();
@@ -16,6 +19,19 @@ function Client() {
   }
   setAddState(values);
   }
+
+  const statushandler=(e)=>{
+    const value=e.target.value;
+    const status=value.slice(0,1);
+    const id=value.slice(1).trim();
+   const clientstatus={
+    status,
+    id
+   }
+   setchagestate(clientstatus);
+  }
+
+  console.log("changestatus",changestatus);
 
   return (
     <>
@@ -92,7 +108,8 @@ function Client() {
                       <th>Client name</th>
                       <th>Email</th>
                       <th>Mobile</th>
-                      <th className="text-right">Action</th>
+                      <th>Status</th>
+                      {/* <th className="text-right">Action</th> */}
                     </tr>
                   </thead>
 
@@ -127,7 +144,15 @@ function Client() {
                               <td>{UserName}</td>
                               <td>{Email}</td>
                               <td>{Phone}</td>
-                              <td className="text-right">
+                              <td>
+                                <select onChange={statushandler} style={{ width:'80px',height:'30px',border:'none',borderRadius:'4px'}}>
+                                 {Status==1 ? (<option disabled>Active</option>):(<option disabled>Inactive</option>)}
+                                  
+                                  <option value={`1 ${id}`}>Active</option>
+                                  <option value={`0 ${id}`}>Inactive</option>
+                                </select>
+                              </td>
+                              {/* <td className="text-right">
                                 <div className="dropdown dropdown-action" style={{cursor:'pointer'}}>
                                   <a
                                     href="#"
@@ -161,7 +186,7 @@ function Client() {
                                     </span>
                                   </div>
                                 </div>
-                              </td>
+                              </td> */}
                             </tr>
                           </>
                         );
@@ -176,6 +201,7 @@ function Client() {
       </div>
       <Addclient/>
       {add && <POST values={add} url={url} Addstate={setAddState} />}
+      {changestatus && <POST values={changestatus} url={statusurl} Addstate={setchagestate} />}
    
     </>
   );

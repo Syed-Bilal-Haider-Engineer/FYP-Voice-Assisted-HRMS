@@ -4,7 +4,10 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import Errorsg from "../Msgerror/Errormsg";
 import { projectschema } from "../Yup/Yup";
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
+import {
+  project,
+} from "../Redux/Actions/Actions";
 const url = "http://localhost/HRMS/Project/Addproject.php";
 const selectinput = {
   width: "100%",
@@ -24,6 +27,7 @@ const Initivalue = {
 };
 
 function Addproject() {
+  const usedispatch=useDispatch();
   const departmentinfo = useSelector((state) => state.Departmentreducer);
   const employees = useSelector((state) => state.Fetchemployeereducer);
   const Client = useSelector((state) => state.Clientreducer);
@@ -48,6 +52,10 @@ function Addproject() {
       const msg = response.data;
       if (response.status == 200) {
         toast.success(`${msg}`);
+      }
+      else if(response.data.projectdetails)
+      {
+         usedispatch(project(response.data.projectdetails));
       }
     } catch (error) {
       toast.success(`${error}`);
@@ -109,7 +117,7 @@ function Addproject() {
                         className="select"
                         style={selectinput}
                       >
-                        <option disabled>Select client</option>
+                        <option>Select client</option>
                         {Client.length > 0 &&
                           Client.map((items) => {
                             return (
@@ -159,6 +167,7 @@ function Addproject() {
                         style={selectinput}
                         name="leader"
                       >
+                          <option>Select team leader</option>
                         {employees.length > 0 &&
                           employees.map((items, index) => {
                             const { EmployeeID, username } = items;

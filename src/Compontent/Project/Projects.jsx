@@ -5,7 +5,7 @@ import {NavLink,Link} from 'react-router-dom';
 function Projects() {
 
   const projectinfo=useSelector(state=>state.Projectreducer);
-  console.log("projectinfo",projectinfo);
+  
   return (
     <>
       <>
@@ -123,7 +123,7 @@ function Projects() {
                         </div>
                       </div>
                       <h4 className="project-title">
-                        <a href="project-view.php">{project_name}</a>
+                        <span> {project_name} </span>
                       </h4>
                 
                       <p className="text-muted">

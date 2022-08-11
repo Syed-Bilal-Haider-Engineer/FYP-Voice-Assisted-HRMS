@@ -19,7 +19,7 @@ function Projectlist() {
                   <h3 className="page-title">Projects</h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
-                      <a href="index.php">Dashboard</a>
+                      <span>Dashboard</span>
                     </li>
                     <li className="breadcrumb-item active">Projects</li>
                   </ul>
@@ -34,15 +34,16 @@ function Projectlist() {
                     <i className="fa fa-plus" /> Create Project
                   </a>
                   <div className="view-icons">
-                    <Link to="/Projects" className="grid-view btn btn-link">
+                    <Link to="/Admindashboard/Projects" className="grid-view btn btn-link">
                       <i className="fa fa-th" />
                     </Link>
-                    <Link to="/Projectlist"
+                    <Link to="/Admindashboard/Projectlist"
                      
-                      className="list-view btn btn-link active"
-                    >
-                      <i className="fa fa-bars" />
-                    </Link>
+                     className="list-view btn btn-link active"
+                   >
+                     <i className="fa fa-bars" />
+                   </Link>
+                  
                   </div>
                 </div>
               </div>
@@ -79,7 +80,7 @@ function Projectlist() {
                         <th>Leader</th>
                        <th>Description</th>
                         <th>Deadline</th>
-                        <th>Priority</th>
+                        {/* <th>Priority</th> */}
                         <th>Status</th>
                         <th>View</th>
                         <th className="text-right">Action</th>
@@ -96,7 +97,7 @@ function Projectlist() {
                         <td>{description}</td>
                         <td>{end_date} </td>
                        
-                        <td>
+                        {/* <td>
                           <div className="dropdown action-label">
                             <a
                               href=""
@@ -122,7 +123,7 @@ function Projectlist() {
                               </a>
                             </div>
                           </div>
-                        </td>
+                        </td> */}
                        
                         <td style={{ color:'green',borderRadius:'5px'}}>
                          
