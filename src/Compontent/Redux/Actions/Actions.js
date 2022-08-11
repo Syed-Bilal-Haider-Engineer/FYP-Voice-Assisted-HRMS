@@ -121,3 +121,10 @@ export const employeesearch=(values)=>{
     payload:values
   }
 }
+
+export const contactususer=(values)=>{
+  return {
+    type:Action.contactus,
+    payload:values
+  }
+}

@@ -14,6 +14,8 @@ import { POST } from "../API/PostAPI";
 import useGet from "../API/API";
 import { useEffect } from "react";
 function Applications() {
+    // .......Fetch Applications Handler..........
+    useGet("http://localhost/HRMS/Application/Fetchapplicationsuser.php", "Applications");
   const url = "http://localhost/HRMS/Application/Changestatus.php";
   const [setstatus, setstatusstate] = useState();
   const Applicationdetails = useSelector((state) => state.fetchuserAppliations);
@@ -26,9 +28,7 @@ function Applications() {
     setCurrentPage(value);
   };
   const pageCount = Math.ceil(Applicationdetails.length / postsPerPage);
-  // .......Fetch Applications Handler..........
 
-    useGet("http://localhost/HRMS/Application/Fetchapplicationsuser.php", "Applications");
  
   // .............Decison making...........
   const DecisionHandler = (id, status,applicationemail) => {
@@ -95,8 +95,7 @@ function Applications() {
                             i++;
                             return (
                               <>
-                             
-                                <tr style={{ color: "black" }} key={index}>
+                             <tr style={{ color: "black" }} key={index}>
                                   <td>{i}</td>
                                   <td>{items.designation}</td>
                                   <td>{items.instituename}</td>
@@ -108,7 +107,12 @@ function Applications() {
                                   <td>{items.cname}</td>
                                   <td>{items.email}</td>
                                   <td>{items.phone}</td>
-                                  <td>Cv</td>
+                                  {items.File ?(
+                                  <td><a href={`http://localhost/HRMS/Uploads/${items.File}`} style={{color:'black'}}  target="_blank" download>Click to download</a></td>
+                                  ):(
+                                    <td></td>
+                                  )}
+
                                   <td className="text-right">
                                     <div className="dropdown dropdown-action">
                                       <a

@@ -2,10 +2,16 @@ import React from "react";
 import Addproject from "./Addproject";
 import {useSelector} from 'react-redux';
 import {Link} from 'react-router-dom';
+import { useState } from "react";
+import Editeproject from './Editeproject';
 function Projectlist() {
-  
+  const [eidtestate,seteditestate]=useState('');
   const projectinfo=useSelector(state=>state.Projectreducer);
   console.log("projectinfo",projectinfo);
+// ........Project edite handler.......
+const projecthandler=(id)=>{
+  seteditestate(id);
+}
   return (
     <>
       <div className="main-wrapper">
@@ -147,6 +153,9 @@ function Projectlist() {
                                 href="#"
                                 data-toggle="modal"
                                 data-target="#edit_project"
+                                onClick={()=>{
+                                  projecthandler(project_id);
+                                }}
                               >
                                 <i className="fa fa-pencil m-r-5" /> Edit
                               </a>
@@ -166,7 +175,7 @@ function Projectlist() {
           </div>
     
           <Addproject />
-        
+          {eidtestate && <Editeproject value={eidtestate}/>}
         </div>
         {/* /Page Wrapper */}
       </div>

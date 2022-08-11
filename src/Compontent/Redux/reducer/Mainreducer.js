@@ -44,6 +44,18 @@ const Visterreducer=(state=vister,actions)=>{
     }
 }
 
+// .........contact us reducer.apply.........
+const contactus=[];
+const contactusreducer=(state=contactus,actions)=>{
+    switch(actions.type){
+        case ActionTypes.contactus:
+            const contactinfo=actions.payload;
+            state=[...contactinfo];
+        return state;
+        default:
+      return state;
+    }
+}
 // .................Job reducer...........
 const Job=[];
 const Jobreducer=(state=Job,actions)=>{
@@ -224,6 +236,7 @@ const reducer=combineReducers(
         Projectreducer,
         Tasksreducer,
         noticereducer,
-        attendancereducer
+        attendancereducer,
+        contactusreducer
     });
 export default reducer

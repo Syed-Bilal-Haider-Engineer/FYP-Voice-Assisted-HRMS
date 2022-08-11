@@ -17,8 +17,8 @@ function Employeedashboard() {
                       <img alt="" src="assets/img/profiles/avatar-02.jpg" />
                     </div>
                     <div className="welcome-det">
-                      <h3>Welcome, John Doe</h3>
-                      <p>Monday, 20 May 2019</p>
+                      <h3>Welcome, Employee</h3>
+                      <p>{}</p>
                     </div>
                   </div>
                 </div>

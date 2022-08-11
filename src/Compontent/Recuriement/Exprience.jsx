@@ -22,12 +22,12 @@ function Apply() {
   const url="http://localhost/HRMS/Application/Application.php";
   const formData = new FormData();
   // ......get user id and status.at...
-  var Role, checkstatus,id;
+  var Role, checkstatus,userid;
   if (localStorage.getItem("user")) {
     const Islogin = window.atob(localStorage.getItem("user"));
     Role = JSON.parse(Islogin);
     checkstatus = Role.token;
-    id=Role.id;
+    userid=Role.id;
   }
 const Initivalue={
    designation:"",
@@ -51,16 +51,17 @@ useEffect(()=>{
 
 useEffect(()=>{
   const result=visterinfo.length > 0 && visterinfo.find((items) => {
-    return items.id == id;
+    return items.id == userid;
   });
   setemailstate(result.email);
 },[visterinfo]);
-console.log("normal user",id,"email",emailstate);
+console.log("normal user",userid,"email",emailstate);
 
 const inputRef = useRef(null);
 const filehandler = async (values) => {
   const img = inputRef.current.files[0];
-  formData.append("id",values.id);
+  formData.append("id",values.userid);
+  console.log("userid",values.userid);
    formData.append("designation",values.designation);
    formData.append("degreeyear",values.degreeyear);
    formData.append("totalexp",values.totalexp);
@@ -73,7 +74,6 @@ const filehandler = async (values) => {
    formData.append('subject',values.subject);
    formData.append("instituename",values.instituename);
    //........Application Educations form............
-
    try {
     setLoading(true)
     const response = await axios.post(url,formData,{headers:{ "Content-Type": "multipart/form-data" }});
@@ -82,7 +82,6 @@ const filehandler = async (values) => {
     if(status==true)
     {
       // ..send email of Users..
-    
      let body = {
       email: 'bilalshahbscs@gmail.com'
      }
@@ -107,8 +106,7 @@ const filehandler = async (values) => {
     validationSchema={Applicationschema}
     onSubmit={(values, { resetForm }) => {
       const id={
-        id:checkstatus
-      }
+        userid};
       const uservalues={...values, ...id};
       uservalues && filehandler(uservalues);
        console.log("values",uservalues);

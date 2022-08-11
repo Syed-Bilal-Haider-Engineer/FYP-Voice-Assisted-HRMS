@@ -1,15 +1,33 @@
-import React from "react";
+import React,{useState} from "react";
 import useGet from '../API/API';
 import {  useSelector } from "react-redux";
+import {
+  Container,
+  Box,
+  Typography,
+  Button,
+  Divider,
+  Stack,
+  Grid,
+  Pagination
+} from "@mui/material";
 function Contactus() {
     // .......Get user values from ReactRedux...........
-//    const userInfo = useSelector(state => state.Userregisteration);
-//    console.log("userInfo", userInfo);
-  // const url="http://localhost/HRMS/Contact/Contact.php";
-  //  useGet(url);
+  const url="http://localhost/HRMS/Contact/Contact.php";
+  const type="contact";
+   useGet(url,type);
+
+   const userInfo = useSelector(state => state.contactusreducer);
+   console.log("conatct us", userInfo);
+  //  ...pagination...
+   const [postsPerPage, setPostsPerPage] = useState(5);
+   const [currentPage, setCurrentPage] = useState(1);
+   const handleChangepage = (event, value) => {
+     setCurrentPage(value);
+   };
+   const pageCount = Math.ceil(userInfo.length / postsPerPage);
   return (
     <>
-      <>
         {/* Main Wrapper */}
         <div className="main-wrapper">
           {/* Page Wrapper */}
@@ -42,17 +60,18 @@ function Contactus() {
                           <th>Email </th>
                           <th>Subject </th>
                           <th>Messag</th>
+                          <th>Date</th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr>
                           <td>1</td>
                           <td>
-                           
                           </td>
                           <td>Web Development</td>
                           <td>Lorem ipsum dollar</td>
                           <td>28 Feb 2019</td>
+                          <th>Date</th>
                         </tr>
                       </tbody>
                     </table>
@@ -60,21 +79,22 @@ function Contactus() {
                 </div>
               </div>
             </div>
-            {/* /Page Content */}
-            {/* Add Resignation Modal */}
-            {/* /Add Resignation Modal */}
-            {/* Edit Resignation Modal */}
-            {/* <?php include_once("includes/modals/resignation/edit.php"); ?> */}
-            {/* /Edit Resignation Modal */}
-            {/* Delete Resignation Modal */}
-            {/* <?php include_once("includes/modals/resignation/delete.php"); ?> */}
-            {/* /Delete Resignation Modal */}
           </div>
-          {/* /Page Wrapper */}
         </div>
-        {/* /Main Wrapper */}
+        <Box  m="15px">
+              <Stack
+                direction={"row"}
+                alignItems="center"
+                justifyContent="flex-end">
+                <Pagination
+                  count={pageCount}
+                  page={currentPage}
+                  onChange={handleChangepage}
+                />
+              </Stack>
+            </Box>
       </>
-    </>
+    
   );
 }
 

@@ -20,10 +20,11 @@ import {
   Tasksdata,
   Notice,
   Attendance,
+  contactususer
 } from "../Redux/Actions/Actions";
 import { emailAPI } from "../Recuriement/url";
 export const POST = ({ values, url, Addstate,hremail }) => {
-  console.log("hremail values",hremail);
+  console.log("values",values);
   // .....fetch user login details.......
   var Role, checkstatus,id,email;
   if (localStorage.getItem("user")) {
@@ -113,7 +114,11 @@ export const POST = ({ values, url, Addstate,hremail }) => {
         } else if (response.data.holidaydetails) {
           usedispatch(fetchHolidays(response.data.holidaydetails));
          
-        } else if (response.data.departments) {
+        }else if(response.data.contactus)
+        {
+          usedispatch(contactususer(response.data.contactus))
+        }
+         else if (response.data.departments) {
           usedispatch(Fetchdepartment(response.data.departments));
         } else if (response.data.designations) {
           usedispatch(Fetchdesignation(response.data.designations));
@@ -155,7 +160,10 @@ export const POST = ({ values, url, Addstate,hremail }) => {
         } else if (response.data.token == 1) {
           navigate("/Admindashboard/Employeedashboard");
         } else if (response.data.token == 2) {
-          navigate("/Admindashboard/");
+          navigate("/Admindashboard");
+        }
+        else if (response.data.token == 3) {
+          navigate("/Admindashboard");
         }
         //  ....Login End.....
 

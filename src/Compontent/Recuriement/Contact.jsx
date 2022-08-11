@@ -9,8 +9,15 @@ import {
   Grid,
 } from "@mui/material";
 import Apply from "../../Images/applybg.png";
-
+import { useState } from "react";
+import {POST} from '../API/PostAPI';
 function Contact() {
+  const url="http://localhost/HRMS/Contact/Addcontact.php";
+  const [subjectset,setsubjectstate]=useState('');
+  const [msgset,setmsgstate]=useState('');
+  const [emailset,setemailstate]=useState('');
+  const [nameset,setnamestate]=useState('');
+  const [add,setaddcontactstate]=useState('');
   const match = useMediaQuery("(max-width:700px)");
   const inputsyle = {
     width: match ? "100%" : "45%",
@@ -21,6 +28,21 @@ function Contact() {
     fontSize: " 13px",
     background: " transparent",
   };
+
+  const contactusHanlder=()=>{
+    const contactus={
+      subject:subjectset,
+      msg:msgset,
+      email:emailset,
+      name:nameset
+    }
+    setaddcontactstate(contactus);
+    // setsubjectstate('');
+    // setmsgstate('');
+    // setemailstate('');
+    // setnamestate('');
+
+  }
   return (
     <>
       <Box
@@ -71,6 +93,9 @@ function Contact() {
                     fontSize: " 13px",
                     background: " transparent",
                   }}
+                  onChange={(e)=>{
+                    setsubjectstate(e.target.value);
+                  }}
                 />
               </Box>
               
@@ -87,11 +112,19 @@ function Contact() {
                   type="text"
                   placeholder="Enter your name"
                   style={inputsyle}
+                  onChange={(e)=>{
+                    setnamestate(e.target.value);
+                  }}
                 />
                 <input
                   type="email"
                   placeholder="Enter your email"
                   style={inputsyle}
+                  onChange={
+                    (e)=>{
+                      setemailstate(e.target.value);
+                    }
+                  }
                 />
               </Box>
               <input
@@ -107,6 +140,11 @@ function Contact() {
                   background: " transparent",
                   marginBottom:'10px'
                 }}
+                onChange={
+                  (e)=>{
+                    setmsgstate(e.target.value);
+                  }
+                }
               />
 
               <Button
@@ -118,6 +156,8 @@ function Contact() {
                   color: "white",
                   background: "linear-gradient(#ff9b44 0%, #fc6075 100%)",
                 }}
+               
+                onClick={contactusHanlder}
               >
                 SEND
               </Button>
@@ -125,6 +165,7 @@ function Contact() {
           </Box>
         </Container>
       </Box>
+      {add && <POST values={add} url={url} Addstate={setaddcontactstate} />}
     </>
   );
 }
