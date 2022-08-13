@@ -84,34 +84,12 @@ function Employee() {
             {/* /Page Header */}
             {/* Search Filter */}
             <div className="row filter-row">
-              <div className="col-sm-6 col-md-3">
-                <div className="form-group form-focus">
-                  <input type="text" className="form-control floating" alue={seacrh} onChange={(e)=>{
-                    setsearch(e.target.value)
-                  }} />
-                  <label className="focus-label">Employee ID</label>
-                </div>
-              </div>
-              <div className="col-sm-6 col-md-3">
+              <div className="col-sm-6 col-md-9">
                 <div className="form-group form-focus">
                   <input type="text" className="form-control floating" value={seacrh} onChange={(e)=>{
                     setsearch(e.target.value)
                   }} />
                   <label className="focus-label">Employee Name</label>
-                </div>
-              </div>
-              <div className="col-sm-6 col-md-3">
-                <div className="form-group form-focus select-focus">
-                  <select className="select floating selectinput"  value={seacrh} onChange={(e)=>{
-                    setsearch(e.target.value)
-                  }}>
-                    <option value="0">Select Designation</option>
-                    <option value="1">Web Developer</option>
-                    <option value="2">Web Designer</option>
-                    <option value="3">Android Developer</option>
-                    <option value="4">Ios Developer</option>
-                  </select>
-                
                 </div>
               </div>
               <div className="col-sm-6 col-md-3" onClick={searchhandler}>

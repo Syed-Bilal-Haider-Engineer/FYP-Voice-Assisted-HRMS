@@ -5,6 +5,12 @@ function Projectsview() {
 
   const params = useParams();
   console.log(params.productsid);
+  var Role, checkstatus;
+if (localStorage.getItem("user")) {
+  const Islogin = window.atob(localStorage.getItem("user"));
+  Role = JSON.parse(Islogin);
+  checkstatus = Role.token;
+}
   return (
     <>
       <div className="main-wrapper">
@@ -23,6 +29,7 @@ function Projectsview() {
                     <li className="breadcrumb-item active">Project</li>
                   </ul>
                 </div>
+                {checkstatus ==2 || checkstatus ==3 ?(
                 <div className="col-auto float-right ml-auto">
                   <a
                     href="#"
@@ -32,15 +39,8 @@ function Projectsview() {
                   >
                     <i className="fa fa-plus" /> Edit Project
                   </a>
-                  <a
-                    href="task-board.php"
-                    className="btn btn-white float-right m-r-10"
-                    data-toggle="tooltip"
-                    title="Task Board"
-                  >
-                    <i className="fa fa-bars" />
-                  </a>
-                </div>
+                 
+                </div>):(null)}
               </div>
             </div>
             {/* /Page Header */}

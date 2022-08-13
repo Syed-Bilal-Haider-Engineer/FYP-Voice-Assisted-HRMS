@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Showusers,Getcategory,fetchvister,fetchJob,Fetchdepartment,Fetchdesignation,
     fetchHolidays,Userapplications,FetchEmployee,FetchEmployeeleave,project,Attendance,
-    Clientinfo,Tasksdata,Notice,contactususer} from '../Redux/Actions/Actions';
+    Clientinfo,Tasksdata,Notice,contactususer,settingaction} from '../Redux/Actions/Actions';
 import axios from "axios";
 import Loading from '../../Loading';
 
@@ -77,6 +77,10 @@ const useGet = (url,type) => {
                  else if(type=='contact')
                  {
                     usedispatch(contactususer(value))
+                 }
+                 else if(type=='getsetting')
+                 {
+                    usedispatch(settingaction(value));
                  }
             })
             .catch((error) => {

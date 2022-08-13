@@ -28,7 +28,7 @@ function Editeemp({id}) {
      setrole(result.role);
      setphonestate(result.phone);
   }, [id]);
-console.log(rolevalue);
+
   const inputRef = useRef(null);
   const formData = new FormData();
   const updatehandler=async(e)=>{

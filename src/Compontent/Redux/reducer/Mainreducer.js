@@ -119,16 +119,36 @@ const Fetchholidayreducer=(state=Fetchholidaystate,actions)=>{
 
 const fetchVister=[];
 const fetchuserAppliations=(state=fetchVister,actions)=>{
+    console.log("actions.payload applications:",actions.payload)
     switch(actions.type){
         case ActionTypes.Userapplications:
             const applicationsvalues=actions.payload;
             state=[...applicationsvalues];
         return state;
+        case ActionTypes.applicationssearcing:
+            var searchkey=actions.payload;
+            const newstate=state.filter((items)=>{
+                const {instituename,designation,date}=items;
+                    return instituename==searchkey || designation==searchkey || date==searchkey;
+                })
+        return newstate;
         default:
       return state;
     }
 }
-
+// ...setting reducer.apply.apply.
+var settingresult=[];
+const settingreducer=(state=settingresult,actions)=>{
+    // console.log("actions.payload applications:",actions.payload)
+    switch(actions.type){
+        case ActionTypes.setsetting:
+            const settingvalue=actions.payload;
+            state=[...settingvalue];
+        return state;
+        default:
+      return state;
+    }
+}
 // ...............Employee reducer...............
 const Fetchemployee=[];
 const Fetchemployeereducer=(state=Fetchemployee,actions)=>{
@@ -237,6 +257,7 @@ const reducer=combineReducers(
         Tasksreducer,
         noticereducer,
         attendancereducer,
-        contactusreducer
+        contactusreducer,
+        settingreducer
     });
 export default reducer

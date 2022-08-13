@@ -15,6 +15,8 @@ function Dashboard() {
   useEffect(() => {
     if (checkstatus == 1) {
       navigate("/Admindashboard/Employeedashboard");
+    }else if(checkstatus==2){
+      navigate("/Admindashboard");
     }
   }, []);
   // ...........fetch all employee, project, department,task,clients and normal users data from database.....
@@ -25,7 +27,7 @@ function Dashboard() {
   const tasks = useSelector((state) => state.Tasksreducer);
   console.log("tasks", tasks);
   const department = useSelector((state) => state.Departmentreducer);
-  const jobinfo = useSelector((state) => state.Jobreducer);
+  const jobinfo = useSelector(state => state.Jobreducer);
   const Applicationdetails = useSelector((state) => state.fetchuserAppliations);
   return (
     <>

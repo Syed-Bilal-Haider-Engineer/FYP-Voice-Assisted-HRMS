@@ -20,7 +20,8 @@ import {
   Tasksdata,
   Notice,
   Attendance,
-  contactususer
+  contactususer,
+  settingaction
 } from "../Redux/Actions/Actions";
 import { emailAPI } from "../Recuriement/url";
 export const POST = ({ values, url, Addstate,hremail }) => {
@@ -136,6 +137,15 @@ export const POST = ({ values, url, Addstate,hremail }) => {
         else if(response.data.clients){
           usedispatch(Clientinfo(response.data.clients));
         }
+        // ....Employee Details.....
+        else if(response.data.employeeinfo)
+        {
+      usedispatch(FetchEmployee(response.data.employeeinfo))
+        }
+        else if(response.data.setting)
+        {
+          usedispatch(settingaction(response.data.setting));
+        }
         // .....End, Post ,deletiona and update....
         // .......login ............
         if (response.data.token) {
@@ -160,9 +170,6 @@ export const POST = ({ values, url, Addstate,hremail }) => {
         } else if (response.data.token == 1) {
           navigate("/Admindashboard/Employeedashboard");
         } else if (response.data.token == 2) {
-          navigate("/Admindashboard");
-        }
-        else if (response.data.token == 3) {
           navigate("/Admindashboard");
         }
         //  ....Login End.....

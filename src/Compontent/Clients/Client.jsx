@@ -67,27 +67,13 @@ function Client() {
 					
 					<!-- Search Filter --> */}
           <div className="row filter-row">
-            <div className="col-sm-6 col-md-3">
+            <div className="col-sm-6 col-md-9">
               <div className="form-group form-focus">
                 <input type="text" className="form-control floating" />
                 <label className="focus-label">Client ID</label>
               </div>
             </div>
-            <div className="col-sm-6 col-md-3">
-              <div className="form-group form-focus">
-                <input type="text" className="form-control floating" />
-                <label className="focus-label">Client Name</label>
-              </div>
-            </div>
-            <div className="col-sm-6 col-md-3">
-              <div className="form-group form-focus select-focus ">
-                <select className="select floating selectinput">
-                  <option>Select Company</option>
-                  <option>Global Technologies</option>
-                  <option>Delta Infotech</option>
-                </select>
-              </div>
-            </div>
+            
             <div className="col-sm-6 col-md-3">
               <a href="#" className="btn btn-success btn-block">
                 {" "}

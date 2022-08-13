@@ -14,7 +14,7 @@ import { Link,NavLink } from "react-router-dom";
 import {useSelector} from 'react-redux';
 function Joblist() {
   const jobinfo = useSelector(state => state.Jobreducer);
-  console.log("jobinfo", jobinfo);
+  console.log("jobinfo", jobinfo.length);
 
 
   //.......Login , use local storage..............
@@ -35,7 +35,7 @@ function Joblist() {
   const pageCount = Math.ceil(jobinfo.length / postsPerPage);
   return (
     <>
-      <Box sx={{ py: 16, backgroundColor: "white" }}>
+      <Box sx={{ py: 16, backgroundColor: "white" }} id="jobs">
         <Container>
           <Box sx={{ textAlign: "center", py: 2 }}>
             <Typography
@@ -109,7 +109,7 @@ function Joblist() {
                           color: "black",
                         }}
                       >
-                        <Typography>{company_name}</Typography>
+                        {/* <Typography>{company_name}</Typography> */}
                         <Typography>last date: {last_date}</Typography>
                         <Typography>{job_city}</Typography>
                       </Box>

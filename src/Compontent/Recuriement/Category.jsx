@@ -63,7 +63,8 @@ function Category() {
                           padding: "40px",
                           textAlign: "center",
                           boxShadow: "2px 2px lightgray",
-                         
+                        
+                         height:"200px",
                           cursor: "pointer",
                           "&:hover": {
                            color:`${theme.palette.text.hint}`

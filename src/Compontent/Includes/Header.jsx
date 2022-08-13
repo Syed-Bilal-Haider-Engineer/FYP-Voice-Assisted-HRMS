@@ -30,7 +30,7 @@ function Header() {
       <div className="header">
         {/* Logo */}
         <div className="header-left">
-          <a href="index.php" className="logo">
+          <a href="#" className="logo">
             <img src={logo} width={40} height={40} alt="" />
           </a>
         </div>
@@ -51,7 +51,7 @@ function Header() {
             alignItems: "center",
           }}
         >
-          <h3>Smart HRM</h3>
+          <h3> HRMS</h3>
           <h3 style={{ marginLeft: "20px" }}> Time tracking:{timestate}</h3>
         </div>
         {/* /Header Title */}
@@ -145,9 +145,9 @@ function Header() {
               <Link className="dropdown-item" to="/Admindashboard/Profile">
                 My Profile
               </Link>
-              <a className="dropdown-item" href="settings.php">
-                Settings
-              </a>
+              <Link className="dropdown-item" to="/Admindashboard/Setting">
+                         Settings
+              </Link>
               <Link className="dropdown-item" to="/Logout">
                 Logout
               </Link>

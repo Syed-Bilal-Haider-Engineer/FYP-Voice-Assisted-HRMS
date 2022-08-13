@@ -28,7 +28,9 @@ function App() {
   useGet("http://localhost/HRMS/Category/getcategory.php", "category");
   useGet("http://localhost/HRMS/Client/Client.php", "Client");
   useGet("http://localhost/HRMS/Project/Project.php", "Project");
-  useGet("http://localhost/HRMS/Tasks/Fetchtask.php","task")
+  useGet("http://localhost/HRMS/Tasks/Fetchtask.php","task");
+  useGet('http://localhost/HRMS/Job/Jobs.php','job');
+
   // ...................Normal Users.........................
 
   const HomeComponent = () => {

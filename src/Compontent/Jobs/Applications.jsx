@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
+import {applicationssearcing} from '../Redux/Actions/Actions';
 import {
   Container,
   Box,
@@ -14,6 +15,8 @@ import { POST } from "../API/PostAPI";
 import useGet from "../API/API";
 import { useEffect } from "react";
 function Applications() {
+  const usedispatch=useDispatch();
+  const [seacrh,setsearch]=useState('Search job applications');
     // .......Fetch Applications Handler..........
     useGet("http://localhost/HRMS/Application/Fetchapplicationsuser.php", "Applications");
   const url = "http://localhost/HRMS/Application/Changestatus.php";
@@ -28,8 +31,6 @@ function Applications() {
     setCurrentPage(value);
   };
   const pageCount = Math.ceil(Applicationdetails.length / postsPerPage);
-
- 
   // .............Decison making...........
   const DecisionHandler = (id, status,applicationemail) => {
     // console.log("status",status);
@@ -40,6 +41,11 @@ function Applications() {
     };
     setstatusstate(value);
   };
+  const searchhandler=()=>{
+    console.log("seacrh",seacrh);
+    usedispatch(applicationssearcing(seacrh));
+    setsearch('');
+  }
   return (
     <>
       <>
@@ -62,6 +68,27 @@ function Applications() {
                     </ul>
                   </div>
                 </div>
+                 {/* Page Header */}
+            
+            {/* /Page Header */}
+            {/* Search Filter */}
+            <div className="row filter-row" style={{marginTop:'10px'}}>
+              <div className="col-sm-12 col-md-9">
+                <div className="form-group form-focus">
+                  <input type="text" className="form-control floating" placeholder="Search job applications"  value={seacrh} onChange={(e)=>{
+                    setsearch(e.target.value)
+                  }} />
+                </div>
+              </div>
+              
+              <div className="col-sm-6 col-md-3" onClick={searchhandler}>
+                <a href="#" className="btn btn-success btn-block">
+                  Search
+                </a>
+              </div>
+            </div>
+            {/* Search Filter */}
+            {/* user profiles list starts her */}
               </div>
               {/* /Page Header */}
               <div className="row">
@@ -73,15 +100,16 @@ function Applications() {
                           <th style={{ width: 30 }}>#</th>
                           <th>Job title</th>
                           <th>Univeristy</th>
-                          <th>Description</th>
+                          {/* <th>Description</th> */}
                           <th>Degree</th>
                           <th>CGPA</th>
-                          <th>Locations</th>
+                          {/* <th>Locations</th> */}
                           <th>Exprience</th>
                           <th>Company</th>
                           <th>email</th>
                           <th>Phone</th>
                           <th>Resume</th>
+                          <th>Date</th>
                           <th>Selections</th>
                         </tr>
                       </thead>
@@ -93,77 +121,80 @@ function Applications() {
                             currentPage * postsPerPage
                           ).map((items, index) => {
                             i++;
-                            return (
-                              <>
-                             <tr style={{ color: "black" }} key={index}>
-                                  <td>{i}</td>
-                                  <td>{items.designation}</td>
-                                  <td>{items.instituename}</td>
-                                  <td>{items.description}</td>
-                                  <td>{items.degree}</td>
-                                  <td>{items.cgpa}</td>
-                                  <td>{items.address}</td>
-                                  <td>{items.totalexp}</td>
-                                  <td>{items.cname}</td>
-                                  <td>{items.email}</td>
-                                  <td>{items.phone}</td>
-                                  {items.File ?(
-                                  <td><a href={`http://localhost/HRMS/Uploads/${items.File}`} style={{color:'black'}}  target="_blank" download>Click to download</a></td>
-                                  ):(
-                                    <td></td>
-                                  )}
-
-                                  <td className="text-right">
-                                    <div className="dropdown dropdown-action">
-                                      <a
-                                        href="#"
-                                        className="action-icon dropdown-toggle"
-                                        data-toggle="dropdown"
-                                        aria-expanded="false"
-                                      >
-                                        <i className="material-icons">
-                                          more_vert
-                                        </i>
-                                      </a>
-                                      <div className="dropdown-menu dropdown-menu-right">
-                                        <span className="dropdown-item">
-                                          {items.status}
-                                        </span>
-                                        <hr/>
-                                        <span
-                                          className="dropdown-item"
-                                          onClick={() => {
-                                            DecisionHandler(items.id, "Reject",items.email);
-                                          }}
+                            if(items.userstatus=='Interview' || items.userstatus=='pending' ){
+                              return (
+                                <>
+                               <tr style={{ color: "black" }} key={index}>
+                                    <td>{i}</td>
+                                    <td>{items.designation}</td>
+                                    <td>{items.instituename}</td>
+                                    {/* <td>{items.description}</td> */}
+                                    <td>{items.degree}</td>
+                                    <td>{items.cgpa}</td>
+                                    {/* <td>{items.address}</td> */}
+                                    <td>{items.totalexp}</td>
+                                    <td>{items.cname}</td>
+                                    <td>{items.email}</td>
+                                    <td>{items.phone}</td>
+                                    {items.File ?(
+                                    <td><a href={`http://localhost/HRMS/Uploads/${items.File}`} style={{color:'black'}}  target="_blank" download>Click to download</a></td>
+                                    ):(
+                                      <td></td>
+                                    )}
+                                    <td>{items.date}</td>
+                                    <td className="text-right">
+                                      <div className="dropdown dropdown-action">
+                                        <a
+                                          href="#"
+                                          className="action-icon dropdown-toggle"
+                                          data-toggle="dropdown"
+                                          aria-expanded="false"
                                         >
-                                          Reject
-                                        </span>
-                                        <span
-                                          className="dropdown-item"
-                                          onClick={() => {
-                                            DecisionHandler(
-                                              items.id,
-                                              "Interview",
-                                              items.email
-                                            );
-                                          }}
-                                        >
-                                          Interview
-                                        </span>
-                                        <span
-                                          className="dropdown-item"
-                                          onClick={() => {
-                                            DecisionHandler(items.id, "Select",items.email);
-                                          }}
-                                        >
-                                          Select
-                                        </span>
+                                          <i className="material-icons">
+                                            more_vert
+                                          </i>
+                                        </a>
+                                        <div className="dropdown-menu dropdown-menu-right">
+                                          <span className="dropdown-item">
+                                            {items.userstatus}
+                                          </span>
+                                          <hr/>
+                                          <span
+                                            className="dropdown-item"
+                                            onClick={() => {
+                                              DecisionHandler(items.id, "Reject",items.email);
+                                            }}
+                                          >
+                                            Reject
+                                          </span>
+                                          <span
+                                            className="dropdown-item"
+                                            onClick={() => {
+                                              DecisionHandler(
+                                                items.id,
+                                                "Interview",
+                                                items.email
+                                              );
+                                            }}
+                                          >
+                                            Interview
+                                          </span>
+                                          <span
+                                            className="dropdown-item"
+                                            onClick={() => {
+                                              DecisionHandler(items.id, "Select",items.email);
+                                            }}
+                                          >
+                                            Select
+                                          </span>
+                                        </div>
                                       </div>
-                                    </div>
-                                  </td>
-                                </tr>
-                              </>
-                            );
+                                    </td>
+                                  </tr>
+                                </>
+                              );
+                            }
+                          
                           })}
                       </tbody>
                     </table>

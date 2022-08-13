@@ -19,10 +19,17 @@ function Sidebar() {
                 <span>Main</span>
               </li>
               <li className="submenu">
-                <Link to="/Admindashboard">
-                  <i className="la la-dashboard" /> <span> Dashboard</span>
-                </Link>
+                {checkstatus == 2 || checkstatus == 3 ? (
+                  <Link to="/Admindashboard">
+                    <i className="la la-dashboard" /> <span> Dashboard</span>
+                  </Link>
+                ) : (
+                  <Link to="/Admindashboard/Employeedashboard">
+                    <i className="la la-dashboard" /> <span> Dashboard</span>
+                  </Link>
+                )}
               </li>
+
               <div
                 className="dropdown"
                 style={{
@@ -58,7 +65,7 @@ function Sidebar() {
                   >
                     Employee Leave{" "}
                   </Link>
-                 
+
                   <Link
                     to="/Admindashboard/Attendance"
                     className="dropdown-item"
@@ -246,31 +253,25 @@ function Sidebar() {
                 }}
               >
                 <i className="la la-money" />
-              <Link
-                    to="/Admindashboard/Timesheet"
-                    
-                  >
-                    Timesheet
-                  </Link>
+                <Link to="/Admindashboard/Timesheet">Timesheet</Link>
+              </li>
+              {checkstatus == 2 || checkstatus == 3 ? (
+                <li
+                  style={{
+                    display: "flex",
+                    justifyContent: "flex-start",
+                    alignItems: "center",
+                    color: "#b7c0cd",
+                    fontSize: "26px",
+                    padding: "5px 15px",
+                  }}
+                >
+                  <i className="la la-user" />
+                  <Link to="/Admindashboard/Client">Client</Link>
                 </li>
-              <li
-                style={{
-                  display: "flex",
-                  justifyContent: "flex-start",
-                  alignItems: "center",
-                  color: "#b7c0cd",
-                  fontSize: "26px",
-                  padding: "5px 15px",
-                }}
-              >
-                <i className="la la-user" />
-                <Link to="/Admindashboard/Client">Client</Link>
-              </li>
-              <li className="menu-title">
-                <span>HR</span>
-              </li>
+              ) : null}
 
-              <li className="submenu">
+              {/* <li className="submenu">
                 <a href="#">
                   <i className="la la-money" /> <span> Payroll </span>{" "}
                   <span className="menu-arrow" />
@@ -288,39 +289,68 @@ function Sidebar() {
                     <Link to="/Admindashboard/Salaryview"> Payslip </Link>
                   </li>
                 </ul>
-              </li>
+              </li> */}
               {/* <li>
                 <Link to="/Admindashboard/Resignations">
                   <i className="la la-external-link-square" />{" "}
                   <span>Resignations</span>
                 </Link>
               </li> */}
-
-              <li>
-                <Link to="/Admindashboard/Contactus">
-                  <i className="la la-times-circle" />
-                  <span>Contact</span>
-                </Link>
-              </li>
+              {checkstatus == 2 || checkstatus == 3 ? (
+                <li>
+                  <Link to="/Admindashboard/Contactus">
+                    <i className="la la-times-circle" />
+                    <span>Contact</span>
+                  </Link>
+                </li>
+              ) : null}
               <li className="menu-title">
                 <span>Pages</span>
               </li>
-              <li className="submenu">
-                <a href="#">
-                  <i className="la la-user" /> <span> Profile </span>{" "}
-                  <span className="menu-arrow" />
-                </a>
-                <ul style={{ display: "none" }}>
-                  <li>
+              {checkstatus == 2 || checkstatus == 3 ? (
+                <li className="submenu">
+                  <a href="#">
+                    <i className="la la-user" /> <span> Profile </span>{" "}
+                    <span className="menu-arrow" />
+                  </a>
+                  <ul style={{ display: "none" }}>
+                    <li>
+                      <Link to="/Admindashboard/Profile">Employee Profile</Link>
+                    </li>
+                  </ul>
+                </li>
+              ) : (
+                <>
+                  <li
+                    style={{
+                      display: "flex",
+                      justifyContent: "flex-start",
+                      alignItems: "center",
+                      color: "#b7c0cd",
+                      fontSize: "26px",
+                      padding: "5px 15px",
+                    }}
+                  >
+                    <i
+                      className="la la-user"
+                      style={{
+                        color: "#b7c0cd",
+                        float: "left",
+                        fontSize: "30px",
+                      }}
+                    />
                     <Link to="/Admindashboard/Profile">Employee Profile</Link>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <a href="settings.php">
-                  <i className="la la-cogs" /> <span>Settings</span>
-                </a>
-              </li>
+                  </li>{" "}
+                </>
+              )}
+              {checkstatus == 2 || checkstatus == 3 ? (
+                <li>
+                  <Link to="/Admindashboard/Setting">
+                    <i className="la la-cogs" /> <span>Settings</span>
+                  </Link>
+                </li>
+              ) : null}
+
               <li>
                 <Link to="/Admindashboard/Logout">
                   <i className="la la-power-off" /> <span>Logout</span>

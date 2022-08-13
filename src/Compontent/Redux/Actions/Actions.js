@@ -107,24 +107,34 @@ export const Notice=(values)=>{
     payload:values
   }
 }
-
 export const Attendance=(values)=>{
   return {
     type:ActionTypes.attendance,
     payload:values
   }
 }
-
 export const employeesearch=(values)=>{
   return {
-    type:Action.empsearch,
+    type:ActionTypes.empsearch,
     payload:values
   }
 }
-
 export const contactususer=(values)=>{
   return {
-    type:Action.contactus,
+    type:ActionTypes.contactus,
+    payload:values
+  }
+}
+export const applicationssearcing=(values)=>{
+  return {
+    type:ActionTypes.applicationssearcing,
+    payload:values
+  }
+}
+export const settingaction=(values)=>{
+  console.log("values setting",values);
+  return {
+    type:ActionTypes.setsetting,
     payload:values
   }
 }

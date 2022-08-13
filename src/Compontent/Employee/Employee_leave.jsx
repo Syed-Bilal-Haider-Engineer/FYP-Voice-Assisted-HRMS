@@ -95,7 +95,8 @@ function Employee_leave() {
                         <th>To</th>
                         <th>No of Days</th>
                         <th>Reason</th>
-                        <th>status</th>
+                        {checkstatus == 1 && <th>status</th>}
+                       {checkstatus == 2 || checkstatus == 3 ? (<th>status</th>):(null)} 
                       </tr>
                     </thead>
                     <tbody>
@@ -117,7 +118,7 @@ function Employee_leave() {
                               <td>{items.Ending_On}</td>
                               <td>{items.Days}</td>
                               <td>{items.Reason.substring(0, 80)}</td>
-                              {checkstatus == 2 ? (
+                              {checkstatus == 2 || checkstatus == 3 ? (
                                 <td>
                                   <select
                                     style={{
@@ -146,7 +147,7 @@ function Employee_leave() {
                                 <td style={{ color: "red" }}>{items.status}</td>
                               )}
 
-                              {checkstatus == 1 ? (
+                              {/* {checkstatus == 1 ? (
                                 <td className="text-right">
                                   <div
                                     className="dropdown dropdown-action"
@@ -181,7 +182,7 @@ function Employee_leave() {
                                     </div>
                                   </div>
                                 </td>
-                              ) : null}
+                              ) : null} */}
                             </tr>
                           );
                         })}

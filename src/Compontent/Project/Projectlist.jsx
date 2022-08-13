@@ -12,6 +12,13 @@ function Projectlist() {
 const projecthandler=(id)=>{
   seteditestate(id);
 }
+
+var Role, checkstatus;
+if (localStorage.getItem("user")) {
+  const Islogin = window.atob(localStorage.getItem("user"));
+  Role = JSON.parse(Islogin);
+  checkstatus = Role.token;
+}
   return (
     <>
       <div className="main-wrapper">
@@ -31,14 +38,16 @@ const projecthandler=(id)=>{
                   </ul>
                 </div>
                 <div className="col-auto float-right ml-auto">
-                  <a
-                    href="#"
-                    className="btn add-btn"
-                    data-toggle="modal"
-                    data-target="#create_project"
-                  >
-                    <i className="fa fa-plus" /> Create Project
-                  </a>
+                {checkstatus ==2 || checkstatus ==3 ?(
+                     <a
+                     href="#"
+                     className="btn add-btn"
+                     data-toggle="modal"
+                     data-target="#create_project"
+                   >
+                     <i className="fa fa-plus" /> Create Project
+                   </a>
+                   ):(null)}
                   <div className="view-icons">
                     <Link to="/Admindashboard/Projects" className="grid-view btn btn-link">
                       <i className="fa fa-th" />
@@ -86,10 +95,10 @@ const projecthandler=(id)=>{
                         <th>Leader</th>
                        <th>Description</th>
                         <th>Deadline</th>
-                        {/* <th>Priority</th> */}
                         <th>Status</th>
                         <th>View</th>
-                        <th className="text-right">Action</th>
+                        {checkstatus ==2 || checkstatus ==3 ?(
+                        <th>Action</th>):(null)}
                       </tr>
                     </thead>
                     <tbody>
@@ -135,10 +144,10 @@ const projecthandler=(id)=>{
                          
                            <span className="badge bg-inverse-success">  {status}</span>
                         </td>
-                       <Link to={`/Admindashboard/Projectsview/${project_id}`}> <td>View </td></Link>
-                       
+                        <td> <Link to={`/Admindashboard/Projectsview/${project_id}`}> View</Link> </td>
+                       {checkstatus ==2 || checkstatus ==3 ?(
                         <td className="text-right">
-                          <div className="dropdown dropdown-action">
+                          <div className="dropdown dropdown-action" >
                             <a
                               href="#"
                               className="action-icon dropdown-toggle"
@@ -162,7 +171,7 @@ const projecthandler=(id)=>{
                              
                             </div>
                           </div>
-                        </td>
+                        </td>):(null)}
                       </tr>
                       </>})}
                     

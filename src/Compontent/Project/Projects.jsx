@@ -5,7 +5,12 @@ import {NavLink,Link} from 'react-router-dom';
 function Projects() {
 
   const projectinfo=useSelector(state=>state.Projectreducer);
-  
+  var Role, checkstatus;
+  if (localStorage.getItem("user")) {
+    const Islogin = window.atob(localStorage.getItem("user"));
+    Role = JSON.parse(Islogin);
+    checkstatus = Role.token;
+  }
   return (
     <>
       <>
@@ -27,14 +32,17 @@ function Projects() {
                     </ul>
                   </div>
                   <div className="col-auto float-right ml-auto">
-                    <a
-                      href="#"
-                      className="btn add-btn"
-                      data-toggle="modal"
-                      data-target="#create_project"
-                    >
-                      <i className="fa fa-plus" /> Create Project
-                    </a>
+                   {checkstatus ==2 || checkstatus ==3 ?(
+                     <a
+                     href="#"
+                     className="btn add-btn"
+                     data-toggle="modal"
+                     data-target="#create_project"
+                   >
+                     <i className="fa fa-plus" /> Create Project
+                   </a>
+                   ):(null)}
+                   
                     <div className="view-icons">
                     <Link to="/Admindashboard/Projects" className="grid-view btn btn-link">
                       <i className="fa fa-th" />

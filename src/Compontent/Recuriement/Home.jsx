@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import Fade from "react-reveal/Fade";
-import useGet from '../API/API';
-import theme from '../../Theme/Theme';
-import {jobsearch} from '../Redux/Actions/Actions';
+import useGet from "../API/API";
+import theme from "../../Theme/Theme";
+import { jobsearch } from "../Redux/Actions/Actions";
+import { HashLink } from 'react-router-hash-link';
 import {
   Container,
   Box,
@@ -15,12 +16,8 @@ import Hero from "../../Images/h1_hero.jpg";
 import { useDispatch } from "react-redux";
 
 function Home() {
- 
   const dispatch = useDispatch();
-  const url="http://localhost/HRMS/Job/Jobs.php";
-  const type="job";
-const [Search, setSearch] = useState("");
-  useGet(url,type);
+  const [Search, setSearch] = useState("");
   const match = useMediaQuery("(max-width:700px)");
   const inputstyle = {
     width: match ? "100%" : "40%",
@@ -35,10 +32,10 @@ const [Search, setSearch] = useState("");
     outline: "none",
     backgroundColor: `${theme.palette.text.secondary}`,
   };
-  const SearchJobhandler=()=>{
+  const SearchJobhandler = () => {
     dispatch(jobsearch(Search));
-    setSearch('');
-  }
+    setSearch("");
+  };
   return (
     <>
       <Box
@@ -88,12 +85,13 @@ const [Search, setSearch] = useState("");
               name="keyword"
               placeholder="Job title and Keywords"
               style={inputstyle}
-              onChange={(e)=> setSearch(e.target.value)}
+              onChange={(e) => setSearch(e.target.value)}
             />
             <Divider
               sx={{ width: "3px", height: "5px", textAlign: "center" }}
             />
             <Button
+            
               type="submit"
               value="Finds Jobs"
               sx={{
@@ -114,7 +112,9 @@ const [Search, setSearch] = useState("");
               }}
               onClick={SearchJobhandler}
             >
+             {/* <a href="#jobs"  alt="" style={{color:'white',textDecoration:'none'}}> */}
               Find Jobs
+              {/* </a> */}
             </Button>
           </Box>
         </Container>

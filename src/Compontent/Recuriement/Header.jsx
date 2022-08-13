@@ -79,15 +79,13 @@ export default function Header() {
         <img width="100px" src="/logo.png" alt="" />
       </Box>
       <List>
-        {["About", "Services", "Roadmap", "FAQ", "Statistic"].map(
-          (text, index) => (
+       
             <ListItem
               button
               style={{
                 justifyContent: "center",
                 borderBottom: "1px solid #bbb8b8",
               }}
-              key={text}
             >
               <ListItemText
                 style={{
@@ -97,11 +95,91 @@ export default function Header() {
                   cursor: "pointer",
                   color: "#ffffff",
                 }}
-                primary={text}
-              />
+                >
+                <Link to="/">Home</Link>
+
+                  </ListItemText>
             </ListItem>
-          )
-        )}
+            <ListItem
+              button
+              style={{
+                justifyContent: "center",
+                borderBottom: "1px solid #bbb8b8",
+              }}
+            >
+              <ListItemText
+                style={{
+                  textTransform: "capitalize",
+                  textAlign: "center",
+                  textDecoration: "none",
+                  cursor: "pointer",
+                  color: "#ffffff",
+                }}
+                >
+                <Link to="/signup">Signup</Link>
+
+                  </ListItemText>
+            </ListItem>
+            <ListItem
+              button
+              style={{
+                justifyContent: "center",
+                borderBottom: "1px solid #bbb8b8",
+              }}
+            >
+              <ListItemText
+                style={{
+                  textTransform: "capitalize",
+                  textAlign: "center",
+                  textDecoration: "none",
+                  cursor: "pointer",
+                  color: "#ffffff",
+                }}
+                >
+                <Link to="/login">login</Link>
+
+                  </ListItemText>
+            </ListItem>
+            <ListItem
+              button
+              style={{
+                justifyContent: "center",
+                borderBottom: "1px solid #bbb8b8",
+              }}
+            >
+              <ListItemText
+                style={{
+                  textTransform: "capitalize",
+                  textAlign: "center",
+                  textDecoration: "none",
+                  cursor: "pointer",
+                  color: "#ffffff",
+                }}
+                >
+                <Link to="/Contactus">Contactus</Link>
+
+                  </ListItemText>
+            </ListItem>
+            <ListItem
+              button
+              style={{
+                justifyContent: "center",
+                borderBottom: "1px solid #bbb8b8",
+              }}
+            >
+              <ListItemText
+                style={{
+                  textTransform: "capitalize",
+                  textAlign: "center",
+                  textDecoration: "none",
+                  cursor: "pointer",
+                  color: "#ffffff",
+                }}
+                >
+                <Link to="/Logout">Logout</Link>
+
+                  </ListItemText>
+            </ListItem>
       </List>
     </div>
   );

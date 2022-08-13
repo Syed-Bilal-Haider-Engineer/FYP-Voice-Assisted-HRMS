@@ -33,6 +33,8 @@ import Dashboard from "../Dashboard/Dashboard";
 import history from './Historycomponent';
 import Attendance from '../Employee/Attendance.jsx';
 import Contactus from '../Contact/Contact';
+import Setting from '../setting/setting';
+import HrDashboard from '../Dashboard/Hrdashboard';
 function Routesuser() {
   return <>
        <Header />
@@ -41,6 +43,7 @@ function Routesuser() {
          <Routes history={history}  refresh={true}>
            <Route path="/" element={<Dashboard />} />
            <Route path="/Employeedashboard" element={<Employeedashboard />} />
+           <Route path="/Admindashboardhr" element={<HrDashboard/>}/>
            <Route path="/Designations" element={<Designations />} />
            <Route path="/Employee" element={<Employee />} />
            <Route path="/Employee_leave" element={<Employee_leave />} />
@@ -69,6 +72,7 @@ function Routesuser() {
            <Route path="/Notice" element={<Notice />} />
            <Route path='/Attendance' element={<Attendance/>}/>
            <Route path="/Contactus" element={<Contactus/>}/>
+           <Route path="/Setting" element={<Setting/>}/>
          </Routes>
      </div>
      </>

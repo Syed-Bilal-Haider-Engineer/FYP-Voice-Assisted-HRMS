@@ -21,6 +21,14 @@ function Notice() {
   const noticeremovehandler = (id) => {
     setremove({ id });
   };
+
+  var userdetials, checkstatus, userID;
+  if (localStorage.getItem("user")) {
+    const Islogin = window.atob(localStorage.getItem("user"));
+    userdetials = JSON.parse(Islogin);
+    checkstatus = userdetials.token;
+    userID = userdetials.id;
+  }
   return (
     <>
       <div className="main-wrapper">
@@ -40,7 +48,8 @@ function Notice() {
                     <li class="breadcrumb-item active">Notice</li>
                   </ul>
                 </div>
-                <div class="col-auto float-right ml-auto">
+                {checkstatus==2 || checkstatus==3 ?(
+                  <div class="col-auto float-right ml-auto">
                   <a
                     href="#"
                     class="btn add-btn"
@@ -50,6 +59,8 @@ function Notice() {
                     <i class="fa fa-plus"></i> Add Notice
                   </a>
                 </div>
+                ):(null)}
+                
               </div>
             </div>
 
@@ -76,6 +87,7 @@ function Notice() {
                                 }}
                               >
                                 <h4 className="payslip-title">{title}</h4>
+                                {checkstatus==2 || checkstatus==3 ?(
                                 <span
                                   style={{ cursor: "pointer" }}
                                   onClick={() => {
@@ -84,7 +96,7 @@ function Notice() {
                                 >
                                   {" "}
                                   <i className="fa fa-trash-o m-r-5" />
-                                </span>
+                                </span>):(null)}
                               </div>
                               <div className="row">
                                 <div className="col-sm-12 m-b-20">

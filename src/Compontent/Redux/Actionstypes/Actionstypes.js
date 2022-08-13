@@ -16,5 +16,7 @@ export const ActionTypes = {
     notice:'notice',
     attendance:'attendance',
     empsearch:'empsearch',
-    contactus:'contactus'
+    contactus:'contactus',
+    applicationssearcing:'applicationssearcing',
+    setsetting:'setting'
 }

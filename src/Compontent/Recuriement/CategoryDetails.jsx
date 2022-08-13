@@ -92,7 +92,7 @@ function Categorydetails() {
                           color: "black",
                         }}
                       >
-                        <Typography>{items.company_name}</Typography>
+                        {/* <Typography>{items.company_name}</Typography> */}
                         <Typography>last date:{items.last_date} </Typography>
                         <Typography>{items.job_city}</Typography>
                       </Box>

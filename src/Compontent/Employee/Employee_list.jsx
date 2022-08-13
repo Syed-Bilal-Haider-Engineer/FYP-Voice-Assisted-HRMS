@@ -1,6 +1,7 @@
 import React,{useState} from "react";
 import {Link} from 'react-router-dom';
-import {useSelector} from 'react-redux';
+import {useSelector,useDispatch} from 'react-redux';
+import {employeesearch} from '../Redux/Actions/Actions';
 import {
   Container,
   Box,
@@ -11,9 +12,13 @@ import {
   Grid,
   Pagination
 } from "@mui/material";
+import Editeemp from './Editeemp';
 function Employee_list() {
+  const usedispatch=useDispatch();
+  const [employeeid,setstateid]=useState('');
   const Employeestate=useSelector(state=>state.Fetchemployeereducer);
-  console.log("Employeestate",Employeestate);
+  const designation=useSelector(state=>state.Designationreducer);
+  console.log("Employeestate",Employeestate,"designation:",designation);
   const [postsPerPage, setPostsPerPage] = useState(5);
    const [currentPage, setCurrentPage] = useState(1);
    const handleChangepage = (event, value) => {
@@ -27,7 +32,17 @@ function Employee_list() {
     Role=JSON.parse(Islogin);
     checkstatus=Role.token;
    };
- 
+ const [empsearch,setemployeestate]=useState('');
+
+ const searchhandler=()=>{
+  usedispatch(employeesearch(empsearch));
+  setemployeestate('');
+ }
+
+//  .....update employeeid.....
+const Updateemployee=(id)=>{
+  setstateid(id);
+   }
   return (
     <>
       <>
@@ -79,31 +94,17 @@ function Employee_list() {
               {/* /Page Header */}
               {/* Search Filter */}
               <div className="row filter-row">
-                <div className="col-sm-6 col-md-3">
+              
+                <div className="col-sm-6 col-md-9">
                   <div className="form-group form-focus">
-                    <input type="text" className="form-control floating" />
-                    <label className="focus-label">Employee ID</label>
+                    <input type="text" className="form-control floating"  onChange={(e)=>{
+                      setemployeestate(e.target.value)
+                    }}/>
+                    <label className="focus-label">Search employee</label>
                   </div>
                 </div>
-                <div className="col-sm-6 col-md-3">
-                  <div className="form-group form-focus">
-                    <input type="text" className="form-control floating" />
-                    <label className="focus-label">Employee Name</label>
-                  </div>
-                </div>
-                <div className="col-sm-6 col-md-3">
-                  <div className="form-group form-focus select-focus">
-                    <select className="select floating selectinput">
-                      <option>Select Designation</option>
-                      <option>Web Developer</option>
-                      <option>Web Designer</option>
-                      <option>Android Developer</option>
-                      <option>Ios Developer</option>
-                    </select>
-                    
-                  </div>
-                </div>
-                <div className="col-sm-6 col-md-3">
+              
+                <div className="col-sm-6 col-md-3" onClick={searchhandler}>
                   <a href="#" className="btn btn-success btn-block">
                     {" "}
                     Search{" "}
@@ -150,7 +151,7 @@ function Employee_list() {
                           <td>{items.phone}</td>
                           <td>{items.designation}</td>
                           <td>{items.address}</td>
-                          <td>{items.role==0 ? 'Employee':'Admin'}  </td>
+                          <td> {items.role==2 || items.role==3 ? ('Admin'):('Employee')}  </td>
                           <td className="text-right">
                             <div className="dropdown dropdown-action">
                               <a
@@ -163,10 +164,14 @@ function Employee_list() {
                               </a>
                               <div className="dropdown-menu dropdown-menu-right">
                                 <a
+                                 onClick={()=>{
+                                  Updateemployee(items.EmployeeID)
+                                }}
                                   className="dropdown-item"
                                   href="#"
                                   data-toggle="modal"
                                   data-target="#edit_employee"
+                                 
                                 >
                                   <i className="fa fa-pencil m-r-5" /> Edit
                                 </a>
@@ -200,7 +205,7 @@ function Employee_list() {
           </div>
           {/* /Page Wrapper */}
         </div>
-        {/* /Main Wrapper */}
+        {employeeid && <Editeemp id={employeeid}/>}
       </>
     </>
   );

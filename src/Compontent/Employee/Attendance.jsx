@@ -4,6 +4,7 @@ import { ipaddress } from "../Recuriement/url";
 import { POST } from "../API/PostAPI";
 import Loading from '../../Loading';
 import axios from "axios";
+import { Container, Box, Stack, Pagination } from "@mui/material";
 function Attendance() {
   const [loading, setLoading] = useState(false);
   const [checkouts,setcheckout]=useState('');
@@ -26,7 +27,7 @@ function Attendance() {
   const [ipaddressvalue,setipaddress]=useState('');
   const [add, setaddstate] = useState();
   const [macaddress,setmacaddress]=useState();
-  const [staticip, setstaticIPstate] = useState("192.168.10.3");
+  const [staticip, setstaticIPstate] = useState("192.168.70.52");
   // ...useEffct for IP address....
   useEffect(() => {
     setLoading(true);
@@ -64,6 +65,15 @@ function Attendance() {
     setcheckout(id);
     setcheckipstate(false);
   }
+
+  
+  // ....pagination start...
+  const [postsPerPage, setPostsPerPage] = useState(3);
+  const [currentPage, setCurrentPage] = useState(1);
+  const handleChangepage = (event, value) => {
+    setCurrentPage(value);
+  };
+  const pageCount = Math.ceil(attendancedetails.length / postsPerPage);
   return (
     <>
       {/* Main Wrapper */}
@@ -134,22 +144,28 @@ function Attendance() {
                   <table className="table table-striped custom-table mb-0 datatable">
                     <thead>
                       <tr>
-                        <th style={{ width: 30 }}>#</th>
+                        {/* <th style={{ width: 30 }}>#</th> */}
                         <th>Employee name </th>
                         <th>Check in </th>
                         <th>Check out </th>
                         <th>Working hour </th>
+                        <th>Date</th>
                         {/* <th className="text-right">Action</th> */}
                       </tr>
                     </thead>
                     <tbody>
-                      {attendancedetails.map((items, index) => {
-                        const { EmployeeID, checkin, checkout, workinghour } =
+                    {attendancedetails.length > 0 &&
+                          attendancedetails
+                            .slice(
+                              currentPage * postsPerPage - postsPerPage,
+                              currentPage * postsPerPage
+                            ).map((items, index) => {
+                        const { EmployeeID, checkin, checkout, workinghour,curdate } =
                           items;
                         return (
                           <>
                             <tr key={index}>
-                              <td>1</td>
+                              {/* <td>1</td> */}
                               {Employeestate.map((element, i) => {
                                 if (element.EmployeeID == EmployeeID) {
                                   return <td key={i}>{element.username}</td>;
@@ -158,28 +174,7 @@ function Attendance() {
                              <td>{checkin}</td>
                               <td>{checkout}</td>
                               <td>{workinghour}</td>
-                              {/* <td className="text-right">
-                                <div className="dropdown dropdown-action">
-                                  <a
-                                    href="#"
-                                    className="action-icon dropdown-toggle"
-                                    data-toggle="dropdown"
-                                    aria-expanded="false"
-                                  >
-                                    <i className="material-icons">more_vert</i>
-                                  </a>
-                                  <div className="dropdown-menu dropdown-menu-right">
-                                    <a
-                                      className="dropdown-item"
-                                      href="#"
-                                      data-toggle="modal"
-                                      data-target="#edit_designation"
-                                    >
-                                      <i className="fa fa-pencil m-r-5" /> Edit
-                                    </a>
-                                  </div>
-                                </div>
-                              </td> */}
+                              <td>{curdate}</td>
                             </tr>
                           </>
                         );
@@ -192,6 +187,21 @@ function Attendance() {
           </div>
         </div>
         {/* /Page Wrapper */}
+        {attendancedetails.length > 0 && (
+              <Box m="15px">
+                <Stack
+                  direction={"row"}
+                  alignItems="center"
+                  justifyContent="flex-end"
+                >
+                  <Pagination
+                    count={pageCount}
+                    page={currentPage}
+                    onChange={handleChangepage}
+                  />
+                </Stack>
+              </Box>
+            )}
       </div>
       <Loading loading={loading} />
       {add && <POST values={add} url={url} Addstate={setaddstate} />}

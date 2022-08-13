@@ -54,11 +54,11 @@ function Timesheet() {
                         <tr>
                           <th>Project</th>
                           <th>Deadline</th>
-                          <th>Date</th>
+                          {/* <th>Date</th> */}
                           <th className="d-none d-sm-table-cell">
                             Description
                           </th>
-                          <th></th>
+                          <th>status</th>
                           <th className="text-right">Actions</th>
                         </tr>
                       </thead>
@@ -80,7 +80,7 @@ function Timesheet() {
                           <td style={{color:'red'}}>
                            {items.status}
                           </td>
-                          <td>{items.currentdate}</td>
+                          {/* <td>{items.currentdate}</td> */}
                           <td className="text-right">
                             <div className="dropdown dropdown-action">
                               <a

@@ -103,7 +103,7 @@ function Addemployee() {
                       </option>
                       {Applicationdetails.length > 0 &&
                         Applicationdetails.map((items, index) => (
-                          items.Interview=='Select'?(
+                          items.userstatus=='Select'?(
                             <option value={items.id}>{items.username}</option>
                           
                           ):null
