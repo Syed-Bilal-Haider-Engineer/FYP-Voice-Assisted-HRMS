@@ -115,8 +115,9 @@ function Sidebar() {
                       paddingLeft: "10px",
                     }}
                   >
+               
                     <i
-                      className="la la-user"
+                      className="fa fa-user-circle-o"
                       style={{
                         color: "#b7c0cd",
                         float: "left",
@@ -229,6 +230,7 @@ function Sidebar() {
                 <i className="la la-money" />
                 <Link to="/Admindashboard/Leads">Leads</Link>
               </li>
+           
               <li
                 style={{
                   display: "flex",
@@ -239,7 +241,7 @@ function Sidebar() {
                   padding: "5px 15px",
                 }}
               >
-                <i className="la la-money" />
+                <i class="fa fa-bell-o" />
                 <Link to="/Admindashboard/Notice"> Notice </Link>
               </li>
               <li
@@ -252,7 +254,7 @@ function Sidebar() {
                   padding: "5px 15px",
                 }}
               >
-                <i className="la la-money" />
+               <i class="fa fa-clock-o"></i>
                 <Link to="/Admindashboard/Timesheet">Timesheet</Link>
               </li>
               {checkstatus == 2 || checkstatus == 3 ? (
