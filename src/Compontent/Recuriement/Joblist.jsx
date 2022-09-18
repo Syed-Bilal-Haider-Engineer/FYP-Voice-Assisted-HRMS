@@ -35,7 +35,7 @@ function Joblist() {
   const pageCount = Math.ceil(jobinfo.length / postsPerPage);
   return (
     <>
-      <Box sx={{ py: 16, backgroundColor: "white" }} id="jobs">
+      <Box sx={{ py: 16, backgroundColor: "white" }} id="jobscetions">
         <Container>
           <Box sx={{ textAlign: "center", py: 2 }}>
             <Typography

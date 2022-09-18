@@ -5,9 +5,12 @@ import { Container, Typography, Box,Button} from "@mui/material";
 import {NavLink} from 'react-router-dom';
 import {useSelector} from 'react-redux';
 import Home from "./Home";
+import Header from "./Header.jsx";
+import Footer from "./Footer.jsx";
 function Categorydetails() {
   //..........local storage use for login......
   var Role,checkstatus;
+  
   if(localStorage.getItem("user"))
   {
   const Islogin=window.atob(localStorage.getItem("user"));
@@ -30,6 +33,7 @@ function Categorydetails() {
 
   return (
     <>
+    <Header/>
       <Home />
       <Box sx={{ py: 8, backgroundColor: "white" }}>
         <Container>
@@ -130,10 +134,9 @@ function Categorydetails() {
          
           ):null))
         } 
-         
-         
         </Container>
       </Box>
+      <Footer/>
     </>
   );
 }

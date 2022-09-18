@@ -1,11 +1,10 @@
-
 import React, { useRef, useState, useEffect } from "react";
 import { Formik, Field, Form } from "formik";
 import Errorsg from "../Msgerror/Errormsg";
 import { emailAPI } from "./url";
 import { jobschema } from "../Yup/Yup";
-import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useNavigate,Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import useGet from "../API/API";
 import axios from "axios";
@@ -37,14 +36,14 @@ const Status = [
 function Exprience() {
   const [loading, setLoading] = useState(false);
   var Role, checkstatus, userid;
-if (localStorage.getItem("user")) {
-  const Islogin = window.atob(localStorage.getItem("user"));
-  Role = JSON.parse(Islogin);
-  checkstatus = Role.token;
-  userid = Role.id;
-}
-console.log("userid",userid);
-  const navigate=useNavigate();
+  if (localStorage.getItem("user")) {
+    const Islogin = window.atob(localStorage.getItem("user"));
+    Role = JSON.parse(Islogin);
+    checkstatus = Role.token;
+    userid = Role.id;
+  }
+  console.log("userid", userid);
+  const navigate = useNavigate();
   const type = "vister";
   useGet("http://localhost/HRMS/Visters/fetchVisters.php", type);
   const [emailstate, setemailstate] = useState();
@@ -59,7 +58,7 @@ console.log("userid",userid);
     console.log("result", result);
   }, [visterinfo]);
 
-   console.log("email",emailstate);
+  console.log("email", emailstate);
   const formData = new FormData();
   const inputRef = useRef(null);
   const filehandler = async (values) => {
@@ -107,13 +106,11 @@ console.log("userid",userid);
       });
   };
 
-
-  useEffect(()=>{
-    if(checkstatus==undefined)
-    {
-      navigate('/login');
+  useEffect(() => {
+    if (checkstatus == undefined) {
+      navigate("/login");
     }
-  },[]);
+  }, []);
   return (
     <>
       <Formik
@@ -133,7 +130,7 @@ console.log("userid",userid);
             <div className="container">
               <div className="account-box">
                 <div className="account-wrapper">
-                  <h3 className="account-title">Applications Form</h3>
+                  <h3 className="account-title">Application Form</h3>
                   {/* Account Form */}
                   <Form>
                     <div
@@ -155,13 +152,27 @@ console.log("userid",userid);
                         <Errorsg name="instituename" className="error" />
                       </div>
                       <div className="form-group">
-                        <label>Degree</label>
+                        <label>Degree name</label>
                         <Field
+                          style={{ marginRight: "5px" }}
+                          as="select"
                           className="form-control"
                           name="degree"
                           required=""
                           type="text"
-                        />
+                        >
+                          <option value="select degree" disabled>Select Here</option>
+                          <option value="software eng">
+                            software engineering
+                          </option>
+                          <option value="computer science">
+                            computer science
+                          </option>
+                          <option value="Information technology">
+                            Information technology
+                          </option>
+                          <option value="other">other</option>
+                        </Field>
                         <Errorsg name="degree" className="error" />
                       </div>
                     </div>
@@ -174,13 +185,21 @@ console.log("userid",userid);
                       }}
                     >
                       <div className="form-group">
-                        <label>Degree year</label>
+                        <label>session</label>
                         <Field
+                          
+                          as="select"
                           className="form-control"
                           name="degreeyear"
                           required=""
                           type="text"
-                        />
+                        >
+                        <option value="select degree" disabled>Select session</option>
+                        <option value="2018-2022">2018 to 2022 session</option>
+                        <option value="2016-2020">2016 to 2020 session</option>
+                        <option value="2014-2018">2014-2018 session</option>
+                        <option value="other">other</option>
+                        </Field>
                         <Errorsg name="degreeyear" className="error" />
                       </div>
                       <div className="form-group">
@@ -285,6 +304,16 @@ console.log("userid",userid);
                       >
                         Apply
                       </button>
+                      <div className="col-auto pt-2">
+                      <Link
+                            to="/"
+                            className="text-muted float-left"
+                            style={{ textDecoration: "none" }}
+                          >
+                            Back
+                          </Link>
+                       
+                      </div>
                     </div>
                   </Form>
                 </div>

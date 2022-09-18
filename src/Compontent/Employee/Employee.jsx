@@ -5,13 +5,17 @@ import {Link} from 'react-router-dom';
 import Editeemp from './Editeemp';
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import {employeesearch} from '../Redux/Actions/Actions';
+import { useEffect } from "react";
 function Employee() {
-  const usedispatch=useDispatch();
   const [employeeid,setstateid]=useState('');
   const [seacrh,setsearch]=useState();
+  const [employeelist,setemployeestate]=useState([]);
    const Employeestate=useSelector(state=>state.Fetchemployeereducer);
    console.log("Employeestate",Employeestate);
+
+ useEffect(()=>{
+  Employeestate && setemployeestate(Employeestate);
+ },[employeelist,Employeestate])
 
    var Role,checkstatus;
    if(localStorage.getItem("user"))
@@ -26,11 +30,25 @@ function Employee() {
    }
 
   //  ...search handler...
+  var newstate;
   const searchhandler=()=>{
-    usedispatch(employeesearch(seacrh));
+     newstate = employeelist.filter((items) => {
+      return (
+        items.fname?.toLowerCase().includes(seacrh?.toLowerCase().trim()) ||
+        items.lname?.toLowerCase().includes(seacrh?.toLowerCase().trim()) || 
+    items.designation?.toLowerCase().includes(seacrh?.toLowerCase().trim()) 
+      )});
+      if(seacrh!=''){
+        setemployeestate(newstate);
+        setsearch();
+      }else {
+        setemployeestate(Employeestate);
+      }
+      
   }
+  
 
-  console.log("employeeid",employeeid);
+  
   return (
     <>
       {/* Main Wrapper */}
@@ -101,7 +119,7 @@ function Employee() {
             {/* Search Filter */}
             {/* user profiles list starts her */}
             <div className="row staff-grid-row">
-            {Employeestate.map((items,i)=>{
+            {employeelist?.map((items,i)=>{
 
               return <>
         

@@ -6,6 +6,8 @@ import {NavLink} from 'react-router-dom';
 import {useSelector,useDispatch} from 'react-redux';
 import Home from "./Home";
 import {Fetchjobdetails} from '../Redux/Actions/Actions';
+import Header from "./Header.jsx";
+import Footer from "./Footer.jsx";
 function Jobdetails() {
   //..........local storage use for login......
   var Role,checkstatus;
@@ -24,6 +26,7 @@ function Jobdetails() {
   console.log("jobdetails",jobdetails);
   return (
     <>
+    <Header/>
       <Home />
       <Box sx={{ py: 8, backgroundColor: "white" }}>
           <Container>
@@ -90,6 +93,7 @@ function Jobdetails() {
        
         </Container>  
       </Box>
+      <Footer/>
     </>
   );
 }

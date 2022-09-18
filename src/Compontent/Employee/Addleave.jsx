@@ -85,7 +85,11 @@ function Addleave() {
                       style={selectinput}
                     >
                       <option>Leave type</option>
-                      <option value="fewer">Fewer </option>
+                      <option value="annual">annual </option>
+                      <option value="casual">casual </option>
+                      <option value="sick">sick </option>
+                      <option value="urgent work">urgent work </option>
+                       <option value="other">other</option>
                     </Field>
                     <Errorsg name="employee" className="error" />
                   </div>

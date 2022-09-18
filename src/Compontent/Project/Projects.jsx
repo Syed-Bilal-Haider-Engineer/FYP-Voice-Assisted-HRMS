@@ -61,28 +61,10 @@ function Projects() {
               {/* Search Filter */}
               <div className="row filter-row">
                
-                <div className="col-sm-6 col-md-3">
+                <div className="col-sm-9">
                   <div className="form-group form-focus">
                     <input type="text" className="form-control floating" />
-                    <label className="focus-label">Project Name</label>
-                  </div>
-                </div>
-                <div className="col-sm-6 col-md-3">
-                  <div className="form-group form-focus">
-                    <input type="text" className="form-control floating" />
-                    <label className="focus-label">Employee Name</label>
-                  </div>
-                </div>
-                <div className="col-sm-6 col-md-3">
-                  <div className="form-group form-focus select-focus">
-                    <select className="select floating selectinput">
-                      <option>Select Project</option>
-                      <option>Web Developer</option>
-                      <option>Web Designer</option>
-                      <option>Android Developer</option>
-                      <option>Ios Developer</option>
-                    </select>
-                   
+                    <label className="focus-label">Search proejct details</label>
                   </div>
                 </div>
                 <div className="col-sm-6 col-md-3">

@@ -49,7 +49,7 @@ function Addproject() {
       const response = await axios.post(url, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
-      const msg = response.data;
+      const msg = response.message;
       if (response.status == 200) {
         toast.success(`${msg}`);
       }

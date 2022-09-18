@@ -1,7 +1,14 @@
 import React,{useEffect} from "react";
 import { useState,useRef } from "react";
-import {useSelector} from 'react-redux';
+import {useSelector,useDispatch} from 'react-redux';
+import axios from "axios";
+import { toast } from "react-toastify";
+import {
+  project,
+} from "../Redux/Actions/Actions";
 function Editeproject({value}) {
+  const usedispatch=useDispatch();
+  const url='http://localhost/HRMS/Project/updateproject.php';
   const [projectname,setprojectstate]=useState('');
   const [projectid,setprojectidstate]=useState('');
   const [projectdescription,setprodescstate]=useState('');
@@ -26,36 +33,35 @@ function Editeproject({value}) {
   }, [value]);
   const inputRef = useRef(null);
   const formData = new FormData();
-
-
   console.log(projectname,":",projectdescription,":",clientinfo,":",teamleader,":",teammem,":",enddate);
   // .........Project edite handler...........
   const updatehandler=async(e)=>{
+    alert("update handler");
     e.preventDefault();
     const img = inputRef.current.files[0];
     formData.append('id',projectid);
      formData.append('prodesc',projectdescription)
-     formData.append("img",img);
+    //  formData.append("img",img);
      formData.append("proname",projectname);
      formData.append("client",clientinfo);
      formData.append("teamleader",teamleader);
      formData.append("teammem",teammem);
      formData.append("deadline",enddate);
-    //  try {
-    //   const response = await axios.post(url,formData,{headers:{ "Content-Type": "multipart/form-data" }});
-    //   console.log("response.data",response.data);
-    //   const msg=response.data.message;
+     try {
+      const response = await axios.post(url,formData,{headers:{ "Content-Type": "multipart/form-data" }});
+      console.log("response.data",response.data);
+      const msg=response.data.message;
      
-    //   if(response.data.status==true)
-    //   {
-    //     toast.success(`${msg}`);
-    //   }
-    //   else {
-    //     toast.error(`${msg}`);
-    //   }
-    // } catch(error) {
-    //   toast.error(`${error}`);
-    // }
+      if(response.data.status==true)
+      {
+        toast.success(`${msg}`);
+      }
+      else {
+        toast.error(`${msg}`);
+      }
+    } catch(error) {
+      toast.error(`${error}`);
+    }
   }
   return (
     <div id="edit_project" className="modal custom-modal fade" role="dialog">
@@ -99,7 +105,7 @@ function Editeproject({value}) {
                       }} style={{width:'100%',height:"42px",
                      borderRadius:'4px',border:'1px solid lightgray'}}>
                     
-                    {client.length>0 && client.map((element)=>{
+                    {client.length>0 && client?.map((element)=>{
                             if(element.id==clientinfo){
                               return <>   <option value={element.id}>{element.UserName}</option>  </>
                             }
@@ -139,7 +145,7 @@ function Editeproject({value}) {
                       }} style={{width:'100%',height:"42px",
                      borderRadius:'4px',border:'1px solid lightgray'}}>
                     
-                    {Employeestate.length>0 && Employeestate.map((element)=>{
+                    {Employeestate.length>0 && Employeestate?.map((element)=>{
                             if(element.username==teamleader){
                               return <>   <option value={element.username}>{element.username}</option>  </>
                             }
@@ -161,7 +167,7 @@ function Editeproject({value}) {
                       }} style={{width:'100%',height:"42px",
                      borderRadius:'4px',border:'1px solid lightgray'}}>
                     
-                    {Employeestate.length>0 && Employeestate.map((element)=>{
+                    {Employeestate.length>0 && Employeestate?.map((element)=>{
                             if(element.EmployeeID==teammem){
                               return <>   <option value={element.EmployeeID}>{element.username}</option>  </>
                             }
@@ -187,10 +193,10 @@ function Editeproject({value}) {
                   }}
                 />
               </div>
-              <div className="form-group">
+              {/* <div className="form-group">
                 <label>Upload Files</label>
                 <input className="form-control" type="file"  ref={inputRef} name="file" />
-              </div>
+              </div> */}
               <div className="submit-section">
                 <button className="btn btn-primary submit-btn">Save</button>
               </div>

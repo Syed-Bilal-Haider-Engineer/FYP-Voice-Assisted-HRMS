@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect,useState} from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Editeproject from "../Project/Editeproject";
 function Dashboard() {
   var totaltask=0;
+  const [eidtestate,seteditestate]=useState('');
   const navigate = useNavigate();
   var userdetials, checkstatus, userID;
   if (localStorage.getItem("user")) {
@@ -15,7 +16,7 @@ function Dashboard() {
   useEffect(() => {
     if (checkstatus == 1) {
       navigate("/Admindashboard/Employeedashboard");
-    }else if(checkstatus==2){
+    }else if(checkstatus==2 || checkstatus==3){
       navigate("/Admindashboard");
     }
   }, []);
@@ -29,6 +30,10 @@ function Dashboard() {
   const department = useSelector((state) => state.Departmentreducer);
   const jobinfo = useSelector(state => state.Jobreducer);
   const Applicationdetails = useSelector((state) => state.fetchuserAppliations);
+
+  const projectHandler=(id)=>{
+    seteditestate(id)
+  }
   return (
     <>
       {/* Page Wrapper */}
@@ -222,11 +227,15 @@ function Dashboard() {
                                       </a>
                                       <div className="dropdown-menu dropdown-menu-right">
                                         <a
+                                        style={{cursor:'pointer'}}
                                           className="dropdown-item"
                                           data-toggle="modal"
                                           data-target="#edit_project"
+                                          onClick={()=>{
+                                            projectHandler(project_id);
+                                          }}
                                         >
-                                          <i className="fa fa-pencil m-r-5" />{" "}
+                                          <i className="fa fa-pencil m-r-5" />
                                           Edit
                                         </a>
                                       </div>
@@ -248,6 +257,7 @@ function Dashboard() {
           </div>
         </div>
         {/* /Page Content */}
+        {eidtestate && <Editeproject value={eidtestate}/>}
       </div>
       {/* /Page Wrapper */}
       <Editeproject />

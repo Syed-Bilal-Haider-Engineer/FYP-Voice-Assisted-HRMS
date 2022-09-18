@@ -104,7 +104,7 @@ function Sidebar() {
                 </div>
               </div>
 
-              {checkstatus == 2 ? (
+              {checkstatus == 2 || checkstatus == 3? (
                 <>
                   <div
                     className="dropdown"
@@ -121,7 +121,7 @@ function Sidebar() {
                       style={{
                         color: "#b7c0cd",
                         float: "left",
-                        fontSize: "30px",
+                        fontSize: "20px",
                       }}
                     />
                     <button
@@ -180,6 +180,48 @@ function Sidebar() {
               </li> */}
                     </div>
                   </div>
+                  <div
+                    className="dropdown"
+                    style={{
+                      display: "flex",
+                      justifyContent: "flex-start",
+                      alignItems: "center",
+                      paddingLeft: "10px",
+                    }}
+                  >
+               
+                    <i
+                      className="la la-money"
+                      style={{
+                        color: "#b7c0cd",
+                        float: "left",
+                        fontSize: "20px",
+                      }}
+                    />
+                    <button
+                      style={{ color: "#b7c0cd", fontSize: "18px" }}
+                      className="btn  dropdown-toggle"
+                      type="button"
+                      id="dropdownMenuButton"
+                      data-toggle="dropdown"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                    >
+                      Salary
+                    </button>
+
+                    <div
+                      className="dropdown-menu"
+                      aria-labelledby="dropdownMenuButton"
+                    >
+                   <Link to="/Admindashboard/Salary"  className="dropdown-item"> Employee Salary </Link>
+                  
+                   <Link to="/Admindashboard/Salarysetting"  className="dropdown-item">
+                      Salary setting
+                    </Link>
+                    <Link to="/Admindashboard/Salaryview"  className="dropdown-item"> Payslip </Link>
+                    </div>
+                  </div>
                 </>
               ) : null}
 
@@ -216,6 +258,7 @@ function Sidebar() {
                     Project
                   </Link>
                 </div>
+              
               </div>
               <li
                 style={{
@@ -273,25 +316,7 @@ function Sidebar() {
                 </li>
               ) : null}
 
-              {/* <li className="submenu">
-                <a href="#">
-                  <i className="la la-money" /> <span> Payroll </span>{" "}
-                  <span className="menu-arrow" />
-                </a>
-                <ul style={{ display: "none" }}>
-                  <li>
-                    <Link to="/Admindashboard/Salary"> Employee Salary </Link>
-                  </li>
-                  <li>
-                    <Link to="/Admindashboard/Salarysetting">
-                      Salary setting
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/Admindashboard/Salaryview"> Payslip </Link>
-                  </li>
-                </ul>
-              </li> */}
+             
               {/* <li>
                 <Link to="/Admindashboard/Resignations">
                   <i className="la la-external-link-square" />{" "}

@@ -4,6 +4,7 @@ import useGet from "../API/API";
 import theme from "../../Theme/Theme";
 import { jobsearch } from "../Redux/Actions/Actions";
 import { HashLink } from 'react-router-hash-link';
+import { useNavigate } from "react-router-dom";
 import {
   Container,
   Box,
@@ -14,6 +15,7 @@ import {
 } from "@mui/material";
 import Hero from "../../Images/h1_hero.jpg";
 import { useDispatch } from "react-redux";
+import { useEffect } from "react";
 
 function Home() {
   const dispatch = useDispatch();
@@ -36,6 +38,7 @@ function Home() {
     dispatch(jobsearch(Search));
     setSearch("");
   };
+
   return (
     <>
       <Box
@@ -50,6 +53,7 @@ function Home() {
         <Container>
           <Box sx={{ width: { xs: "100%", md: "50%" } }}>
             <Fade top>
+            
               <Typography
                 sx={{
                   fontSize: { xs: "40px", md: "80px" },
@@ -90,6 +94,7 @@ function Home() {
             <Divider
               sx={{ width: "3px", height: "5px", textAlign: "center" }}
             />
+              
             <Button
             
               type="submit"
@@ -100,7 +105,7 @@ function Home() {
                 background:
                   "linear-gradient(to right, #ff9b44 0%, #fc6075 100%)",
                 textSlign: "center",
-                color: "#fff",
+               
                 padding: "15px",
                 textTransform: " capitalize",
                 lineHeight: "38px",
@@ -113,9 +118,12 @@ function Home() {
               onClick={SearchJobhandler}
             >
              {/* <a href="#jobs"  alt="" style={{color:'white',textDecoration:'none'}}> */}
+             <HashLink to="#jobscetions"  style={{ color:"#fff"}}>
               Find Jobs
+              </HashLink>
               {/* </a> */}
             </Button>
+           
           </Box>
         </Container>
       </Box>

@@ -15,8 +15,8 @@ import { POST } from "../API/PostAPI";
 import useGet from "../API/API";
 import { useEffect } from "react";
 function Applications() {
-  const usedispatch=useDispatch();
-  const [seacrh,setsearch]=useState('Search job applications');
+  const [seacrh,setsearch]=useState('');
+  const [applicationsstate,setApplicationstate]=useState([]);
     // .......Fetch Applications Handler..........
     useGet("http://localhost/HRMS/Application/Fetchapplicationsuser.php", "Applications");
   const url = "http://localhost/HRMS/Application/Changestatus.php";
@@ -30,7 +30,7 @@ function Applications() {
   const handleChangepage = (event, value) => {
     setCurrentPage(value);
   };
-  const pageCount = Math.ceil(Applicationdetails.length / postsPerPage);
+  const pageCount = Math.ceil(applicationsstate.length / postsPerPage);
   // .............Decison making...........
   const DecisionHandler = (id, status,applicationemail) => {
     // console.log("status",status);
@@ -41,10 +41,28 @@ function Applications() {
     };
     setstatusstate(value);
   };
+
+  useEffect(()=>{
+    Applicationdetails && setApplicationstate(Applicationdetails);
+  },[applicationsstate,Applicationdetails]);
+
+let newstate; 
   const searchhandler=()=>{
-    console.log("seacrh",seacrh);
-    usedispatch(applicationssearcing(seacrh));
-    setsearch('');
+    newstate = applicationsstate.filter((items) => {
+      return (
+        items.designation?.toLowerCase().includes(seacrh?.toLowerCase().trim()) ||
+        items.instituename?.toLowerCase().includes(seacrh?.toLowerCase().trim()) || 
+        items.degree?.toLowerCase().includes(seacrh?.toLowerCase().trim()) ||
+        items.totalexp?.toLowerCase().includes(seacrh?.toLowerCase().trim()) ||
+        items.cname?.toLowerCase().includes(seacrh?.toLowerCase().trim()) || 
+        items.cgpa?.toLowerCase().includes(seacrh?.toLowerCase().trim()) 
+      )});
+  }
+  if(seacrh){
+    setApplicationstate(newstate);
+    setsearch();
+  }else {
+    setApplicationstate(Applicationdetails);
   }
   return (
     <>
@@ -115,8 +133,8 @@ function Applications() {
                       </thead>
                     
                       <tbody>
-                        {Applicationdetails.length > 0 &&
-                          Applicationdetails.slice(
+                        {applicationsstate.length > 0 &&
+                          applicationsstate?.slice(
                             currentPage * postsPerPage - postsPerPage,
                             currentPage * postsPerPage
                           ).map((items, index) => {

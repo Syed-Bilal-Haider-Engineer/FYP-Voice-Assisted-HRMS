@@ -1,5 +1,4 @@
-import React,{useEffect, useState} from "react";
-import logo from "../../Images/logo2.png";
+import React,{ useState} from "react";
 import { Formik, Field, Form } from "formik";
 import Errorsg from "../Msgerror/Errormsg";
 import { Loginschema } from "../Yup/Yup";
@@ -16,6 +15,7 @@ function Login() {
   const [add,setAddState]=useState('');
   return (
     <>
+    <div style={{marginTop:"7%"}}>
       <Formik
         initialValues={Initivalue}
         validationSchema={Loginschema}
@@ -28,15 +28,9 @@ function Login() {
         <div className="main-wrapper">
           <div className="account-content">
             <div className="container">
-              {/* Account Logo */}
-              <div className="account-logo">
-                <a href="index.php">
-                  <img src={logo} alt="Company Logo" />
-                </a>
-              </div>
               <div className="account-box">
                 <div className="account-wrapper">
-                  <h3 className="account-title">User login</h3>
+                  <h3 className="account-title"> login Form</h3>
                   {/* Account Form */}
                   <Form>
                     <div
@@ -92,6 +86,13 @@ function Login() {
                         Login
                       </button>
                       <div className="col-auto pt-2">
+                      <Link
+                            to="/"
+                            className="text-muted float-left"
+                            style={{ textDecoration: "none" }}
+                          >
+                            Home
+                          </Link>
                         <Link
                           className="text-muted float-right"
                          to="/Signup"
@@ -108,6 +109,7 @@ function Login() {
         </div>
       </Formik>
       {add && <POST values={add} url={url} Addstate={setAddState}/>}
+      </div>
     </>
   );
 }

@@ -24,8 +24,8 @@ import {
   settingaction
 } from "../Redux/Actions/Actions";
 import { emailAPI } from "../Recuriement/url";
-export const POST = ({ values, url, Addstate,hremail }) => {
-  console.log("values",values);
+export const POST = ({ values, url, Addstate }) => {
+  console.log("values",values.hremail);
   // .....fetch user login details.......
   var Role, checkstatus,id,email;
   if (localStorage.getItem("user")) {
@@ -169,7 +169,7 @@ export const POST = ({ values, url, Addstate,hremail }) => {
           navigate("/");
         } else if (response.data.token == 1) {
           navigate("/Admindashboard/Employeedashboard");
-        } else if (response.data.token == 2) {
+        } else if (response.data.token == 2 || response.data.token == 3) {
           navigate("/Admindashboard");
         }
         //  ....Login End.....
