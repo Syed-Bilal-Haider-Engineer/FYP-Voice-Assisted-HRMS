@@ -8,9 +8,10 @@ import {
   useMediaQuery,
   Grid,
 } from "@mui/material";
-import Apply from "../../Images/applybg.png";
 import { useState } from "react";
 import {POST} from '../API/PostAPI';
+import Header from "./Header.jsx";
+import Footer from "./Footer.jsx";
 function Contact() {
   const url="http://localhost/HRMS/Contact/Addcontact.php";
   const [subjectset,setsubjectstate]=useState('');
@@ -45,6 +46,7 @@ function Contact() {
   }
   return (
     <>
+    <Header/>
       <Box
         sx={{
           pt: 6,
@@ -166,6 +168,7 @@ function Contact() {
         </Container>
       </Box>
       {add && <POST values={add} url={url} Addstate={setaddcontactstate} />}
+      <Footer/>
     </>
   );
 }
