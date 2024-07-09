@@ -8,7 +8,6 @@ export const Showusers =(values)=> {
     payload: values
 }};
 export const Getcategory=(values)=>{
-  console.log("catgeory",values);
   return {
     type:ActionTypes.Getcategory,
     payload:values
